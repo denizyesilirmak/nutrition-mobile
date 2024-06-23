@@ -10,25 +10,9 @@ const Button = ({ label, onPress }: ButtonProps) => {
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => ({
-        borderColor: pressed ? "#33669990" : "#cccccc60",
-        height: 46,
-        borderRadius: 14,
-        justifyContent: "center",
-        alignItems: "center",
-        borderWidth: 2,
-      })}
+      className="items-center justify-center rounded-2xl border-2 border-[#cccccc60] opacity-100 active:opacity-60"
     >
-      <View
-        style={{
-          alignItems: "center",
-          justifyContent: "center",
-          height: "100%",
-          backgroundColor: "#33669950",
-          borderRadius: 12,
-          width: "100%",
-        }}
-      >
+      <View className="w-full items-center justify-center rounded-2xl bg-[#33669950] px-4 py-3">
         <Text
           color="SECONDARY"
           size="lg"

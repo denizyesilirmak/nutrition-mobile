@@ -24,23 +24,10 @@ const Login = () => {
         source={require("@/src/assets/images/register-bg.png")}
         resizeMethod="resize"
         resizeMode="stretch"
-        style={{
-          width: "100%",
-          height: 250,
-          justifyContent: "flex-end",
-          alignItems: "center",
-          paddingBottom: 16,
-        }}
+        className="flex h-[250px] w-full items-center justify-end bg-cover bg-center pb-4"
       >
         <Ionicons name="fast-food-outline" size={48} color="black" />
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 16,
-            gap: 8,
-          }}
-        >
+        <View className="items-center justify-center gap-2 p-4">
           <Text color="SECONDARY" size="xxl" weight="medium">
             Welcome to EatInsight
           </Text>
@@ -51,12 +38,7 @@ const Login = () => {
         </View>
       </ImageBackground>
 
-      <View
-        style={{
-          paddingHorizontal: 24,
-          gap: 12,
-        }}
-      >
+      <View className="gap-3 px-6">
         <TextInput
           placeholder="Enter your email"
           label="Email"
@@ -65,15 +47,7 @@ const Login = () => {
         />
         <TextInput placeholder="Enter your password" label="Password" secured />
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingHorizontal: 8,
-            paddingVertical: 8,
-            alignItems: "center",
-          }}
-        >
+        <View className="flex-row items-center justify-between p-2">
           <Checkbox
             value={remember}
             onChange={(value) => {
@@ -91,16 +65,9 @@ const Login = () => {
           onPress={() => router.push("/(auth)/(tabs)/(foods)")}
         />
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          paddingVertical: 16,
-          marginTop: 16,
-        }}
-      >
+      <View className="mt-4 flex-row justify-center py-4">
         <Text color="TERTIARY" size="md" weight="regular">
-          Don't have an account?{" "}
+          Don't have an account?
           <Text color="PRIMARY" size="md" weight="bold" underline>
             Sign up
           </Text>
@@ -108,14 +75,7 @@ const Login = () => {
       </View>
       <Seperator />
 
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          paddingVertical: 16,
-          gap: 8,
-        }}
-      >
+      <View className="flex-row items-center justify-center gap-2 p-4">
         <Text color="TERTIARY" size="md" weight="regular">
           Privacy Policy | Terms of Service
         </Text>
@@ -123,12 +83,7 @@ const Login = () => {
           © 2021 EatInsight
         </Text>
 
-        <View
-          style={{
-            padding: 24,
-            opacity: 0.5,
-          }}
-        >
+        <View className="p-6 opacity-50">
           <Text color="TERTIARY" size="md" weight="regular">
             EatInsight is not a medical app. For medical advice, consult a
             doctor. Nutrition information is provided for educational purposes
