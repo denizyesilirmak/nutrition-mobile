@@ -1,0 +1,37 @@
+const MAIN_COLORS = {
+  PRIMARY: "#FF6B6B",
+  SECONDARY: "#FFD166",
+  TERTIARY: "#06D6A0",
+  QUATERNARY: "#118AB2",
+  QUINARY: "#073B4C",
+};
+
+const TEXT_COLORS = {
+  PRIMARY: "#e24a4a",
+  SECONDARY: "#000000",
+  TERTIARY: "#333",
+  QUATERNARY: "#666",
+};
+
+const BACKGROUND_COLORS = {
+  PRIMARY: "#FFF",
+  SECONDARY: "#F2F2F2",
+  TERTIARY: "#E5E5E5",
+  QUATERNARY: "#D9D9D9",
+};
+
+const STATUS_COLORS = {
+  SUCCESS: "#06D6A0",
+  ERROR: "#FF6B6B",
+  WARNING: "#FFD166",
+  INFO: "#118AB2",
+};
+
+const COLORS = {
+  main: MAIN_COLORS,
+  text: TEXT_COLORS,
+  background: BACKGROUND_COLORS,
+  status: STATUS_COLORS,
+};
+
+export default COLORS;
