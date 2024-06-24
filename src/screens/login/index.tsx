@@ -51,7 +51,6 @@ const Login = () => {
           <Checkbox
             value={remember}
             onChange={(value) => {
-              console.log(value);
               setRemember(value);
             }}
             label="Remember me"
