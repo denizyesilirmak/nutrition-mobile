@@ -75,7 +75,7 @@ const Login = () => {
       </View>
       <Seperator />
 
-      <View className="flex-row items-center justify-center gap-2 p-4">
+      <View className="items-center justify-center gap-2 p-4">
         <Text color="TERTIARY" size="md" weight="regular">
           Privacy Policy | Terms of Service
         </Text>

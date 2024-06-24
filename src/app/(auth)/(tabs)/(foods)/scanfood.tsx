@@ -1,12 +1,7 @@
-import Text from "@/src/components/Text";
-import { View } from "react-native";
+import ScanFoodScreen from "@/src/screens/scanFood";
 
 const ScanFood = () => {
-  return (
-    <View>
-      <Text>ScanFood</Text>
-    </View>
-  );
+  return <ScanFoodScreen />;
 };
 
 export default ScanFood;

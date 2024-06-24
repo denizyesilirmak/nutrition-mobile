@@ -4,6 +4,7 @@ import {
   useFrameProcessor,
   useCameraDevice,
   useCameraPermission,
+  useCameraFormat,
 } from "react-native-vision-camera";
 import { useTensorflowModel } from "react-native-fast-tflite";
 import { useResizePlugin } from "vision-camera-resize-plugin";
@@ -18,6 +19,12 @@ const CameraScreen = () => {
 
   const permission = useCameraPermission();
 
+  const format = useCameraFormat(device, [
+    {
+      videoResolution: { width: 1920, height: 1080 },
+    },
+  ]);
+
   useEffect(() => {
     if (permission.hasPermission === false) {
       permission.requestPermission();
@@ -25,7 +32,7 @@ const CameraScreen = () => {
   }, [permission]);
 
   const objectDetection = useTensorflowModel(
-    require("../assets/aiyfood.tflite")
+    require("../assets/aiyfood.tflite"),
   );
   const model =
     objectDetection.state === "loaded" ? objectDetection.model : undefined;
@@ -36,7 +43,7 @@ const CameraScreen = () => {
     (food) => {
       setFood(food);
     },
-    [food]
+    [food],
   );
 
   const frameProcessor = useFrameProcessor(
@@ -44,7 +51,6 @@ const CameraScreen = () => {
       "worklet";
       if (model == null) return;
 
-      // 1. Resize 4k Frame to 192x192x3 using vision-camera-resize-plugin
       const resized = resize(frame, {
         scale: {
           width: 192,
@@ -54,17 +60,16 @@ const CameraScreen = () => {
         dataType: "uint8",
       });
 
-      // 2. Run model with given input buffer synchronously
       const outputs = model.runSync([resized]);
       const results = Object.entries(outputs[0]).filter(
-        ([key, value]) => value > 100
+        ([key, value]) => value > 100,
       );
 
       let max = results.reduce(
         (prev, current) => {
           return prev[1] > current[1] ? prev : current;
         },
-        [0, 0]
+        [0, 0],
       );
       if (labels[max[0]] !== undefined && labels[max[0]] !== "__background__") {
         console.log(labels[max[0]], max[1] / 255);
@@ -73,7 +78,7 @@ const CameraScreen = () => {
         }
       }
     },
-    [model]
+    [model],
   );
 
   if (device == null) {
@@ -92,6 +97,7 @@ const CameraScreen = () => {
       }}
     >
       <Camera
+        format={format}
         frameProcessor={frameProcessor}
         device={device}
         isActive
