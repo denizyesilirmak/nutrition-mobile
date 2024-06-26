@@ -1,8 +1,23 @@
 # Nutirition Mobile
 
-## About
+## Documentation
 
-[Project Scope Details](docs/PROJECT_SCOPE.md)
+- [Project Scope](docs/PROJECT_SCOPE.md)
+
+### Components
+
+- [BackgroundImage](docs/components//BackgroundImage.md)
+- [Button](docs/components//Button.md)
+- [Checkbox](docs/components//Checkbox.md)
+- [DatePicker](docs/components//DatePicker.md)
+- [FoodDetector](docs/components//FoodDetector.md)
+- [FoodListItem](docs/components//FoodListItem.md)
+- [Image](docs/components//Image.md)
+- [ScreenView](docs/components//ScreenView.md)
+- [SearchBar](docs/components//SearchBar.md)
+- [Seperator](docs/components//Seperator.md)
+
+## About
 
 ### Description
 
@@ -50,4 +65,6 @@ npm install
 
 ```bash
 npm start
+npx run:ios --device
+npx run:android --device
 ```
