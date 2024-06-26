@@ -2,6 +2,8 @@
 
 ## About
 
+[Project Scope Details](docs/PROJECT_SCOPE.md)
+
 ### Description
 
 This is a mobile application that allows users to track their daily nutrition intake. Users can input their daily meals and the app will calculate the total calories, protein, fat, and carbohydrates consumed. The app will also provide a summary of the user's daily nutrition intake.
