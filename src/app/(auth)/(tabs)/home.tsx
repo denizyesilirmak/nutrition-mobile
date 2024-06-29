@@ -1,16 +1,7 @@
-import DatePicker from "@/src/components/DatePicker";
-import { Text, View } from "react-native";
+import HomeScreen from "@/src/screens/home";
 
 const Home = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
-      <DatePicker />
-    </View>
-  );
+  return <HomeScreen />;
 };
 
 export default Home;

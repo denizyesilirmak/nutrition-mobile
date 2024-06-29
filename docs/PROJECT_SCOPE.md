@@ -28,8 +28,7 @@
 ## Daily Food Logging (Breakfast, Lunch, Dinner)
 
 - **Meal Entries:** Users can log their meals for breakfast, lunch, and dinner by selecting foods from a pre-populated database or by manually entering details.
-- **Portion Control:** Users can specify portion sizes to accurately track their caloric intake.
-- **Meal Reminders:** The app can send reminders to log meals at specific times to ensure consistent tracking.
+- **Portion Control:** Users can specify portion of meals with gram selection.
 
 ## Food Search and Details
 
@@ -41,9 +40,9 @@
 
 ### Calorie Balance Analysis
 
-- **Daily Summary:** The app will provide a summary of daily caloric intake versus expenditure.
+- **Daily Summary:** The app will provide a summary of daily caloric intake.
 - **Weekly and Monthly Trends:** Users can view graphs and charts that show trends in their caloric balance over weeks and months.
-- **Goal Tracking:** Users can set goals for caloric intake and expenditure and track their progress against these goals.
+- **Goal Tracking:** Users can set goals for caloric intake and expenditure and track their progress against their daily, weekly, and monthly targets.
 
 ### User Weight Tracking
 
@@ -58,8 +57,8 @@
 
 ## Food Recognition via Camera (Optional)
 
-- **Image Capture:** Users can take photos of their meals using their device’s camera.
-- **Food Identification:** The app will use image recognition technology to identify food items in the photo.
+- **Camera Integration:** Users can open camera and detect food items.
+- **Food Identification:** The app will use image recognition technology to identify food items from the camera feed.
 - **Nutritional Estimation:** The app will estimate the nutritional content of the identified foods, including calories and macronutrients.
 
 ## Integration with Apple Watch and Android Health (Optional)

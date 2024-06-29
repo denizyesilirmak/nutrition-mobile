@@ -8,7 +8,13 @@ type ScreenViewProps = {
 
 const ScreenView = ({ children, scrollable, style }: ScreenViewProps) => {
   return (
-    <ScrollView scrollEnabled={scrollable} style={[style]}>
+    <ScrollView
+      scrollEnabled={scrollable}
+      style={[style]}
+      contentContainerStyle={{
+        paddingBottom: 20,
+      }}
+    >
       {children}
     </ScrollView>
   );

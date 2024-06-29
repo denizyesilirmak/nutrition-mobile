@@ -1,3 +1,5 @@
+import Header from "@/src/components/Header";
+import IconButton from "@/src/components/IconButton";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router/tabs";
 
@@ -6,6 +8,18 @@ const AuthLayout = () => {
     <Tabs
       screenOptions={{
         headerShown: true,
+        headerShadowVisible: false,
+        headerTitleAlign: "center",
+
+        headerLeftContainerStyle: {
+          paddingLeft: 8,
+        },
+        headerRightContainerStyle: {
+          paddingRight: 8,
+        },
+        headerStyle: {
+          backgroundColor: "transparent",
+        },
       }}
     >
       <Tabs.Screen
@@ -13,6 +27,15 @@ const AuthLayout = () => {
         options={{
           headerTitle: "Home",
           tabBarIcon: () => <Ionicons name="home-outline" size={28} />,
+          headerLeft: () => (
+            <IconButton icon={<Ionicons name="calendar-outline" size={24} />} />
+          ),
+
+          headerRight: () => (
+            <IconButton
+              icon={<Ionicons name="ellipsis-horizontal-outline" size={24} />}
+            />
+          ),
         }}
       />
       <Tabs.Screen

@@ -18,7 +18,7 @@ const initialLayout = () => {
           }}
         />
         <Stack.Screen name="register" />
-        <Stack.Screen name="camera" />
+        {/* <Stack.Screen name="camera" /> */}
       </Stack>
     </>
   );

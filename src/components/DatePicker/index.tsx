@@ -27,18 +27,11 @@ function DateItem({ date }: { date: Date }) {
         height: 96,
       }}
     >
-      <View
-        style={{
-          backgroundColor: "#fff",
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "space-around",
-          borderRadius: 8,
-          borderWidth: 1,
-        }}
-      >
-        <Text>{format(date, "dd")}</Text>
-        <Text>{format(date, "EEE")}</Text>
+      <View className="flex-1 items-center justify-around rounded-lg border border-gray-200 bg-white">
+        <Text className="text-xl font-bold">{format(date, "dd")}</Text>
+        <Text className="text-sm font-medium uppercase color-gray-500">
+          {format(date, "EEE")}
+        </Text>
       </View>
     </View>
   );
@@ -70,7 +63,7 @@ const DatePicker = () => {
       onScroll: (event) => {
         const interval = itemWidth + padding;
         const currentVibrationPoint = Math.floor(
-          event.contentOffset.x / interval
+          event.contentOffset.x / interval,
         );
 
         if (
@@ -82,7 +75,7 @@ const DatePicker = () => {
         }
       },
     },
-    []
+    [],
   );
 
   return (
@@ -93,6 +86,17 @@ const DatePicker = () => {
         alignItems: "center",
       }}
     >
+      <View
+        style={{
+          position: "absolute",
+          width: itemWidth + 10,
+          height: 106,
+          borderColor: "#9eddff",
+          borderWidth: 3,
+          borderRadius: 10,
+          zIndex: 2,
+        }}
+      />
       <AnimatedFlashList
         data={result}
         keyExtractor={(item) => item.toString()}
