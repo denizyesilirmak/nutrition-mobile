@@ -1,4 +1,4 @@
-import FoodDetector from "@/src/components/FoodDetector";
+// import FoodDetector from "@/src/components/FoodDetector";
 import { useDetectedFoods } from "@/src/store/foodDetectSession";
 import { Text, View } from "react-native";
 
@@ -19,7 +19,7 @@ const ScanResult = () => {
 const ScanFood = () => {
   return (
     <View className="flex-1">
-      <FoodDetector />
+      {/* <FoodDetector /> */}
       <ScanResult />
     </View>
   );

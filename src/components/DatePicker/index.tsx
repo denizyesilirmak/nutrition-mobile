@@ -1,14 +1,13 @@
 import { FlashList } from "@shopify/flash-list";
 import { add, eachDayOfInterval, format, sub } from "date-fns";
 import { useMemo } from "react";
-import { Dimensions, Text, View } from "react-native";
+import { Dimensions, FlatList, Text, View } from "react-native";
 import Animated, {
-  ScrollHandler,
   runOnJS,
   useAnimatedScrollHandler,
+  useSharedValue,
 } from "react-native-reanimated";
 import * as Haptics from "expo-haptics";
-import { useSharedValue } from "react-native-worklets-core";
 
 const screenWidth = Dimensions.get("window").width;
 const itemCount = 5;
@@ -23,7 +22,7 @@ function DateItem({ date }: { date: Date }) {
     <View
       style={{
         marginHorizontal: padding / 2,
-        width: itemWidth,
+        width: itemWidth - 0.1,
         height: 96,
       }}
     >
@@ -37,8 +36,13 @@ function DateItem({ date }: { date: Date }) {
   );
 }
 
-const DatePicker = () => {
+const DatePicker = ({
+  onDateChange,
+}: {
+  onDateChange: (date: Date) => void;
+}) => {
   const lastVibrationPoint = useSharedValue(0);
+  const currentIndex = useSharedValue(0);
 
   const result: Date[] = useMemo(() => {
     const today = new Date();
@@ -54,29 +58,14 @@ const DatePicker = () => {
     }).toReversed();
   }, []);
 
-  const vibrate = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
+  const onDateChangeJS = () => {
+    onDateChange(result[Math.round(currentIndex.value + 1)]);
   };
 
-  const scrollHandler = useAnimatedScrollHandler(
-    {
-      onScroll: (event) => {
-        const interval = itemWidth + padding;
-        const currentVibrationPoint = Math.floor(
-          event.contentOffset.x / interval,
-        );
-
-        if (
-          event.contentOffset.x % interval < interval &&
-          lastVibrationPoint.value !== currentVibrationPoint
-        ) {
-          runOnJS(vibrate)();
-          lastVibrationPoint.value = currentVibrationPoint;
-        }
-      },
-    },
-    [],
-  );
+  const scrollHandler = useAnimatedScrollHandler((event) => {
+    const index = Math.floor(event.contentOffset.x / (itemWidth + padding / 2));
+    currentIndex.value = Math.round(index);
+  });
 
   return (
     <View
@@ -87,6 +76,7 @@ const DatePicker = () => {
       }}
     >
       <View
+        pointerEvents="none"
         style={{
           position: "absolute",
           width: itemWidth + 10,
@@ -97,12 +87,12 @@ const DatePicker = () => {
           zIndex: 2,
         }}
       />
-      <AnimatedFlashList
+      <Animated.FlatList
         data={result}
         keyExtractor={(item) => item.toString()}
         renderItem={({ item }) => <DateItem date={item} />}
-        estimatedItemSize={100}
         horizontal
+        decelerationRate="fast"
         inverted
         contentContainerStyle={{
           paddingHorizontal: padding / 2,
@@ -111,6 +101,9 @@ const DatePicker = () => {
         snapToInterval={itemWidth + padding}
         showsHorizontalScrollIndicator={false}
         onScroll={scrollHandler}
+        onMomentumScrollEnd={() => {
+          runOnJS(onDateChangeJS)();
+        }}
       />
     </View>
   );

@@ -131,33 +131,46 @@ const DailyTips = () => {
 
   return (
     <View className="flex-1 items-center justify-center px-6">
-      <View className="flex-coll w-full items-center justify-around overflow-hidden rounded-3xl bg-white p-4 shadow-md">
-        <Animated.FlatList
-          ref={flatlistRef}
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          onScroll={scrollHandler}
-          scrollEventThrottle={16}
-          data={DUMMY_DAILY_TIPS}
-          renderItem={(itemData) => (
-            <Tip
-              title={itemData.item.title}
-              content={itemData.item.content}
-              width={width}
-              pageSVG={pageIndexSv}
-              image={itemData.item.image}
-            />
-          )}
-        />
-        {DUMMY_DAILY_TIPS.map((item, index) => (
-          <DailyTipBackground
-            image={item.image}
-            pageSv={pageIndexSv}
-            index={index}
-            key={index}
+      <View
+        className="flex-coll w-full items-center justify-around rounded-3xl bg-white p-4"
+        style={{
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 0,
+          },
+          shadowOpacity: 0.1,
+          shadowRadius: 6,
+        }}
+      >
+        <View className="flex-1 flex-row items-center justify-center overflow-hidden">
+          <Animated.FlatList
+            ref={flatlistRef}
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            onScroll={scrollHandler}
+            scrollEventThrottle={16}
+            data={DUMMY_DAILY_TIPS}
+            renderItem={(itemData) => (
+              <Tip
+                title={itemData.item.title}
+                content={itemData.item.content}
+                width={width}
+                pageSVG={pageIndexSv}
+                image={itemData.item.image}
+              />
+            )}
           />
-        ))}
+          {DUMMY_DAILY_TIPS.map((item, index) => (
+            <DailyTipBackground
+              image={item.image}
+              pageSv={pageIndexSv}
+              index={index}
+              key={index}
+            />
+          ))}
+        </View>
       </View>
     </View>
   );

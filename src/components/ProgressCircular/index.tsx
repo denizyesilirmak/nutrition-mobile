@@ -17,7 +17,7 @@ const ProgressCircular = ({ progress = 0, target = 2000 }: PropTypes) => {
   const animatedPropsWidth = useAnimatedProps(() => {
     return {
       strokeWidth: withSequence(
-        withTiming(0, { duration: 0 }),
+        withTiming(0, { duration: 500 }),
         withDelay(200, withSpring(10, { damping: 6 })),
       ),
     };

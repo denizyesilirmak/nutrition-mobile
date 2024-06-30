@@ -2,48 +2,63 @@ import { Text, View } from "react-native";
 import ProgressCircular from "../ProgressCircular";
 import ProgressLine from "../ProgressLine";
 
-const DUMMY_DATA = {
-  eaten: 1800,
-  burned: 600,
-  target: 1850,
-  carbs: {
-    current: 300,
-    target: 560,
-  },
-  protein: {
-    current: 200,
-    target: 300,
-  },
-  fat: {
-    current: 123,
-    target: 300,
-  },
-  tard: {
-    current: 280,
-    target: 300,
-  },
-  horseshit: {
-    current: 50,
-    target: 300,
-  },
-  tomato: {
-    current: 250,
-    target: 300,
-  },
+export type DashboardProps = {
+  data: {
+    eaten: number;
+    burned: number;
+    target: number;
+    carbs: {
+      current: number;
+      target: number;
+    };
+    protein: {
+      current: number;
+      target: number;
+    };
+    fat: {
+      current: number;
+      target: number;
+    };
+    tard: {
+      current: number;
+      target: number;
+    };
+    horseshit: {
+      current: number;
+      target: number;
+    };
+    tomato: {
+      current: number;
+      target: number;
+    };
+  };
 };
 
-const Dashboard = () => {
+const Dashboard = ({ data }: DashboardProps) => {
+  console.log("eatendata", data.eaten);
+
   return (
     <View className="flex-1 items-center justify-center px-6">
-      <View className="flex-coll w-full items-center justify-around rounded-3xl bg-white p-4 shadow-md">
+      <View
+        className="flex-coll w-full items-center justify-around rounded-3xl bg-white p-4"
+        style={{
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 0,
+          },
+          shadowOpacity: 0.1,
+          shadowRadius: 6,
+        }}
+      >
         <View className="flex-1 flex-row items-center justify-center">
           <View className="flex-1 flex-col items-center justify-center">
-            <Text className="text-xl">{DUMMY_DATA.eaten}</Text>
+            <Text className="text-xl">{data.eaten}</Text>
             <Text className="text-sm color-slate-600">Eaten</Text>
           </View>
-          <ProgressCircular progress={0.2} target={1850} />
+          <ProgressCircular progress={data.eaten / 1850} target={1850} />
           <View className="flex-1 flex-col items-center justify-center">
-            <Text className="text-xl">{DUMMY_DATA.burned}</Text>
+            <Text className="text-xl">{data.burned}</Text>
             <Text className="text-sm color-slate-600">Burned</Text>
           </View>
         </View>
@@ -51,28 +66,31 @@ const Dashboard = () => {
           <View className="flex-1 flex-col items-center justify-center p-2">
             <Text className="p-2 text-sm color-slate-600">Carbs</Text>
             <ProgressLine
-              progress={DUMMY_DATA.carbs.current / DUMMY_DATA.carbs.target}
+              progress={data.carbs.current / data.carbs.target}
+              index={1}
             />
             <Text className="text-sm">
-              {DUMMY_DATA.carbs.current}/{DUMMY_DATA.carbs.target} gr
+              {data.carbs.current}/{data.carbs.target} gr
             </Text>
           </View>
           <View className="flex-1 flex-col items-center justify-center p-2">
             <Text className="p-2 text-sm color-slate-600">Protein</Text>
             <ProgressLine
-              progress={DUMMY_DATA.protein.current / DUMMY_DATA.protein.target}
+              progress={data.protein.current / data.protein.target}
+              index={2}
             />
             <Text className="text-sm">
-              {DUMMY_DATA.protein.current}/{DUMMY_DATA.protein.target} gr
+              {data.protein.current}/{data.protein.target} gr
             </Text>
           </View>
           <View className="flex-1 flex-col items-center justify-center p-2">
             <Text className="p-2 text-sm color-slate-600">Fat</Text>
             <ProgressLine
-              progress={DUMMY_DATA.fat.current / DUMMY_DATA.fat.target}
+              progress={data.fat.current / data.fat.target}
+              index={3}
             />
             <Text className="text-sm">
-              {DUMMY_DATA.fat.current}/{DUMMY_DATA.fat.target} gr
+              {data.fat.current}/{data.fat.target} gr
             </Text>
           </View>
         </View>
@@ -81,30 +99,28 @@ const Dashboard = () => {
           <View className="flex-1 flex-col items-center justify-center p-2">
             <Text className="p-2 text-sm color-slate-600">Tard</Text>
             <ProgressLine
-              progress={DUMMY_DATA.tard.current / DUMMY_DATA.tard.target}
+              progress={data.tard.current / data.tard.target}
+              index={4}
             />
             <Text className="text-sm">
-              {DUMMY_DATA.tard.current}/{DUMMY_DATA.tard.target} gr
+              {data.tard.current}/{data.tard.target} gr
             </Text>
           </View>
           <View className="flex-1 flex-col items-center justify-center p-2">
             <Text className="p-2 text-sm color-slate-600">Horseshit</Text>
-            <ProgressLine
-              progress={
-                DUMMY_DATA.horseshit.current / DUMMY_DATA.horseshit.target
-              }
-            />
+            <ProgressLine progress={data.horseshit.current / data.horseshit.target} index={5} />
             <Text className="text-sm">
-              {DUMMY_DATA.horseshit.current}/{DUMMY_DATA.horseshit.target} gr
+              {data.horseshit.current}/{data.horseshit.target} gr
             </Text>
           </View>
           <View className="flex-1 flex-col items-center justify-center p-2">
             <Text className="p-2 text-sm color-slate-600">Tomato</Text>
             <ProgressLine
-              progress={DUMMY_DATA.tomato.current / DUMMY_DATA.tomato.target}
+              progress={data.tomato.current / data.tomato.target}
+              index={6}
             />
             <Text className="text-sm">
-              {DUMMY_DATA.tomato.current}/{DUMMY_DATA.tomato.target} gr
+              {data.tomato.current}/{data.tomato.target} gr
             </Text>
           </View>
         </View>
