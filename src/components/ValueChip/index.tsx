@@ -9,20 +9,20 @@ type ValueChipProps = {
 
 const VALUE_CHIP_COLORS = {
   Energy: {
-    background: "orange",
-    line: "darkorange",
+    background: "#FFA50020",
+    line: "#FF8C00",
   },
   Protein: {
-    background: "#FF6347",
+    background: "#FF634720",
     line: "#CD5C5C",
   },
   Carbs: {
-    background: "#00FF7F",
+    background: "#00FF7F20",
     line: "#3CB371",
   },
   Fat: {
-    background: "#4682B4",
-    line: "cyan",
+    background: "#33669920",
+    line: "#336699",
   },
 };
 
@@ -31,7 +31,6 @@ const ValueChip = ({ type, value, percent }: ValueChipProps) => {
     <View
       style={{
         borderRadius: 8,
-        gap: 6,
         backgroundColor: VALUE_CHIP_COLORS[type].background,
         width: 72,
         height: 22,
@@ -51,7 +50,7 @@ const ValueChip = ({ type, value, percent }: ValueChipProps) => {
           size="xs"
           weight="bold"
           style={{
-            color: "white",
+            color: VALUE_CHIP_COLORS[type].line,
           }}
         >
           {type}
@@ -60,7 +59,7 @@ const ValueChip = ({ type, value, percent }: ValueChipProps) => {
           size="xs"
           weight="medium"
           style={{
-            color: "white",
+            color: "black",
           }}
         >
           200
