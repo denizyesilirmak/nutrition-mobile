@@ -1,21 +1,22 @@
-import { ScrollView, StyleProp, View, ViewStyle } from "react-native";
+import { ScrollView } from "react-native";
 
 type ScreenViewProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   scrollable?: boolean;
-  style?: StyleProp<ViewStyle>;
+  padding?: boolean;
 };
 
-const ScreenView = ({ children, scrollable, style }: ScreenViewProps) => {
+const ScreenView = ({ children, scrollable, padding }: ScreenViewProps) => {
   return (
     <ScrollView
+      bounces={false}
       scrollEnabled={scrollable}
-      style={[style]}
-      contentContainerStyle={{
-        paddingBottom: 20,
-      }}
+      className="flex-1 bg-white dark:bg-black"
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      contentContainerClassName={`${scrollable ? "" : "flex-1"} ${padding ? "p-4" : ""}`}
     >
-      {children}
+      {children && children}
     </ScrollView>
   );
 };
