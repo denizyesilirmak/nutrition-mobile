@@ -1,72 +1,54 @@
 import DailyTips from "@/src/components/DailyTips";
-import Dashboard, { DashboardProps } from "@/src/components/Dashboard";
-import DatePicker from "@/src/components/DatePicker";
-import HomeMealInput from "@/src/components/HomeMealInput.tsx";
+import DatePickerSlider from "@/src/components/DatePickerSlider";
+import Meals from "@/src/components/Meals";
+import Overview from "@/src/components/Overview";
 import ScreenView from "@/src/components/ScreenView";
+import { useQuery } from "@tanstack/react-query";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
-const dummyData = {
-  eaten: 1850,
-  burned: 200,
-  target: 2000,
-  carbs: {
-    current: 200,
-    target: 300,
-  },
-  protein: {
-    current: 100,
-    target: 150,
-  },
-  fat: {
-    current: 50,
-    target: 70,
-  },
-  tard: {
-    current: 10,
-    target: 450,
-  },
-  horseshit: {
-    current: 10,
-    target: 123,
-  },
-  tomato: {
-    current: 10,
-    target: 200,
-  },
-};
+// const fetchMeals = async () => {
+//   const response = await fetch("https://api.example.com/meals");
+//   const data = await response.json();
+//   return data;
+// };
 
 const Home = () => {
-  const [date, setDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const total = 2400;
+  const consumedCalories = Math.trunc(total - Math.random() * 2400);
+
+  // const {data, isLoading, isError} = useQuery("meals", async () => {
 
   useEffect(() => {
-    console.log("update");
-    //randomize data
-    dummyData.eaten = Math.floor(Math.random() * 1850);
-    dummyData.burned = Math.floor(Math.random() * dummyData.burned);
-    dummyData.carbs.current = Math.floor(Math.random() * dummyData.carbs.target);
-    dummyData.protein.current = Math.floor(Math.random() * dummyData.protein.target);
-    dummyData.fat.current = Math.floor(Math.random() * dummyData.fat.target);
-    dummyData.tard.current = Math.floor(Math.random() * dummyData.tard.target);
-    dummyData.horseshit.current = Math.floor(Math.random() * dummyData.horseshit.target);
-    dummyData.tomato.current = Math.floor(Math.random() * dummyData.tomato.target);
-  });
+    const currentDay = selectedDate;
+    const previousDay = new Date(currentDay);
+    previousDay.setDate(currentDay.getDate() - 1);
+
+    console.log("-------");
+    console.log("Selected Date", format(selectedDate, "yyyy-MM-dd"));
+    console.log("Previous Day", format(previousDay, "yyyy-MM-dd"));
+  }, [selectedDate]);
 
   return (
     <ScreenView scrollable>
-      <DatePicker onDateChange={(date) => setDate(date)} />
-      <Text className="px-6 py-3 text-lg font-semibold color-slate-900">
-        Overview
-      </Text>
-      <Dashboard data={dummyData} />
-      <Text className="px-6 py-3 text-lg font-semibold color-slate-900">
-        Add Meal
-      </Text>
-      <HomeMealInput />
-      <Text className="px-6 py-3 text-lg font-semibold color-slate-900">
-        Daily Tips
-      </Text>
-      <DailyTips />
+      <DatePickerSlider onDateChange={(date) => setSelectedDate(date)} />
+      <View className="p-4 pt-0">
+        <Text className="text-lg font-bold text-black dark:text-white">
+          Overview
+        </Text>
+        <Overview consumedCalories={consumedCalories} total={total} />
+        <Text className="pt-2 text-lg font-bold text-black dark:text-white">
+          Meals
+        </Text>
+        <Meals />
+        <Text className="pt-2 text-lg font-bold text-black dark:text-white">
+          Daily Tips
+        </Text>
+        <DailyTips />
+      </View>
     </ScreenView>
   );
 };
