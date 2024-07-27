@@ -1,17 +1,20 @@
 type TextInputProps = {
-  onChangeText?: (text: string) => void;
-  value?: string;
   placeholder?: string;
-  label?: string;
-  secured?: boolean;
-  autoCapitalize?: "none" | "sentences" | "words" | "characters";
   keyboardType?:
     | "default"
     | "number-pad"
     | "decimal-pad"
     | "numeric"
     | "email-address"
-    | "phone-pad";
+    | "phone-pad"
+    | undefined;
+  autoCapitalize?: "none" | "sentences" | "words" | "characters" | undefined;
+  icon?: any;
+  secureTextEntry?: boolean;
+  error?: boolean;
+  onChangeText?: (text: string) => void;
+  onBlur?: () => void;
+  value?: string;
+  postFix?: string;
 };
-
 export type { TextInputProps };

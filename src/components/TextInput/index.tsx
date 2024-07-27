@@ -1,65 +1,63 @@
-import { TextInput as RnTextInput, View } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { TextInput as RNTextInput, useColorScheme, View } from "react-native";
 import { TextInputProps } from "./types";
-import Text from "../Text";
-import { useState } from "react";
 
 const TextInput = ({
-  onChangeText,
-  value,
   placeholder,
-  label,
-  secured,
-  autoCapitalize,
   keyboardType,
+  autoCapitalize,
+  icon,
+  secureTextEntry,
+  error,
+  onChangeText,
+  onBlur,
+  value,
+  postFix,
 }: TextInputProps) => {
-  const [focused, setFocused] = useState(false);
+  const colorSheme = useColorScheme();
 
   return (
     <View
+      className="flex-row items-center rounded-xl border border-gray-300 px-4 dark:border-gray-400"
       style={{
-        gap: 6,
+        borderColor: error
+          ? colorSheme === "dark"
+            ? "#f87171"
+            : "#ef4444"
+          : colorSheme === "dark"
+            ? "#374151"
+            : "#d1d5db",
       }}
     >
-      {label && (
-        <Text
-          color="SECONDARY"
-          size="lg"
-          weight="medium"
-          style={{
-            marginLeft: 8,
-          }}
-        >
-          {label}
-        </Text>
-      )}
-      <View
-        style={{
-          borderWidth: 2,
-          borderColor: focused ? "#33669990" : "#cccccc60",
-          borderRadius: 14,
-        }}
-      >
-        <RnTextInput
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          secureTextEntry={secured}
-          autoCapitalize={autoCapitalize}
-          keyboardType={keyboardType}
-          style={{
-            borderWidth: 1,
-            borderColor: "gray",
-            height: 46,
-            padding: 10,
-            borderRadius: 12,
-            fontSize: 16,
-            paddingLeft: 16,
-          }}
-          onChangeText={onChangeText}
-          value={value}
-          placeholder={placeholder}
-          placeholderTextColor={"gray"}
+      {icon && (
+        <MaterialIcons
+          name={icon}
+          size={18}
+          className="pr-2"
+          color={colorSheme === "dark" ? "#9ca3af" : "#707070"}
         />
-      </View>
+      )}
+      <RNTextInput
+        className="flex-1 py-4 color-black dark:text-white"
+        placeholder={placeholder}
+        keyboardType={keyboardType || "default"}
+        autoCapitalize={autoCapitalize || "none"}
+        placeholderTextColor={colorSheme === "dark" ? "#9ca3af" : "#707070"}
+        secureTextEntry={secureTextEntry}
+        keyboardAppearance={colorSheme === "dark" ? "dark" : "light"}
+        onChangeText={onChangeText}
+        onBlur={onBlur}
+        value={value}
+      />
+      {postFix && (
+        <View className="flex-row items-center">
+          <RNTextInput
+            className="color-black dark:text-white"
+            value={postFix}
+            editable={false}
+          />
+        </View>
+      )}
     </View>
   );
 };
