@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { Text, View, useWindowDimensions } from "react-native";
-import { Image } from "react-native";
 import Animated, {
   Extrapolation,
   interpolate,
@@ -18,7 +17,7 @@ const DUMMY_DAILY_TIPS = [
       "Intermittent fasting is an eating pattern that cycles between periods of fasting and eating. It doesn’t specify which foods you should eat but rather when you should eat them. In this respect, it’s not a diet in the conventional sense but more accurately described as an eating pattern.",
   },
   {
-    title: "Eating horseshit",
+    title: "Eating healthy",
     image:
       "https://i.pinimg.com/originals/71/3d/f0/713df0b2938806d5a68b3bbc8feedf8c.png",
     content:
@@ -48,11 +47,13 @@ const Tip = ({
 }) => {
   return (
     <View
-      className="w-full items-start justify-start p-2"
-      style={{ width: width - 70 }}
+      className="w-full items-start justify-start overflow-hidden p-2"
+      style={{ width: width - 40 }}
     >
-      <Text className="pb-2 text-xl font-medium color-gray-900">{title}</Text>
-      <Text className="w-[100%] rounded-2xl bg-[#ffffffda] color-gray-800">
+      <Text className="pb-1 text-xl font-medium color-gray-900 dark:text-white">
+        {title}
+      </Text>
+      <Text className="w-[100%] rounded-2xl text-sm color-gray-800 dark:text-white">
         {content}
       </Text>
     </View>
@@ -130,23 +131,13 @@ const DailyTips = () => {
   }, []);
 
   return (
-    <View className="flex-1 items-center justify-center px-6">
-      <View
-        className="flex-coll w-full items-center justify-around rounded-3xl bg-white p-4"
-        style={{
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 0,
-          },
-          shadowOpacity: 0.1,
-          shadowRadius: 6,
-        }}
-      >
+    <View className="flex-1 items-center justify-center">
+      <View className="flex-coll w-full items-center justify-around rounded-xl bg-gray-100 p-2 dark:bg-gray-800">
         <View className="flex-1 flex-row items-center justify-center overflow-hidden">
           <Animated.FlatList
             ref={flatlistRef}
             pagingEnabled
+            scrollEnabled={false}
             showsHorizontalScrollIndicator={false}
             horizontal
             onScroll={scrollHandler}
