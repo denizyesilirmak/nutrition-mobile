@@ -1,29 +1,24 @@
-import { Pressable, View } from "react-native";
-import Text from "../Text";
+import { Pressable, Text } from "react-native";
 
 type ButtonProps = {
-  label: string;
-  onPress: () => void;
+  label?: string;
+  onPress?: () => void;
+  disabled?: boolean;
 };
 
-const Button = ({ label, onPress }: ButtonProps) => {
+const Button = ({ label, onPress, disabled }: ButtonProps) => {
   return (
     <Pressable
       onPress={onPress}
-      className="items-center justify-center rounded-2xl border-2 border-[#cccccc60] opacity-100 active:opacity-60"
+      className="w-full items-center justify-center rounded-xl border border-lime-200 bg-lime-500 py-4 active:bg-lime-400 dark:border-gray-400 dark:bg-green-500 active:dark:bg-green-400"
+      disabled={disabled}
     >
-      <View className="w-full items-center justify-center rounded-2xl bg-[#33669950] px-4 py-3">
-        <Text
-          color="SECONDARY"
-          size="lg"
-          weight="medium"
-          style={{
-            marginLeft: 8,
-          }}
-        >
-          {label}
-        </Text>
-      </View>
+      <Text
+        className="font-semibold text-white dark:text-black"
+        style={{ opacity: disabled ? 0.5 : 1 }}
+      >
+        {label}
+      </Text>
     </Pressable>
   );
 };
