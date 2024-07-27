@@ -11,11 +11,14 @@ const config: ExpoConfig = {
   splash: {
     image: "./src/assets/images/splash.png",
     resizeMode: "contain",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#4CAF50",
   },
   ios: {
     supportsTablet: true,
     bundleIdentifier: "com.nutrition.mobile",
+    infoPlist: {
+      NSAppTransportSecurity: { NSAllowsArbitraryLoads: true },
+    },
   },
   android: {
     package: "com.nutrition.mobile",
