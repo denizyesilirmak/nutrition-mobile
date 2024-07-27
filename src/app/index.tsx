@@ -1,5 +1,5 @@
-import { Button, View } from "react-native";
 import { router } from "expo-router";
+import { Button, View } from "react-native";
 
 const HomeScreen = () => {
   return (
@@ -31,6 +31,15 @@ const HomeScreen = () => {
           router.push("camera");
         }}
       />
+
+      <Button
+        title="Onboarding"
+        onPress={() => {
+          router.push("onboarding");
+        }}
+      />
+
+      <Button title="React Query" onPress={() => {}} />
     </View>
   );
 };

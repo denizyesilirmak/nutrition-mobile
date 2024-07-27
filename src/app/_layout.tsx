@@ -1,27 +1,57 @@
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "../../global.css";
+import { ThemeProvider } from "@react-navigation/native";
+import { useColorScheme } from "react-native";
+import { DarkTheme, LightTheme } from "../constants/Colors";
+import { QueryProvider } from "../query/QueryProvider";
 
-const initialLayout = () => {
+const InitialLayout = () => {
+  const colorScheme = useColorScheme();
+
   return (
     <>
-      <StatusBar style="dark" animated />
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen
-          name="login"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen name="register" />
-        {/* <Stack.Screen name="camera" /> */}
-      </Stack>
+      <QueryProvider>
+        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : LightTheme}>
+          <StatusBar style="dark" animated />
+          <Stack
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen
+              name="login"
+              options={{
+                headerShown: true,
+                headerTitle: "Login",
+                gestureEnabled: false,
+                headerBackVisible: false,
+              }}
+            />
+            <Stack.Screen
+              name="register"
+              options={{
+                headerShown: true,
+                headerTitle: "Register",
+                gestureEnabled: false,
+                headerBackVisible: false,
+              }}
+            />
+            <Stack.Screen
+              name="onboarding"
+              options={{
+                headerShown: true,
+                headerTitle: "Onboarding",
+                gestureEnabled: false,
+                headerBackVisible: false,
+              }}
+            />
+            {/* <Stack.Screen name="camera" /> */}
+          </Stack>
+        </ThemeProvider>
+      </QueryProvider>
     </>
   );
 };
 
-export default initialLayout;
+export default InitialLayout;
