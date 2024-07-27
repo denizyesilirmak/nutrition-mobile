@@ -1,142 +1,133 @@
 import Button from "@/src/components/Button";
-import Checkbox from "@/src/components/Checkbox";
 import ScreenView from "@/src/components/ScreenView";
-import Seperator from "@/src/components/Seperator";
-import Text from "@/src/components/Text";
-import TextInput from "@/src/components/TextInput";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { router } from "expo-router";
-import { useState } from "react";
-import { ImageBackground, View } from "react-native";
+import Stepper from "@/src/components/Stepper";
+import { useEffect, useRef, useState } from "react";
+import { View } from "react-native";
+import PagerView from "react-native-pager-view";
+import RegisterBasic from "./components/registerBasic";
+import RegisterPersonal from "./components/registerPersonal";
+import { PasswordErrors } from "./types";
+import RegisterReview from "./components/registerReview";
+import RegisterSuccess from "./components/registerSuccess";
 
 const Register = () => {
-  const [remember, setRemember] = useState(false);
+  const pagerRef = useRef<PagerView>(null);
+
+  const [email, setEmail] = useState<string>("dnzyslrmk@gmail.com");
+  const [password, setPassword] = useState<string>("Password123");
+  const [passwordVerify, setPasswordVerify] = useState<string>("Password123");
+  const [passwordErrors, setPasswordErrors] = useState<PasswordErrors>({
+    length: "default",
+    uppercase: "default",
+    lowercase: "default",
+    match: "default",
+    validEmail: "default",
+  });
+  const [name, setName] = useState<string>("Deniz");
+  const [lastName, setLastName] = useState<string>("Yeşilırmak");
+  const [age, setAge] = useState<number>(25);
+  const [weight, setWeight] = useState<number>(77);
+  const [height, setHeight] = useState<number>(180);
+  const [gender, setGender] = useState<string>("male");
+
+  const [activeStep, setActiveStep] = useState<number>(0);
+  const scrollEnabledRef = useRef<boolean>(true);
+
+  useEffect(() => {
+    //set the error states but don't run on the first render
+    if (password.length > 0) {
+      setPasswordErrors((prev) => ({
+        ...prev,
+        length: password.length >= 8 ? "satisfied" : "error",
+        uppercase: /[A-Z]/.test(password) ? "satisfied" : "error",
+        lowercase: /[a-z]/.test(password) ? "satisfied" : "error",
+        match: password === passwordVerify ? "satisfied" : "error",
+      }));
+    }
+    if (email.length > 0) {
+      setPasswordErrors((prev) => ({
+        ...prev,
+        validEmail: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+          ? "satisfied"
+          : "error",
+      }));
+    }
+  }, [password, passwordVerify, email]);
 
   return (
-    <ScreenView
-      scrollable={false}
-      style={{
-        flex: 1,
-        backgroundColor: "white",
-      }}
-    >
-      <ImageBackground
-        source={require("@/src/assets/images/register-bg.png")}
-        resizeMethod="resize"
-        resizeMode="stretch"
-        style={{
-          width: "100%",
-          height: 250,
-          justifyContent: "flex-end",
-          alignItems: "center",
-          paddingBottom: 16,
-        }}
+    <ScreenView scrollable={false} padding>
+      <PagerView
+        ref={pagerRef}
+        initialPage={0}
+        style={{ flex: 1 }}
+        onPageSelected={(e) => setActiveStep(e.nativeEvent.position)}
+        scrollEnabled={scrollEnabledRef.current}
       >
-        <Ionicons name="fast-food-outline" size={48} color="black" />
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 16,
-            gap: 8,
-          }}
-        >
-          <Text color="SECONDARY" size="xxl" weight="medium">
-            Welcome to EatInsight
-          </Text>
-          <Text color="SECONDARY" size="md" weight="regular" center>
-            Track what you eat, and get insights, for free. Lose weight the
-            healthy way. We believe in you!
-          </Text>
-        </View>
-      </ImageBackground>
-
-      <View
-        style={{
-          paddingHorizontal: 24,
-          gap: 12,
-        }}
-      >
-        <TextInput
-          placeholder="Enter your email"
-          label="Email"
-          autoCapitalize="none"
-          keyboardType="email-address"
-        />
-        <TextInput placeholder="Enter your password" label="Password" secured />
-
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingHorizontal: 8,
-            paddingVertical: 8,
-            alignItems: "center",
-          }}
-        >
-          <Checkbox
-            value={remember}
-            onChange={(value) => {
-              console.log(value);
-              setRemember(value);
-            }}
-            label="Remember me"
+        <View key={0}>
+          <RegisterBasic
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            passwordVerify={passwordVerify}
+            setPasswordVerify={setPasswordVerify}
+            passwordErrors={passwordErrors}
+            setPasswordErrors={setPasswordErrors}
           />
-          <Text color="TERTIARY" size="md" weight="regular" underline>
-            Forgot password?
-          </Text>
         </View>
-        <Button
-          label="Login"
-          onPress={() => router.push("/(auth)/(tabs)/(foods)")}
-        />
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          paddingVertical: 16,
-          marginTop: 16,
-        }}
-      >
-        <Text color="TERTIARY" size="md" weight="regular">
-          Don't have an account?{" "}
-          <Text color="PRIMARY" size="md" weight="bold" underline>
-            Sign up
-          </Text>
-        </Text>
-      </View>
-      <Seperator />
-
-      <View
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          paddingVertical: 16,
-          gap: 8,
-        }}
-      >
-        <Text color="TERTIARY" size="md" weight="regular">
-          Privacy Policy | Terms of Service
-        </Text>
-        <Text color="TERTIARY" size="md" weight="regular">
-          © 2021 EatInsight
-        </Text>
-
-        <View
-          style={{
-            padding: 24,
-            opacity: 0.5,
-          }}
-        >
-          <Text color="TERTIARY" size="md" weight="regular">
-            EatInsight is not a medical app. For medical advice, consult a
-            doctor. Nutrition information is provided for educational purposes
-            only. You are responsible for what you eat. By using EatInsight, you
-            agree to our Privacy Policy and Terms of Service.
-          </Text>
+        <View key={1}>
+          <RegisterPersonal
+            name={name}
+            lastName={lastName}
+            age={age}
+            weight={weight}
+            height={height}
+            gender={gender}
+            onChangeName={setName}
+            onChangeLastName={setLastName}
+            onAgeChange={setAge}
+            onChangeWeight={setWeight}
+            onChangeHeight={setHeight}
+            onChangeGender={setGender}
+          />
         </View>
-      </View>
+        <View key={2}>
+          <RegisterReview name={name} lastName={lastName} />
+        </View>
+        <View key={3}>
+          <RegisterSuccess />
+        </View>
+      </PagerView>
+      {activeStep < 3 && (
+        <>
+          <Stepper
+            steps={["Account", "Personal", "Review"]}
+            activeStep={activeStep}
+          />
+          <Button
+            label={activeStep === 2 ? "Register" : "Next"}
+            disabled={
+              passwordErrors.length !== "satisfied" ||
+              passwordErrors.uppercase !== "satisfied" ||
+              passwordErrors.lowercase !== "satisfied" ||
+              passwordErrors.match !== "satisfied" ||
+              passwordErrors.validEmail !== "satisfied"
+            }
+            onPress={() => {
+              if (activeStep < 2) {
+                pagerRef.current?.setPage(activeStep + 1);
+                setActiveStep(activeStep + 1);
+              } else {
+                //TODO: Handle the registration process
+                // Navigate to the success screen
+                scrollEnabledRef.current = false;
+                pagerRef.current?.setPage(3);
+                setActiveStep(3);
+              }
+            }}
+          />
+        </>
+      )}
     </ScreenView>
   );
 };
