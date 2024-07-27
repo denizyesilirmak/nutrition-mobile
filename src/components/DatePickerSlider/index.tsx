@@ -177,7 +177,7 @@ const DatePickerSlider = ({
           const currentIndex = Math.round(
             contentOffsetX / (dateBoxWidth + dateBoxMargin),
           );
-          const currentDay = dates[currentIndex + 1];
+          const currentDay = dates[currentIndex + 2];
           onDateChange?.(currentDay);
         }}
       />

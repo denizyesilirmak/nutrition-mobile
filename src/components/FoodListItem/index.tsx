@@ -1,14 +1,25 @@
 import { Food } from "@/src/query/hooks/useFoodSearch";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import Image from "../Image";
 import ChartPercentage from "../ChartPercentage";
+import { router } from "expo-router";
 
 const FoodListItem = ({ food }: { food: Food }) => {
   return (
-    <View className="mb-1ƒ w-full border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-black">
+    <Pressable
+      onPress={() => {
+        router.push({
+          pathname: "/foodDetail",
+          params: {
+            foodId: food.id,
+          },
+        });
+      }}
+      className="mb-1ƒ w-full border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-black"
+    >
       <View className="flex flex-row p-4">
         <Image
-          source={{ uri: "http://placekitten.com/250/250" }}
+          source={{ uri: "http://akrepnalan.com/nalan_imaj/p1.jpg" }}
           className="h-20 w-20 rounded-lg border-2 border-green-500 dark:border-lime-500"
         />
 
@@ -48,7 +59,7 @@ const FoodListItem = ({ food }: { food: Food }) => {
           { value: food.fat, color: "#fd7f6f" },
         ]}
       />
-    </View>
+    </Pressable>
   );
 };
 

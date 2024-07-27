@@ -30,7 +30,7 @@ const FoodsScreen = () => {
         keyExtractor={(food) => food.id}
         renderItem={({ item }) => <FoodListItem food={item} />}
         estimatedItemSize={122}
-        onEndReachedThreshold={1.5}
+        onEndReachedThreshold={1.8}
         onEndReached={() => {
           if (hasNextPage) {
             fetchNextPage();

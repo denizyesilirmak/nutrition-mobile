@@ -14,6 +14,12 @@ const FoodsStackLayout = () => {
           presentation: "modal",
         }}
       />
+      <Stack.Screen
+        name="foodDetail"
+        options={{
+          presentation: "modal",
+        }}
+      />
     </Stack>
   );
 };
