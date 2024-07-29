@@ -19,7 +19,7 @@ const FoodListItem = ({ food }: { food: Food }) => {
     >
       <View className="flex flex-row p-4">
         <Image
-          source={{ uri: "http://akrepnalan.com/nalan_imaj/p1.jpg" }}
+          source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiKxP9EE6duAKC-gzgYIrihpl8IfXkFpsu9A&s" }}
           className="h-20 w-20 rounded-lg border-2 border-green-500 dark:border-lime-500"
         />
 

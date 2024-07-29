@@ -64,7 +64,7 @@ const Login = () => {
           Storage.setItem("TOKEN", token);
           Storage.setItem("REMEMBER_ME", remember ? "true" : "false");
 
-          router.push("home");
+          router.push("(auth)/(home)");
         }
       } else {
         Alert.alert("Error", "Email or password is incorrect.");

@@ -2,9 +2,14 @@ import { Pressable } from "react-native";
 import { IconButtonProps } from "./types";
 
 const IconButton = (props: IconButtonProps) => {
-  const { icon } = props;
+  const { icon, onPress } = props;
   return (
-    <Pressable className="rounded-full p-2 active:bg-white">{icon}</Pressable>
+    <Pressable
+      onPress={onPress}
+      className="rounded-full p-2 active:bg-gray-200 dark:active:bg-gray-700"
+    >
+      {icon}
+    </Pressable>
   );
 };
 

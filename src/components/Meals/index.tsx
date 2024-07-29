@@ -1,12 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
+import Animated, { FadeInLeft } from "react-native-reanimated";
 import IconButton from "../IconButton";
 import { MealsProps } from "./types";
-import Animated, {
-  FadeIn,
-  FadeInLeft,
-  SlideInLeft,
-} from "react-native-reanimated";
+import { router } from "expo-router";
 
 const MealHeader = ({
   title,
@@ -23,7 +20,12 @@ const MealHeader = ({
           ({calories} cal)
         </Text>
       </Text>
-      <IconButton icon={<Ionicons name="add" size={20} />} />
+      <IconButton
+        icon={<Ionicons name="add" size={18} />}
+        onPress={() => {
+          router.push("addMeal");
+        }}
+      />
     </View>
   );
 };

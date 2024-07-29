@@ -20,7 +20,10 @@ const Table = ({ items = [] }: TableProps) => {
       </View>
 
       {items.map((item) => (
-        <View className="flex-row items-center justify-between bg-gray-100 p-4 dark:bg-gray-800">
+        <View
+          key={item.name}
+          className="flex-row items-center justify-between bg-gray-100 p-4 dark:bg-gray-800"
+        >
           <Text className="text-md text-gray-500 dark:text-gray-400">
             {item.name}
           </Text>

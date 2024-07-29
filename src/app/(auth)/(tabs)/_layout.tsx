@@ -27,7 +27,7 @@ const AuthLayout = () => {
       }}
     >
       <Tabs.Screen
-        name="home"
+        name="(home)"
         options={{
           title: "Home",
           tabBarIcon: () => (
