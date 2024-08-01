@@ -1,12 +1,13 @@
-import { Pressable, Text } from "react-native";
+import { ActivityIndicator, Pressable, Text } from "react-native";
 
 type ButtonProps = {
   label?: string;
   onPress?: () => void;
   disabled?: boolean;
+  loading?: boolean;
 };
 
-const Button = ({ label, onPress, disabled }: ButtonProps) => {
+const Button = ({ label, onPress, disabled, loading }: ButtonProps) => {
   return (
     <Pressable
       onPress={onPress}
@@ -19,6 +20,14 @@ const Button = ({ label, onPress, disabled }: ButtonProps) => {
       >
         {label}
       </Text>
+      {loading && (
+        <ActivityIndicator
+          className="absolute right-0 mr-4"
+          size="small"
+          color="white"
+          animating={disabled}
+        />
+      )}
     </Pressable>
   );
 };

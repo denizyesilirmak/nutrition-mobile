@@ -1,6 +1,7 @@
 import BottomBar from "@/src/components/BottomBar";
 import IconButton from "@/src/components/IconButton";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { Tabs } from "expo-router/tabs";
 import { useColorScheme } from "react-native";
 
@@ -39,6 +40,9 @@ const AuthLayout = () => {
           ),
           headerLeft: () => (
             <IconButton
+              onPress={() => {
+                router.push("mealHistory");
+              }}
               icon={
                 <Ionicons
                   name="calendar-outline"
@@ -51,6 +55,9 @@ const AuthLayout = () => {
 
           headerRight: () => (
             <IconButton
+              onPress={() => {
+                router.push("addMeal");
+              }}
               icon={
                 <Ionicons
                   name="ellipsis-horizontal-outline"

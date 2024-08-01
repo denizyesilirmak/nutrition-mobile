@@ -17,7 +17,7 @@ const FoodDetail = () => {
       <View className="h-80 items-center">
         <Image
           source={{
-            uri: "https://www.webtekno.com/images/editor/default/0004/15/be202f3bf456677b583865bd1ab3b0e350b28fae.jpeg",
+            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyJylzdWcMQ2fsUAGZDNhbMxzD1L6cRcoxrg&s",
           }}
           className="absolute h-80 w-full"
           resizeMode="cover"

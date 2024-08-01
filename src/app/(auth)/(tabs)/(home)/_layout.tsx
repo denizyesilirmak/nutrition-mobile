@@ -14,6 +14,7 @@ const HomeStackLayout = () => {
           presentation: "modal",
         }}
       />
+      <Stack.Screen name="mealHistory" />
     </Stack>
   );
 };

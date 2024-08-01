@@ -1,39 +1,14 @@
 import ScreenView from "@/src/components/ScreenView";
 import TextInput from "@/src/components/TextInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "@/src/components/Button";
 import Checkbox from "@/src/components/Checkbox";
+import { LOGIN_API } from "@/src/constants/Api";
+import { useLogin } from "@/src/query/hooks/useLogin";
+import { router } from "expo-router";
 import { Alert, Image, Keyboard, Text, View } from "react-native";
 import { isValidEmail, isValidPassword } from "./utils";
-import { router } from "expo-router";
-import { useMutation } from "@tanstack/react-query";
-import { LOGIN_API } from "@/src/constants/Api";
-import Storage from "@/src/storage";
-
-const fetchLogin = async ({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) => {
-  const body = JSON.stringify({ email, password });
-  const response = await fetch(LOGIN_API, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body,
-  });
-
-  const data = await response.json();
-
-  return {
-    data,
-    status: response.status,
-  };
-};
 
 const Login = () => {
   const [remember, setRemember] = useState(false);
@@ -51,50 +26,23 @@ const Login = () => {
     },
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: fetchLogin,
-    onSuccess: (data) => {
-      console.log("[Login] onSuccess:", data);
-      if (data.status === 200) {
-        const token = data.data.token;
-        const status = data.data.status;
-
-        if (status) {
-          //Save token to storage and navigate to home
-          Storage.setItem("TOKEN", token);
-          Storage.setItem("REMEMBER_ME", remember ? "true" : "false");
-
-          router.push("(auth)/(home)");
-        }
-      } else {
-        Alert.alert("Error", "Email or password is incorrect.");
-        setLoginInformation({
-          email: {
-            text: loginInformation.email.text,
-            error: true,
-          },
-          password: {
-            text: loginInformation.password.text,
-            error: true,
-          },
-        });
-      }
-    },
-    onMutate: (variables) => {
-      console.log("[Login] onMutate:", variables);
-      Keyboard.dismiss();
-    },
-    onError: (error) => {
-      console.log("[Login] onError:", error);
-      Alert.alert("Error", "An error occurred while logging in.");
-    },
+  const { isError, isPending, isSuccess, login } = useLogin({
+    email: loginInformation.email.text,
+    password: loginInformation.password.text,
   });
 
+  useEffect(() => {
+    if (isSuccess) {
+      if (remember) {
+        // Save user data to local storage
+      }
+      router.push("(auth)/(home)");
+    }
+  }, [isSuccess, remember]);
+
   const handleLogin = () => {
-    mutate({
-      email: loginInformation.email.text,
-      password: loginInformation.password.text,
-    });
+    Keyboard.dismiss();
+    login();
 
     return;
   };
@@ -140,6 +88,7 @@ const Login = () => {
           }
         />
         <Button
+          loading={isPending}
           label="Login"
           disabled={
             !isValidEmail(loginInformation.email.text) ||
