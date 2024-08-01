@@ -3,6 +3,7 @@ import DatePickerSlider from "@/src/components/DatePickerSlider";
 import Meals from "@/src/components/Meals";
 import Overview from "@/src/components/Overview";
 import ScreenView from "@/src/components/ScreenView";
+import WaterOverview from "@/src/components/WaterOverview";
 import { MEALS_API } from "@/src/constants/Api";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
@@ -267,6 +268,10 @@ const Home = () => {
           Daily Tips
         </Text>
         <DailyTips />
+        <Text className="pt-2 text-lg font-bold text-black dark:text-white">
+          Water Intake
+        </Text>
+        <WaterOverview full={8} consumed={3} />
       </View>
     </ScreenView>
   );
