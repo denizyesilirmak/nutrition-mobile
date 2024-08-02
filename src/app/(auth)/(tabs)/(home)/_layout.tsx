@@ -14,6 +14,14 @@ const HomeStackLayout = () => {
           presentation: "modal",
         }}
       />
+      <Stack.Screen
+        name="addWater"
+        options={{
+          presentation: "modal",
+          gestureEnabled: false,
+          animation: "flip",
+        }}
+      />
       <Stack.Screen name="mealHistory" />
     </Stack>
   );

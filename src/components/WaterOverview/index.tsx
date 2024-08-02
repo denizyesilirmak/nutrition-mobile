@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { Image, Pressable, View } from "react-native";
 
 type WaterOverviewProps = {
@@ -25,7 +26,12 @@ const WaterOverview = ({ full, consumed }: WaterOverviewProps) => {
   });
 
   return (
-    <Pressable className="overflow-hidden rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+    <Pressable
+      onPress={() => {
+        router.push("addWater");
+      }}
+      className="overflow-hidden rounded-lg bg-gray-50 p-4 dark:bg-gray-800"
+    >
       <View className="flex-row justify-between">
         {array.map((_, index) =>
           index < consumed ? (
