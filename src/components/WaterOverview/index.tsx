@@ -28,7 +28,7 @@ const WaterOverview = ({ full, consumed }: WaterOverviewProps) => {
   return (
     <Pressable
       onPress={() => {
-        router.push("addWater");
+        router.push("(auth)/(home)/addWater");
       }}
       className="overflow-hidden rounded-lg bg-gray-50 p-4 dark:bg-gray-800"
     >

@@ -17,7 +17,7 @@ const HomeStackLayout = () => {
       <Stack.Screen
         name="addWater"
         options={{
-          presentation: "modal",
+          presentation: "card",
           gestureEnabled: false,
           animation: "flip",
           

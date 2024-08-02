@@ -7,7 +7,7 @@ import WaterOverview from "@/src/components/WaterOverview";
 import { MEALS_API } from "@/src/constants/Api";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Text, View } from "react-native";
 
 export type Meal = {
