@@ -20,6 +20,7 @@ const HomeStackLayout = () => {
           presentation: "modal",
           gestureEnabled: false,
           animation: "flip",
+          
         }}
       />
       <Stack.Screen name="mealHistory" />
