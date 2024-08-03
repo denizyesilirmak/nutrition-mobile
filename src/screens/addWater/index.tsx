@@ -74,13 +74,13 @@ const AddWater = () => {
       <Text className="text-center text-xl font-bold dark:text-white">
         Add Water
       </Text>
-      <View className="absolute inset-x-0 bottom-0 z-10 flex-1 items-center justify-center pb-4">
+      <View className="absolute inset-x-0 bottom-0 z-10 flex-1 flex-row items-center justify-center gap-4 pb-4">
         <Animated.View style={[bounceAnimation]}>
           <Pressable
             onPress={() => {
               // glassRatio.value = 0;
             }}
-            className="h-20 w-24 flex-col items-center justify-center rounded-2xl border-2 border-white bg-lime-500 active:bg-lime-400 dark:border-black"
+            className="z-30 h-20 w-24 flex-col items-center justify-center rounded-2xl border-2 border-white bg-lime-500 active:bg-lime-400 dark:border-black"
           >
             <AnimatedText
               editable={false}
@@ -92,6 +92,16 @@ const AddWater = () => {
             </Text>
           </Pressable>
         </Animated.View>
+        <Pressable
+          onPress={() => {
+            glassRatio.value = 1;
+          }}
+          className="h-20 w-24 flex-col items-center justify-center rounded-2xl border-2 border-white bg-lime-500 active:bg-lime-400 dark:border-black"
+        >
+          <Text className="text-center text-xl font-semibold text-white dark:text-white">
+            Full
+          </Text>
+        </Pressable>
       </View>
       <View className="p-0">
         <AnimatedLottieView

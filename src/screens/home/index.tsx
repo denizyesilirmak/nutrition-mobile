@@ -97,14 +97,14 @@ const Home = () => {
           consumedCalories={totalCalories.total.energy}
           total={2400 || total}
           macroNutrients={{
-            carbs: totalCalories.total.carbs || 300,
-            protein: totalCalories.total.protein || 100,
-            fat: totalCalories.total.fat || 100,
+            carbs: totalCalories.total.carbs || 0,
+            protein: totalCalories.total.protein || 0,
+            fat: totalCalories.total.fat || 0,
           }}
           maximumNutrients={{
-            carbs: me?.nutritionalNeed?.carbs || 1,
-            protein: me?.nutritionalNeed?.protein || 1,
-            fat: me?.nutritionalNeed?.fat || 1,
+            carbs: me?.nutritionalNeed?.carbs || 300,
+            protein: me?.nutritionalNeed?.protein || 100,
+            fat: me?.nutritionalNeed?.fat || 100,
           }}
         />
         <Text className="pt-2 text-lg font-bold text-black dark:text-white">
