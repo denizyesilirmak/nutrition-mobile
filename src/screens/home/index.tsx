@@ -9,166 +9,9 @@ import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useState } from "react";
 import { Text, View } from "react-native";
-
-export type Meal = {
-  food: Food[];
-  created_at: string;
-  mealTime: string;
-};
-
-export type Food = {
-  id: string;
-  alcohol: number;
-  caffeine: number;
-  calcium: number;
-  carbohydrate: number;
-  category_description: string;
-  cholesterol: number;
-  energy: number;
-  fatty_acids: number;
-  fiber_total: number;
-  food_code: number;
-  iron: number;
-  magnesium: number;
-  main_food_description: string;
-  phosphorus: number;
-  potassium: number;
-  protein: number;
-  selenium: number;
-  sodium: number;
-  sugars_total: number;
-  total_fat: number;
-  vitamin_a: number;
-  vitamin_b_12: number;
-  "vitamin_c ": number;
-  vitamin_d: number;
-  vitamin_e: number;
-  vitamin_k: number;
-  water: number;
-  wweia_category_number: number;
-  zinc: number;
-};
-
-const calculateTotalCalories = (data: Record<string, Food[] | undefined>) => {
-  if (!data) {
-    return {
-      total: {
-        energy: 0,
-        carbs: 0,
-        protein: 0,
-        fat: 0,
-      },
-      breakfast: {
-        energy: 0,
-        carbs: 0,
-        protein: 0,
-        fat: 0,
-      },
-      lunch: {
-        energy: 0,
-        carbs: 0,
-        protein: 0,
-        fat: 0,
-      },
-      dinner: {
-        energy: 0,
-        carbs: 0,
-        protein: 0,
-        fat: 0,
-      },
-    };
-  }
-
-  const total = {
-    energy: 0,
-    carbs: 0,
-    protein: 0,
-    fat: 0,
-  };
-
-  const breakfast = {
-    energy: 0,
-    carbs: 0,
-    protein: 0,
-    fat: 0,
-  };
-
-  const lunch = {
-    energy: 0,
-    carbs: 0,
-    protein: 0,
-    fat: 0,
-  };
-
-  const dinner = {
-    energy: 0,
-    carbs: 0,
-    protein: 0,
-    fat: 0,
-  };
-
-  Object.keys(data).forEach((key) => {
-    if (!data[key]) {
-      return {
-        total: {
-          energy: 0,
-          carbs: 0,
-          protein: 0,
-          fat: 0,
-        },
-        breakfast: {
-          energy: 0,
-          carbs: 0,
-          protein: 0,
-          fat: 0,
-        },
-        lunch: {
-          energy: 0,
-          carbs: 0,
-          protein: 0,
-          fat: 0,
-        },
-        dinner: {
-          energy: 0,
-          carbs: 0,
-          protein: 0,
-          fat: 0,
-        },
-      };
-    }
-
-    data[key].forEach((food) => {
-      total.energy += food.energy;
-      total.carbs += food.carbohydrate;
-      total.protein += food.protein;
-      total.fat += food.total_fat;
-
-      if (key === "breakfast") {
-        breakfast.energy += food.energy;
-        breakfast.carbs += food.carbohydrate;
-        breakfast.protein += food.protein;
-        breakfast.fat += food.total_fat;
-      } else if (key === "lunch") {
-        lunch.energy += food.energy;
-        lunch.carbs += food.carbohydrate;
-        lunch.protein += food.protein;
-        lunch.fat += food.total_fat;
-      } else if (key === "dinner") {
-        dinner.energy += food.energy;
-        dinner.carbs += food.carbohydrate;
-        dinner.protein += food.protein;
-        dinner.fat += food.total_fat;
-      }
-    });
-  });
-
-  return {
-    total,
-    breakfast,
-    lunch,
-    dinner,
-  };
-};
+import { calculateTotalCalories } from "./utils";
+import { Food, Meal } from "./types";
+import useMe from "@/src/query/hooks/useMe";
 
 const Home = () => {
   const today = new Date();
@@ -179,6 +22,10 @@ const Home = () => {
     startDate: format(previosDay, "yyyy-MM-dd"),
     endDate: format(today, "yyyy-MM-dd"),
   });
+
+  const { me } = useMe();
+
+  console.log('[useMe]', me);
 
   const total = 2400;
 
@@ -237,7 +84,7 @@ const Home = () => {
     });
   };
 
-  const totalCalories = calculateTotalCalories(data);
+  const totalCalories = calculateTotalCalories(data as Record<string, Food[]>);
 
   return (
     <ScreenView scrollable>
@@ -248,16 +95,16 @@ const Home = () => {
         </Text>
         <Overview
           consumedCalories={totalCalories.total.energy}
-          total={total}
+          total={2400 || total}
           macroNutrients={{
-            carbs: totalCalories.total.carbs,
-            protein: totalCalories.total.protein,
-            fat: totalCalories.total.fat,
+            carbs: totalCalories.total.carbs || 300,
+            protein: totalCalories.total.protein || 100,
+            fat: totalCalories.total.fat || 100,
           }}
           maximumNutrients={{
-            carbs: 300,
-            protein: 200,
-            fat: 100,
+            carbs: me?.nutritionalNeed?.carbs || 1,
+            protein: me?.nutritionalNeed?.protein || 1,
+            fat: me?.nutritionalNeed?.fat || 1,
           }}
         />
         <Text className="pt-2 text-lg font-bold text-black dark:text-white">

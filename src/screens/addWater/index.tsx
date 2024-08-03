@@ -3,6 +3,8 @@ import { PanResponder, Pressable, Text, TextInput, View } from "react-native";
 import Animated, {
   useAnimatedProps,
   useSharedValue,
+  withSpring,
+  withTiming,
 } from "react-native-reanimated";
 
 const clamp = (value: number, lowerBound = 0, upperBound = 1) => {
@@ -20,9 +22,13 @@ const AddWater = () => {
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderMove: (event) => {
-      glassRatio.value = clamp(
-        1 - event.nativeEvent.locationY / glassHeight.value,
-      );
+      const value = clamp(1 - event.nativeEvent.locationY / glassHeight.value);
+
+      glassRatio.value = value;
+    },
+    onPanResponderRelease: (event) => {
+      const value = clamp(1 - event.nativeEvent.locationY / glassHeight.value);
+      glassRatio.value = withTiming(value);
     },
   });
 
@@ -47,7 +53,7 @@ const AddWater = () => {
       <View className="absolute inset-x-0 bottom-0 z-10 flex-1 items-center justify-center pb-4">
         <Pressable
           onPress={() => {
-            glassRatio.value = 0;
+            // glassRatio.value = 0;
           }}
           className="h-20 w-24 flex-col items-center justify-center rounded-full border-2 border-white bg-lime-500 active:bg-lime-400 dark:border-black"
         >

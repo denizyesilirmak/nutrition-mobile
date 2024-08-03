@@ -111,7 +111,7 @@ const BottomBar = (props: BottomTabBarProps) => {
               style={[
                 {
                   position: "absolute",
-                  width: "33%",
+                  width: "25%",
                   height: 3,
                 },
                 animatedStyle,

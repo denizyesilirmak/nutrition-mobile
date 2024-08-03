@@ -95,6 +95,19 @@ const AuthLayout = () => {
           ),
         }}
       />
+      <Tabs.Screen
+        name="(achivements)"
+        options={{
+          title: "Bagdes",
+          tabBarIcon: () => (
+            <Ionicons
+              name="ribbon-outline"
+              size={18}
+              color={darkMode ? "white" : "black"}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 };
