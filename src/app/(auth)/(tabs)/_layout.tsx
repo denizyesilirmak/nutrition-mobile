@@ -83,12 +83,12 @@ const AuthLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="(achivements)"
         options={{
-          title: "Profile",
+          title: "Bagdes",
           tabBarIcon: () => (
             <Ionicons
-              name="person-outline"
+              name="ribbon-outline"
               size={18}
               color={darkMode ? "white" : "black"}
             />
@@ -96,12 +96,12 @@ const AuthLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="(achivements)"
+        name="profile"
         options={{
-          title: "Bagdes",
+          title: "Profile",
           tabBarIcon: () => (
             <Ionicons
-              name="ribbon-outline"
+              name="person-outline"
               size={18}
               color={darkMode ? "white" : "black"}
             />

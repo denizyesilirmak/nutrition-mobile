@@ -2,7 +2,9 @@ import LottieView from "lottie-react-native";
 import { PanResponder, Pressable, Text, TextInput, View } from "react-native";
 import Animated, {
   useAnimatedProps,
+  useAnimatedStyle,
   useSharedValue,
+  withSequence,
   withSpring,
   withTiming,
 } from "react-native-reanimated";
@@ -18,6 +20,7 @@ const AnimatedText = Animated.createAnimatedComponent(TextInput);
 const AddWater = () => {
   const glassRatio = useSharedValue(0);
   const glassHeight = useSharedValue(0);
+  const bounceShareValue = useSharedValue(1);
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -29,6 +32,17 @@ const AddWater = () => {
     onPanResponderRelease: (event) => {
       const value = clamp(1 - event.nativeEvent.locationY / glassHeight.value);
       glassRatio.value = withTiming(value);
+
+      bounceShareValue.value = withSequence(
+        withSpring(1.2, {
+          damping: 10,
+          stiffness: 100,
+        }),
+        withSpring(1, {
+          damping: 3,
+          stiffness: 200,
+        }),
+      );
     },
   });
 
@@ -45,27 +59,39 @@ const AddWater = () => {
     };
   });
 
+  const bounceAnimation = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          scale: bounceShareValue.value,
+        },
+      ],
+    };
+  });
+
   return (
     <View className="flex-1 p-4">
       <Text className="text-center text-xl font-bold dark:text-white">
         Add Water
       </Text>
       <View className="absolute inset-x-0 bottom-0 z-10 flex-1 items-center justify-center pb-4">
-        <Pressable
-          onPress={() => {
-            // glassRatio.value = 0;
-          }}
-          className="h-20 w-24 flex-col items-center justify-center rounded-full border-2 border-white bg-lime-500 active:bg-lime-400 dark:border-black"
-        >
-          <AnimatedText
-            editable={false}
-            className="text-center text-xl font-semibold dark:text-white"
-            animatedProps={AmountTextProp}
-          />
-          <Text className="text-center text-sm font-semibold text-white dark:text-white">
-            Add
-          </Text>
-        </Pressable>
+        <Animated.View style={[bounceAnimation]}>
+          <Pressable
+            onPress={() => {
+              // glassRatio.value = 0;
+            }}
+            className="h-20 w-24 flex-col items-center justify-center rounded-2xl border-2 border-white bg-lime-500 active:bg-lime-400 dark:border-black"
+          >
+            <AnimatedText
+              editable={false}
+              className="text-center text-xl font-semibold dark:text-white"
+              animatedProps={AmountTextProp}
+            />
+            <Text className="text-center text-sm font-semibold text-white dark:text-white">
+              Add
+            </Text>
+          </Pressable>
+        </Animated.View>
       </View>
       <View className="p-0">
         <AnimatedLottieView

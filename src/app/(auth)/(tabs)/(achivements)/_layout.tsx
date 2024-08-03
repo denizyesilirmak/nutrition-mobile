@@ -8,6 +8,13 @@ const AchivementsStackLayout = () => {
       }}
     >
       <Stack.Screen name="index" />
+      <Stack.Screen
+        name="details"
+        options={{
+          presentation: "modal",
+          animation: "flip"
+        }}
+      />
     </Stack>
   );
 };
