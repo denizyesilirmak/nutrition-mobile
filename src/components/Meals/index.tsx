@@ -17,7 +17,7 @@ const MealHeader = ({
       <Text className="text-black-400 text-md font-semibold dark:text-gray-100">
         {title}{" "}
         <Text className="text-xs text-gray-400 dark:text-gray-300">
-          ({calories} cal)
+          ({Math.round(calories)} cal)
         </Text>
       </Text>
       <IconButton
@@ -58,15 +58,18 @@ const keyGenerator = (id: string) => {
   return id + Math.random().toString();
 };
 
-const Meals = ({ meals }: MealsProps) => {
+const Meals = ({ meals, energyNeedPerMeal }: MealsProps) => {
   if (!meals) {
     return (
       <View className="overflow-hidden rounded-lg bg-gray-50 p-2 dark:bg-gray-800">
-        <MealHeader title="🥞 Breakfast" calories={400} />
+        <MealHeader
+          title="🥞 Breakfast"
+          calories={energyNeedPerMeal.breakfast || 0}
+        />
         <NoRecords />
-        <MealHeader title="🥘 Lunch" calories={400} />
+        <MealHeader title="🥘 Lunch" calories={energyNeedPerMeal.lunch || 0} />
         <NoRecords />
-        <MealHeader title="🍲 Dinner" calories={400} />
+        <MealHeader title="🍲 Dinner" calories={energyNeedPerMeal.lunch || 0} />
         <NoRecords />
       </View>
     );
@@ -74,7 +77,10 @@ const Meals = ({ meals }: MealsProps) => {
 
   return (
     <View className="overflow-hidden rounded-lg bg-gray-50 p-2 dark:bg-gray-800">
-      <MealHeader title="🥞 Breakfast" calories={400} />
+      <MealHeader
+        title="🥞 Breakfast"
+        calories={energyNeedPerMeal.breakfast || 0}
+      />
       {meals.breakfast.length === 0 ? (
         <NoRecords />
       ) : (
@@ -87,7 +93,7 @@ const Meals = ({ meals }: MealsProps) => {
         ))
       )}
 
-      <MealHeader title="🥘 Lunch" calories={400} />
+      <MealHeader title="🥘 Lunch" calories={energyNeedPerMeal.lunch || 0} />
 
       {meals.lunch.length === 0 ? (
         <NoRecords />
@@ -100,7 +106,7 @@ const Meals = ({ meals }: MealsProps) => {
           />
         ))
       )}
-      <MealHeader title="🍲 Dinner" calories={400} />
+      <MealHeader title="🍲 Dinner" calories={energyNeedPerMeal.dinner || 0} />
       {meals.dinner.length === 0 ? (
         <NoRecords />
       ) : (

@@ -23,10 +23,6 @@ const Home = () => {
     endDate: format(today, "yyyy-MM-dd"),
   });
 
-  const { me } = useMe();
-
-  console.log('[useMe]', me);
-
   const total = 2400;
 
   const { data } = useQuery({
@@ -86,6 +82,9 @@ const Home = () => {
 
   const totalCalories = calculateTotalCalories(data as Record<string, Food[]>);
 
+  const { me } = useMe();
+  if (!me) return null;
+
   return (
     <ScreenView scrollable>
       <DatePickerSlider onDateChange={handleDateChange} />
@@ -95,7 +94,7 @@ const Home = () => {
         </Text>
         <Overview
           consumedCalories={totalCalories.total.energy}
-          total={2400 || total}
+          total={me?.nutritionalNeed.calories || total}
           macroNutrients={{
             carbs: totalCalories.total.carbs || 0,
             protein: totalCalories.total.protein || 0,
@@ -110,7 +109,14 @@ const Home = () => {
         <Text className="pt-2 text-lg font-bold text-black dark:text-white">
           Meals
         </Text>
-        <Meals meals={data as Record<string, Food[]>} />
+        <Meals
+          meals={data as Record<string, Food[]>}
+          energyNeedPerMeal={{
+            breakfast: me?.nutritionalNeed.calories * 0.3 || 0,
+            lunch: me?.nutritionalNeed.calories * 0.4 || 0,
+            dinner: me?.nutritionalNeed.calories * 0.3 || 0,
+          }}
+        />
         <Text className="pt-2 text-lg font-bold text-black dark:text-white">
           Daily Tips
         </Text>
