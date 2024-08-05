@@ -2,13 +2,14 @@ import Button from "@/src/components/Button";
 import ScreenView from "@/src/components/ScreenView";
 import Stepper from "@/src/components/Stepper";
 import { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import PagerView from "react-native-pager-view";
 import RegisterBasic from "./components/registerBasic";
 import RegisterPersonal from "./components/registerPersonal";
 import { PasswordErrors } from "./types";
 import RegisterReview from "./components/registerReview";
 import RegisterSuccess from "./components/registerSuccess";
+import useRegister from "@/src/query/hooks/useRegister";
 
 const Register = () => {
   const pagerRef = useRef<PagerView>(null);
@@ -25,13 +26,35 @@ const Register = () => {
   });
   const [name, setName] = useState<string>("Deniz");
   const [lastName, setLastName] = useState<string>("Yeşilırmak");
-  const [age, setAge] = useState<number>(25);
+  const [age, setAge] = useState<string>("1995-04-20");
   const [weight, setWeight] = useState<number>(77);
   const [height, setHeight] = useState<number>(180);
   const [gender, setGender] = useState<string>("male");
 
   const [activeStep, setActiveStep] = useState<number>(0);
   const scrollEnabledRef = useRef<boolean>(true);
+
+  const { register, isError, isPending, isSuccess, error } = useRegister({
+    email,
+    password,
+    birthDate: age,
+    height,
+    weight,
+  });
+
+  useEffect(() => {
+    // error && Alert.alert("Error", error.message);
+    if (error) {
+      Alert.alert("Error", error.message);
+      pagerRef.current?.setPage(0);
+      setActiveStep(0);
+    }
+
+    if (isSuccess) {
+      pagerRef.current?.setPage(3);
+      setActiveStep(3);
+    }
+  }, [error, isSuccess]);
 
   useEffect(() => {
     //set the error states but don't run on the first render
@@ -53,6 +76,22 @@ const Register = () => {
       }));
     }
   }, [password, passwordVerify, email]);
+
+  const handleRegisterButtonPress = () => {
+    //Gather register data and send it to the server
+    const birthDate = new Date().toISOString();
+
+    console.log({
+      email,
+      password,
+      name,
+      lastName,
+      age,
+      weight,
+    });
+
+    register();
+  };
 
   return (
     <ScreenView scrollable={false} padding>
@@ -118,11 +157,7 @@ const Register = () => {
                 pagerRef.current?.setPage(activeStep + 1);
                 setActiveStep(activeStep + 1);
               } else {
-                //TODO: Handle the registration process
-                // Navigate to the success screen
-                scrollEnabledRef.current = false;
-                pagerRef.current?.setPage(3);
-                setActiveStep(3);
+                handleRegisterButtonPress();
               }
             }}
           />

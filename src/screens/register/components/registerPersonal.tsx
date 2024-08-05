@@ -1,17 +1,21 @@
 import LargeSwitch from "@/src/components/LargeSwitch";
 import TextInput from "@/src/components/TextInput";
 import { Text, View } from "react-native";
+import DateTimePicker, {
+  DateTimePickerAndroid,
+} from "@react-native-community/datetimepicker";
+import { useState } from "react";
 
 type RegisterPersonalProps = {
   name: string;
   lastName: string;
-  age: number;
+  age: string;
   weight: number;
   height: number;
   gender: string;
   onChangeName: (name: string) => void;
   onChangeLastName: (lastName: string) => void;
-  onAgeChange: (age: number) => void;
+  onAgeChange: (age: string) => void;
   onChangeWeight: (weight: number) => void;
   onChangeHeight: (height: number) => void;
   onChangeGender: (gender: string) => void;
@@ -31,6 +35,8 @@ const RegisterPersonal = ({
   onChangeName,
   onChangeWeight,
 }: RegisterPersonalProps) => {
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
   return (
     <View className="flex-1 items-center gap-4">
       <Text className="text-2xl font-bold dark:color-white">
@@ -57,12 +63,12 @@ const RegisterPersonal = ({
       />
       <TextInput
         icon="person"
-        placeholder="Age"
+        placeholder="Birth Date"
         autoCapitalize="none"
         keyboardType="numeric"
         postFix=""
         value={age.toString()}
-        onChangeText={(value) => onAgeChange(Number(value))}
+        onChangeText={onAgeChange}
       />
       <TextInput
         icon="monitor-weight"

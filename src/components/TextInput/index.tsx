@@ -13,6 +13,8 @@ const TextInput = ({
   onBlur,
   value,
   postFix,
+  onPress,
+  editable
 }: TextInputProps) => {
   const colorSheme = useColorScheme();
 
@@ -38,6 +40,8 @@ const TextInput = ({
         />
       )}
       <RNTextInput
+        onPress={onPress}
+        editable={editable}
         className="flex-1 py-4 color-black dark:text-white"
         placeholder={placeholder}
         keyboardType={keyboardType || "default"}

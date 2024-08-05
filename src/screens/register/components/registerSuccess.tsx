@@ -26,9 +26,9 @@ const RegisterSuccess = () => {
           You can now go to the home and start your journey! 🎉
         </Text>
         <Button
-          label="Go to Home"
+          label="Go to login"
           onPress={() => {
-            router.push("home");
+            router.push("login");
           }}
         />
       </View>

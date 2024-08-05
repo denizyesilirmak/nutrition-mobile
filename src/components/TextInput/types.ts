@@ -16,5 +16,7 @@ type TextInputProps = {
   onBlur?: () => void;
   value?: string;
   postFix?: string;
+  onPress?: () => void;
+  editable?: boolean;
 };
 export type { TextInputProps };
