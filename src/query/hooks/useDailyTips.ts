@@ -1,27 +1,13 @@
-import { DAILY_TIPS_API } from "@/src/constants/Api";
+import {
+  DailyTip,
+  DailyTipResponse,
+  fetchDailyTips,
+} from "@/src/utils/services";
 import { useQuery } from "@tanstack/react-query";
-
-type DailyTip = {
-  id: number;
-  title: string;
-  content: string;
-  image: string;
-};
-
-type Response = {
-  data: DailyTip[];
-};
-
-const fetchDailyTips = async () => {
-  const response = await fetch(DAILY_TIPS_API);
-  const data = await response.json();
-
-  return data;
-};
 
 const useDailyTips = () => {
   const { data, isLoading, isError, error } = useQuery<
-    Response,
+    DailyTipResponse,
     Error,
     DailyTip[],
     string[]

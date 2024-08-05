@@ -1,21 +1,6 @@
-import { FOOD_SEARCH_API } from "@/src/constants/Api";
+import { fetchFoodSearch, PageResponse } from "@/src/utils/services";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-
-export interface PageResponse {
-  data: Food[];
-  page: number;
-}
-
-export interface Food {
-  carbonhydrate: number;
-  protein: number;
-  fat: number;
-  energy: number;
-  name: string;
-  id: string;
-  image: string;
-}
 
 export const useFoodSearch = ({
   searchTerm,
@@ -32,25 +17,8 @@ export const useFoodSearch = ({
         return lastPage?.data?.length === 20 ? lastPage.page + 1 : undefined;
       },
       initialPageParam: initialPage,
-      queryFn: async ({ pageParam }) => {
-        if (!searchTerm) {
-          return {
-            data: [],
-            page: 1,
-          };
-        }
-
-        const response = await fetch(
-          `${FOOD_SEARCH_API}?query=${searchTerm.toLowerCase()}&page=${pageParam}&limit=20`,
-        );
-
-        const data = (await response.json()) as PageResponse;
-
-        return {
-          data: data.data,
-          page: data.page,
-        };
-      },
+      queryFn: ({ pageParam }) =>
+        fetchFoodSearch({ searchTerm, page: pageParam }),
     });
 
   const results = useMemo(() => {
