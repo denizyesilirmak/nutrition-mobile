@@ -1,5 +1,6 @@
+import useDailyTips from "@/src/query/hooks/useDailyTips";
 import { useEffect, useRef } from "react";
-import { Text, View, useWindowDimensions } from "react-native";
+import { FlatList, Text, View, useWindowDimensions } from "react-native";
 import Animated, {
   Extrapolation,
   interpolate,
@@ -7,30 +8,6 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
-
-const DUMMY_DAILY_TIPS = [
-  {
-    title: "Intermittent Fasting",
-    image:
-      "https://freepng.com/uploads/images/202311/Vector-healthy-food-in-hand-symbol-cartoon-illustration-png_1020x-3870.jpg",
-    content:
-      "Intermittent fasting is an eating pattern that cycles between periods of fasting and eating. It doesn’t specify which foods you should eat but rather when you should eat them. In this respect, it’s not a diet in the conventional sense but more accurately described as an eating pattern.",
-  },
-  {
-    title: "Eating healthy",
-    image:
-      "https://i.pinimg.com/originals/71/3d/f0/713df0b2938806d5a68b3bbc8feedf8c.png",
-    content:
-      "A no-sugar diet is one that omits added sugars. This includes sugars in sweets, desserts, soft drinks, and sugary beverages. A no-sugar diet is often referred to as a sugar-free diet or low-sugar diet.",
-  },
-  {
-    title: "Keto Diet",
-    image:
-      "https://static.vecteezy.com/system/resources/previews/018/974/363/original/hand-drawn-healthy-food-set-illustration-in-doodle-style-png.png",
-    content:
-      "The ketogenic diet is a very low-carb, high-fat diet that shares many similarities with the Atkins and low-carb diets. It involves drastically reducing carbohydrate intake and replacing it with fat. This reduction in carbs puts your body into a metabolic state called ketosis.",
-  },
-];
 
 const Tip = ({
   title,
@@ -103,6 +80,7 @@ const DailyTips = () => {
   const { width } = useWindowDimensions();
   const pageIndexSv = useSharedValue(0.1);
   const flatlistRef = useRef<FlatList>(null);
+  const { tips, isLoading } = useDailyTips();
 
   const actualWidth = width - 70;
 
@@ -115,9 +93,7 @@ const DailyTips = () => {
     const autoScrollInterval = setInterval(() => {
       const currentPageIndex = Math.round(pageIndexSv.value);
       const next =
-        currentPageIndex >= DUMMY_DAILY_TIPS.length - 1
-          ? 0
-          : currentPageIndex + 1;
+        currentPageIndex >= tips.length - 1 ? 0 : currentPageIndex + 1;
 
       flatlistRef.current?.scrollToIndex({
         index: next,
@@ -128,7 +104,11 @@ const DailyTips = () => {
     return () => {
       clearInterval(autoScrollInterval);
     };
-  }, []);
+  }, [tips]);
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <View className="flex-1 items-center justify-center">
@@ -142,7 +122,7 @@ const DailyTips = () => {
             horizontal
             onScroll={scrollHandler}
             scrollEventThrottle={16}
-            data={DUMMY_DAILY_TIPS}
+            data={tips}
             renderItem={(itemData) => (
               <Tip
                 title={itemData.item.title}
@@ -153,7 +133,7 @@ const DailyTips = () => {
               />
             )}
           />
-          {DUMMY_DAILY_TIPS.map((item, index) => (
+          {tips?.map((item, index) => (
             <DailyTipBackground
               image={item.image}
               pageSv={pageIndexSv}
