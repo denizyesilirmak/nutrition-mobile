@@ -81,15 +81,6 @@ const Register = () => {
     //Gather register data and send it to the server
     const birthDate = new Date().toISOString();
 
-    console.log({
-      email,
-      password,
-      name,
-      lastName,
-      age,
-      weight,
-    });
-
     register();
   };
 

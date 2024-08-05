@@ -113,7 +113,7 @@ const AddWater = () => {
           }}
           resizeMode="cover"
           onLayout={(event) => {
-            console.log(event.nativeEvent.layout);
+            // console.log(event.nativeEvent.layout);
             glassHeight.value = event.nativeEvent.layout.height;
           }}
           animatedProps={glassFillingProgress}
