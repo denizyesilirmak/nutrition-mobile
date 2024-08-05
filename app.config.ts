@@ -11,7 +11,7 @@ const config: ExpoConfig = {
   splash: {
     image: "./src/assets/images/splash.png",
     resizeMode: "contain",
-    backgroundColor: "#4CAF50",
+    backgroundColor: "#183215",
   },
   ios: {
     supportsTablet: true,
