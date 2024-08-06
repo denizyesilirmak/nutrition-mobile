@@ -1,0 +1,94 @@
+import {
+  eachWeekOfInterval,
+  eachDayOfInterval,
+  eachMonthOfInterval,
+  subDays,
+  format,
+  add,
+} from "date-fns";
+
+type Mode = "daily" | "weekly" | "monthly";
+
+type DateObj = {
+  start: Date;
+  end: Date;
+};
+
+//days = last 100 days from today
+//weeks = last 52 weeks from today
+//months = last 12 months from today
+
+class DateNavigator {
+  private mode: Mode;
+
+  private days: DateObj[] = eachDayOfInterval({
+    start: subDays(new Date(), 100),
+    end: new Date(),
+  }).map((day) => ({
+    start: day,
+    end: add(day, { days: 1 }),
+  }));
+  private weeks: DateObj[] = eachWeekOfInterval({
+    start: subDays(new Date(), 365),
+    end: new Date(),
+  }).map((week) => ({
+    start: week,
+    end: add(week, { weeks: 1 }),
+  }));
+  private months: DateObj[] = eachMonthOfInterval({
+    start: subDays(new Date(), 365),
+    end: new Date(),
+  }).map((month) => ({
+    start: month,
+    end: add(month, { months: 1 }),
+  }));
+
+  private ranges = {
+    daily: this.days.reverse(),
+    weekly: this.weeks.reverse(),
+    monthly: this.months.reverse(),
+  };
+
+  private currentRangeIndex = 0;
+
+  constructor(mode: Mode) {
+    this.mode = mode;
+  }
+
+  prev = () => {
+    if (this.currentRangeIndex < this.ranges[this.mode].length - 1) {
+      this.currentRangeIndex++;
+    }
+
+    return this.getRange(); // return the current range
+  };
+
+  next = () => {
+    if (this.currentRangeIndex > 0) {
+      this.currentRangeIndex--;
+    }
+
+    return this.getRange(); // return the current range
+  };
+
+  getRange = () => {
+    return {
+      start: format(
+        this.ranges[this.mode][this.currentRangeIndex].start,
+        "dd.MM.yyyy",
+      ),
+      end: format(
+        this.ranges[this.mode][this.currentRangeIndex].end,
+        "dd.MM.yyyy",
+      ),
+    };
+  };
+
+  changeMode = (mode: Mode) => {
+    this.mode = mode;
+    this.currentRangeIndex = 0;
+    return this.getRange();
+  };
+}
+
+export default DateNavigator;
