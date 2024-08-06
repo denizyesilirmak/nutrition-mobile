@@ -2,10 +2,8 @@ import OptionSelector from "@/src/components/OptionSelector";
 import TabSelector from "@/src/components/TabSelector";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import DateNavigator from "./utils/DateNavigator";
-import { set } from "date-fns";
-
-const dateNavigator = new DateNavigator("weekly");
+import { dateNavigator } from "./utils/dateNavigator";
+import formatDate from "./utils/formatDate";
 
 const MealHistory = () => {
   const [selectedTab, setSelectedTab] = useState<
@@ -27,7 +25,11 @@ const MealHistory = () => {
       />
       <OptionSelector
         value={{
-          label: currentRange.start + " - " + currentRange.end,
+          label: formatDate({
+            startDate: currentRange.start,
+            endDate: currentRange.end,
+            mode: selectedTab,
+          }),
           value: new Date().toISOString(),
         }}
         onPressBack={() => {

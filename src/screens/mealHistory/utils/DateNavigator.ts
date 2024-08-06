@@ -1,10 +1,9 @@
 import {
-  eachWeekOfInterval,
+  add,
   eachDayOfInterval,
   eachMonthOfInterval,
+  eachWeekOfInterval,
   subDays,
-  format,
-  add,
 } from "date-fns";
 
 type Mode = "daily" | "weekly" | "monthly";
@@ -73,14 +72,8 @@ class DateNavigator {
 
   getRange = () => {
     return {
-      start: format(
-        this.ranges[this.mode][this.currentRangeIndex].start,
-        "dd.MM.yyyy",
-      ),
-      end: format(
-        this.ranges[this.mode][this.currentRangeIndex].end,
-        "dd.MM.yyyy",
-      ),
+      start: this.ranges[this.mode][this.currentRangeIndex].start,
+      end: this.ranges[this.mode][this.currentRangeIndex].end,
     };
   };
 
@@ -91,4 +84,6 @@ class DateNavigator {
   };
 }
 
-export default DateNavigator;
+const dateNavigatorInstance = new DateNavigator("daily");
+
+export { dateNavigatorInstance as dateNavigator };
