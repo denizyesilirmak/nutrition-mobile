@@ -11,10 +11,7 @@ const formatDate = ({
 }) => {
   switch (mode) {
     case "daily":
-      return `${format(startDate, "dd MMM yyyy")} - ${format(
-        endDate,
-        "dd MMM yyyy",
-      )}`;
+      return `${format(startDate, "dd MMM yyyy")}`;
     case "weekly":
       return `${format(startDate, "dd MMM yyyy")} - ${format(
         endDate,

@@ -9,6 +9,7 @@ import { useLogin } from "@/src/query/hooks/useLogin";
 import { router } from "expo-router";
 import { Alert, Image, Keyboard, Text, View } from "react-native";
 import { isValidEmail, isValidPassword } from "./utils";
+import Storage from "@/src/storage";
 
 const Login = () => {
   const [remember, setRemember] = useState(false);
@@ -26,7 +27,7 @@ const Login = () => {
     },
   });
 
-  const { isError, isPending, isSuccess, login } = useLogin({
+  const { isError, isPending, isSuccess, login, data } = useLogin({
     email: loginInformation.email.text,
     password: loginInformation.password.text,
   });
@@ -36,7 +37,12 @@ const Login = () => {
       if (remember) {
         // Save user data to local storage
       }
-      router.push("(auth)/(home)");
+
+      const token = data?.data.token;
+      if (token) {
+        Storage.setItem("TOKEN", token);
+        router.push("(auth)/(home)");
+      }
     }
   }, [isSuccess, remember]);
 

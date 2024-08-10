@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import LottieView from "lottie-react-native";
 import { PanResponder, Pressable, Text, TextInput, View } from "react-native";
 import Animated, {
@@ -72,13 +73,14 @@ const AddWater = () => {
   return (
     <View className="flex-1 p-4">
       <Text className="text-center text-xl font-bold dark:text-white">
-        Add Water
+        Water Intake
       </Text>
       <View className="absolute inset-x-0 bottom-0 z-10 flex-1 flex-row items-center justify-center gap-4 pb-4">
         <Animated.View style={[bounceAnimation]}>
           <Pressable
             onPress={() => {
               // glassRatio.value = 0;
+              router.back();
             }}
             className="z-30 h-20 w-24 flex-col items-center justify-center rounded-2xl border-2 border-white bg-lime-500 active:bg-lime-400 dark:border-black"
           >

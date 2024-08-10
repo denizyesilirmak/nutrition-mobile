@@ -13,10 +13,6 @@ type DateObj = {
   end: Date;
 };
 
-//days = last 100 days from today
-//weeks = last 52 weeks from today
-//months = last 12 months from today
-
 class DateNavigator {
   private mode: Mode;
 

@@ -12,6 +12,7 @@ import { Text, View } from "react-native";
 import { calculateTotalCalories } from "./utils";
 import { Food, Meal } from "./types";
 import useMe from "@/src/query/hooks/useMe";
+import Storage from "@/src/storage";
 
 const Home = () => {
   const today = new Date();
@@ -25,6 +26,8 @@ const Home = () => {
 
   const total = 2400;
 
+  const TOKEN_TEMP = Storage.getItem("TOKEN");
+
   const { data } = useQuery({
     queryKey: ["meals", "date", selectedDateRange.endDate],
     queryFn: async () => {
@@ -33,7 +36,7 @@ const Home = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer ed791dd1-cd1f-433f-bce1-7e2e0c7fbf52",
+            Authorization: `Bearer ${TOKEN_TEMP}`,
           },
         },
       );

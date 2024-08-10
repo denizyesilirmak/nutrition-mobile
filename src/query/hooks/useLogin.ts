@@ -58,7 +58,7 @@ export const useLogin = ({
   email: string;
   password: string;
 }) => {
-  const { mutate, isError, isPending, isSuccess } = useMutation<
+  const { mutate, isError, isPending, isSuccess, data } = useMutation<
     MutationResponse,
     Error,
     { email: string; password: string }
@@ -77,5 +77,6 @@ export const useLogin = ({
     isError,
     isPending,
     isSuccess,
+    data,
   };
 };
