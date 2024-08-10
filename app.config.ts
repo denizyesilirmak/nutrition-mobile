@@ -14,7 +14,7 @@ const config: ExpoConfig = {
     backgroundColor: "#183215",
   },
   ios: {
-    supportsTablet: true,
+    supportsTablet: false,
     bundleIdentifier: "com.nutrition.mobile",
     infoPlist: {
       NSAppTransportSecurity: { NSAllowsArbitraryLoads: true },
