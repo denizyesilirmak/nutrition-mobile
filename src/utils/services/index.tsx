@@ -1,5 +1,10 @@
-import { DAILY_TIPS_API, FOOD_SEARCH_API } from "@/src/constants/Api";
+import {
+  DAILY_TIPS_API,
+  FOOD_SEARCH_API,
+  MEALS_API,
+} from "@/src/constants/Api";
 import fetchWithToken from "../fetch";
+import { transformMeals } from "../transformMeals";
 
 // -----DAILY TIPS API-----
 
@@ -62,4 +67,21 @@ export const fetchFoodSearch = async ({
     data: data.data,
     page: data.page,
   };
+};
+
+// Meals
+
+export const fetchMeals = async ({
+  startDate,
+  endDate,
+}: {
+  startDate: string;
+  endDate: string;
+}) => {
+  const response = await fetchWithToken(
+    `${MEALS_API}?startDate=${startDate}&endDate=${endDate}`,
+  );
+  const data = await response.json();
+
+  return transformMeals(data);
 };

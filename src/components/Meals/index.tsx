@@ -36,7 +36,12 @@ const MealItem = ({ title, calories }: { title: string; calories: number }) => {
       entering={FadeInLeft}
       className="flex flex-row items-center justify-between px-4 py-3"
     >
-      <Text className="text-black-400 text-md dark:text-gray-100">{title}</Text>
+      <Text
+        className="text-black-400 text-md dark:text-gray-100 w-3/4"
+        numberOfLines={1}
+      >
+        {title}
+      </Text>
       <Text className="text-xs text-gray-400 dark:text-gray-300">
         {calories} cal
       </Text>
