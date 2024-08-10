@@ -1,6 +1,7 @@
 import {
   DAILY_TIPS_API,
   FOOD_SEARCH_API,
+  INSERT_MEAL_API,
   MEALS_API,
 } from "@/src/constants/Api";
 import fetchWithToken from "../fetch";
@@ -69,7 +70,7 @@ export const fetchFoodSearch = async ({
   };
 };
 
-// Meals
+// Get Meals
 
 export const fetchMeals = async ({
   startDate,
@@ -84,4 +85,37 @@ export const fetchMeals = async ({
   const data = await response.json();
 
   return transformMeals(data);
+};
+
+//Insert Meal
+
+export type FoodToInsert = {
+  id: string;
+  multiplier?: number;
+};
+
+export const insertMeal = async ({
+  mealTime,
+  foods,
+}: {
+  mealTime: string;
+  foods: FoodToInsert[];
+}) => {
+  const body = {
+    mealTime,
+    food: foods,
+  };
+
+  console.log("Body:", body);
+
+  const response = await fetchWithToken(INSERT_MEAL_API, {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+
+  const data = await response.json();
+
+  console.log("Data:", data);
+
+  return data;
 };

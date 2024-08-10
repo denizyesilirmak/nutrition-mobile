@@ -1,4 +1,5 @@
 import { ME_API } from "@/src/constants/Api";
+import fetchWithToken from "@/src/utils/fetch";
 import { useQuery } from "@tanstack/react-query";
 
 export type Response = {
@@ -29,12 +30,8 @@ type QueryResponse = {
 };
 
 const fetchMe = async () => {
-  const response = await fetch(ME_API, {
+  const response = await fetchWithToken(ME_API, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ed791dd1-cd1f-433f-bce1-7e2e0c7fbf52`,
-    },
   });
 
   const result = await response.json();

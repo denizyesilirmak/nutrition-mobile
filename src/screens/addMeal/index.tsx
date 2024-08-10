@@ -10,6 +10,9 @@ import {
   useFoodSearch,
 } from "@/src/query/hooks/useFoodSearch";
 import Animated, { FadeInRight } from "react-native-reanimated";
+import useInsertMeal from "@/src/query/hooks/useInsertMeal";
+import IconButton from "@/src/components/IconButton";
+import { Ionicons } from "@expo/vector-icons";
 
 const Food = ({
   food,
@@ -68,6 +71,13 @@ const AddMeals = () => {
     searchTerm: debouncedSearchTerm,
   });
   const [selectedFoods, setSelectedFoods] = useState<FoodType[]>([]);
+  const { insertMeal, isPending, isSuccess } = useInsertMeal({
+    foods: selectedFoods.map((food) => ({
+      id: food.id,
+      multiplier: 1,
+    })),
+    mealTime: "dinner",
+  });
 
   return (
     <View className="flex-1 flex-col items-center justify-center gap-2 p-4">
@@ -101,6 +111,12 @@ const AddMeals = () => {
               </Pressable>
             ))
           )}
+          <IconButton
+            icon={<Ionicons name="add" size={24} color="red" />}
+            onPress={() => {
+              insertMeal();
+            }}
+          />
         </View>
       </View>
       <TextInput
@@ -130,8 +146,13 @@ const AddMeals = () => {
             <Food
               food={item}
               onSelectedFood={(food) => {
-                //add only unique foods using filter
                 setSelectedFoods((foods) => {
+                  // Prevent adding more than 3 foods
+                  if (foods.length >= 3) {
+                    alert("You can only add 3 foods per meal");
+                    return foods;
+                  }
+
                   if (foods.some((f) => f.id === food.id)) {
                     return foods;
                   }
