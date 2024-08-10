@@ -4,15 +4,15 @@ import { useEffect, useState } from "react";
 
 import Button from "@/src/components/Button";
 import Checkbox from "@/src/components/Checkbox";
-import { LOGIN_API } from "@/src/constants/Api";
 import { useLogin } from "@/src/query/hooks/useLogin";
+import { useAuth } from "@/src/store/authStore";
 import { router } from "expo-router";
-import { Alert, Image, Keyboard, Text, View } from "react-native";
+import { Image, Keyboard, Text, View } from "react-native";
 import { isValidEmail, isValidPassword } from "./utils";
-import Storage from "@/src/storage";
 
 const Login = () => {
   const [remember, setRemember] = useState(false);
+  const { isLoggedIn, setToken } = useAuth();
 
   const [loginInformation, setLoginInformation] = useState<
     Record<string, { text: string; error: boolean }>
@@ -33,6 +33,7 @@ const Login = () => {
   });
 
   useEffect(() => {
+    console.log("isLoggedIn", isLoggedIn);
     if (isSuccess) {
       if (remember) {
         // Save user data to local storage
@@ -40,7 +41,7 @@ const Login = () => {
 
       const token = data?.data.token;
       if (token) {
-        Storage.setItem("TOKEN", token);
+        setToken(token);
         router.push("(auth)/(home)");
       }
     }

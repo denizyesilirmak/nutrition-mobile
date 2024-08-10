@@ -4,15 +4,13 @@ import Meals from "@/src/components/Meals";
 import Overview from "@/src/components/Overview";
 import ScreenView from "@/src/components/ScreenView";
 import WaterOverview from "@/src/components/WaterOverview";
-import { MEALS_API } from "@/src/constants/Api";
-import { useQuery } from "@tanstack/react-query";
+import useMe from "@/src/query/hooks/useMe";
+import useMeals from "@/src/query/hooks/useMeals";
 import { format } from "date-fns";
 import { useState } from "react";
 import { Text, View } from "react-native";
+import { Food } from "./types";
 import { calculateTotalCalories } from "./utils";
-import { Food, Meal } from "./types";
-import useMe from "@/src/query/hooks/useMe";
-import Storage from "@/src/storage";
 
 const Home = () => {
   const today = new Date();
@@ -26,49 +24,10 @@ const Home = () => {
 
   const total = 2400;
 
-  const TOKEN_TEMP = Storage.getItem("TOKEN");
-
-  const { data } = useQuery({
-    queryKey: ["meals", "date", selectedDateRange.endDate],
-    queryFn: async () => {
-      const response = await fetch(
-        `${MEALS_API}?startDate=${selectedDateRange.startDate}&endDate=${selectedDateRange.endDate}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${TOKEN_TEMP}`,
-          },
-        },
-      );
-      const data = await response.json();
-
-      return transformMeals(data);
-    },
+  const { meals, isError, isLoading } = useMeals({
+    startDate: selectedDateRange.startDate,
+    endDate: selectedDateRange.endDate,
   });
-
-  const transformMeals = (meals: Meal[]) => {
-    if (!meals) {
-      return {
-        breakfast: [],
-        lunch: [],
-        dinner: [],
-      };
-    }
-
-    const categorizedMeals = {
-      breakfast: [],
-      lunch: [],
-      dinner: [],
-    } as Record<string, Food[]>;
-
-    meals.forEach((meal) => {
-      const { mealTime, food } = meal;
-
-      categorizedMeals[mealTime] = categorizedMeals[mealTime].concat(food);
-    });
-
-    return categorizedMeals as Record<string, Food[]>;
-  };
 
   const handleDateChange = (date: Date) => {
     const nextday = new Date(date);
@@ -83,7 +42,7 @@ const Home = () => {
     });
   };
 
-  const totalCalories = calculateTotalCalories(data as Record<string, Food[]>);
+  const totalCalories = calculateTotalCalories(meals as Record<string, Food[]>);
 
   const { me } = useMe();
   if (!me) return null;
@@ -113,7 +72,7 @@ const Home = () => {
           Meals
         </Text>
         <Meals
-          meals={data as Record<string, Food[]>}
+          meals={meals as Record<string, Food[]>}
           energyNeedPerMeal={{
             breakfast: me?.nutritionalNeed.calories * 0.3 || 0,
             lunch: me?.nutritionalNeed.calories * 0.4 || 0,

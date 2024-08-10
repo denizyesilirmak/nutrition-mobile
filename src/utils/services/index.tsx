@@ -1,4 +1,5 @@
 import { DAILY_TIPS_API, FOOD_SEARCH_API } from "@/src/constants/Api";
+import fetchWithToken from "../fetch";
 
 // -----DAILY TIPS API-----
 
@@ -14,7 +15,7 @@ export type DailyTipResponse = {
 };
 
 export const fetchDailyTips = async () => {
-  const response = await fetch(DAILY_TIPS_API);
+  const response = await fetchWithToken(DAILY_TIPS_API);
   const data = await response.json();
 
   return data;
@@ -51,7 +52,7 @@ export const fetchFoodSearch = async ({
     };
   }
 
-  const response = await fetch(
+  const response = await fetchWithToken(
     `${FOOD_SEARCH_API}?query=${searchTerm.toLowerCase()}&page=${page}&limit=20`,
   );
 
