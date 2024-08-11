@@ -11,6 +11,7 @@ import { useState } from "react";
 import { Text, View } from "react-native";
 import { Food } from "./types";
 import { calculateTotalCalories } from "./utils";
+import Heatmap from "@/src/components/Heatmap";
 
 const Home = () => {
   const today = new Date();

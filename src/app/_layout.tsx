@@ -47,6 +47,15 @@ const InitialLayout = () => {
               }}
             />
             {/* <Stack.Screen name="camera" /> */}
+            <Stack.Screen
+              name="components"
+              options={{
+                headerShown: true,
+                headerTitle: "Components",
+                gestureEnabled: false,
+                headerBackVisible: false,
+              }}
+            />
           </Stack>
         </ThemeProvider>
       </QueryProvider>

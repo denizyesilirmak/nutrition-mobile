@@ -40,6 +40,13 @@ const HomeScreen = () => {
       />
 
       <Button title="React Query" onPress={() => {}} />
+
+      <Button
+        title="Components"
+        onPress={() => {
+          router.push("components");
+        }}
+      />
     </View>
   );
 };
