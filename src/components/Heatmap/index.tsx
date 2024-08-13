@@ -19,9 +19,10 @@ type SquareProps = {
   isInCurrentMonth: boolean;
   date: Date;
   onPress?: () => void;
+  value?: number;
 };
 
-const Square = ({ isInCurrentMonth, date, onPress }: SquareProps) => {
+const Square = ({ isInCurrentMonth, date, onPress, value }: SquareProps) => {
   return (
     <View
       style={{
@@ -62,9 +63,7 @@ const Square = ({ isInCurrentMonth, date, onPress }: SquareProps) => {
           <View
             className="bg-blue h-full rounded-full bg-cyan-600 dark:bg-blue-300"
             style={{
-              width: ["100%", "75%", "50%", "25%", "0%"][
-                Math.floor(Math.random() * 5)
-              ] as DimensionValue,
+              width: value ? `${(value / 10) * 100}%` : 0,
             }}
           ></View>
         </View>
@@ -112,6 +111,7 @@ const Heatmap = ({ year, month, onPressDate }: HeatmapProps) => {
               isInCurrentMonth={isSameMonth(day, new Date(2024, month - 1))}
               date={day}
               onPress={() => onPressDate?.(day)}
+              value={Math.floor(Math.random() * 10)}
             />
           ))}
         </Row>

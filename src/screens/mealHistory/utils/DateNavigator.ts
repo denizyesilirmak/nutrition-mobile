@@ -23,12 +23,17 @@ class DateNavigator {
     start: day,
     end: add(day, { days: 1 }),
   }));
-  private weeks: DateObj[] = eachWeekOfInterval({
-    start: subDays(new Date(), 365),
-    end: new Date(),
-  }).map((week) => ({
+  private weeks: DateObj[] = eachWeekOfInterval(
+    {
+      start: subDays(new Date(), 365),
+      end: new Date(),
+    },
+    {
+      weekStartsOn: 1,
+    },
+  ).map((week) => ({
     start: week,
-    end: add(week, { weeks: 1 }),
+    end: subDays(add(week, { weeks: 1 }), 1),
   }));
   private months: DateObj[] = eachMonthOfInterval({
     start: subDays(new Date(), 365),
