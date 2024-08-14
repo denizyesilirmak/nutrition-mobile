@@ -52,7 +52,7 @@ const Home = () => {
     <ScreenView scrollable>
       <DatePickerSlider onDateChange={handleDateChange} />
       <View className="p-4 pt-0">
-        <Text className="text-lg font-bold text-black dark:text-white">
+        <Text className="pb-2 text-lg font-bold text-black dark:text-white">
           Overview
         </Text>
         <Overview
@@ -69,7 +69,7 @@ const Home = () => {
             fat: me?.nutritionalNeed?.fat || 100,
           }}
         />
-        <Text className="pt-2 text-lg font-bold text-black dark:text-white">
+        <Text className="pb-2 pt-2 text-lg font-bold text-black dark:text-white">
           Meals
         </Text>
         <Meals
@@ -80,11 +80,11 @@ const Home = () => {
             dinner: me?.nutritionalNeed.calories * 0.3 || 0,
           }}
         />
-        <Text className="pt-2 text-lg font-bold text-black dark:text-white">
+        <Text className="pb-2 pt-2 text-lg font-bold text-black dark:text-white">
           Daily Tips
         </Text>
         <DailyTips />
-        <Text className="pt-2 text-lg font-bold text-black dark:text-white">
+        <Text className="pb-2 pt-2 text-lg font-bold text-black dark:text-white">
           Water Intake
         </Text>
         <WaterOverview full={8} consumed={3} />
