@@ -2,7 +2,8 @@ import DarkModeToggle from "@/src/components/DarkModeToggle";
 import ScreenView from "@/src/components/ScreenView";
 import useMe from "@/src/query/hooks/useMe";
 import { Ionicons } from "@expo/vector-icons";
-import { Pressable, Text, useColorScheme, View } from "react-native";
+import { useColorScheme } from "nativewind";
+import { Pressable, Text, View } from "react-native";
 
 const Container = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -32,7 +33,7 @@ const Section = ({
   rightIcon?: string;
   rightComponent?: React.ReactNode;
 }) => {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   return (
     <Pressable className="flex flex-row items-center justify-between py-1">
@@ -62,9 +63,9 @@ const Section = ({
 
 const Profile = () => {
   const { me, isLoading } = useMe();
-  const colorScheme = useColorScheme();
+  const { colorScheme, toggleColorScheme } = useColorScheme();
 
-  console.log(me);
+  // console.log(me);
 
   if (isLoading) {
     return <Text>Loading...</Text>;
@@ -89,7 +90,11 @@ const Profile = () => {
           <Seperator />
           <Section leftIcon="medkit-outline" text={`${me?.weight} kg`} />
           <Seperator />
-          <Section text="Edit Profile" rightIcon="chevron-forward" />
+          <Section
+            leftIcon="person-outline"
+            text="Edit Profile"
+            rightIcon="chevron-forward"
+          />
           <Seperator />
           <Section
             leftIcon="bar-chart-outline"
@@ -104,7 +109,12 @@ const Profile = () => {
           <Section
             leftIcon="moon-outline"
             text="Dark Mode"
-            rightComponent={<DarkModeToggle value={colorScheme === "dark"} />}
+            rightComponent={
+              <DarkModeToggle
+                value={colorScheme === "dark"}
+                onChange={() => toggleColorScheme()}
+              />
+            }
           />
           <Seperator />
           <Section

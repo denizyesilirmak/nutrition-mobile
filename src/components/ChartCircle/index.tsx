@@ -1,4 +1,5 @@
-import { Text, useColorScheme, View } from "react-native";
+import { useColorScheme } from "nativewind";
+import { Text, View } from "react-native";
 import Animated, {
   useAnimatedProps,
   withSequence,
@@ -16,7 +17,7 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const ChartCircle = ({ calorie, total }: ChartCircleProps) => {
   const clampedValue = Math.min(Math.max(calorie / total, 0), 1);
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   const animatedProps = useAnimatedProps(() => {
     return {

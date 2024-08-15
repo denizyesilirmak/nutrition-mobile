@@ -1,5 +1,4 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useEffect, useState } from "react";
 import { Pressable } from "react-native";
 import Animated, {
   interpolateColor,
@@ -13,7 +12,13 @@ const KNOB_COLORS = {
   light: ["#ffffff", "#cccccc"],
 };
 
-const DarkModeToggle = ({ value }: { value: boolean }) => {
+const DarkModeToggle = ({
+  value,
+  onChange,
+}: {
+  value: boolean;
+  onChange: (value: boolean) => void;
+}) => {
   const knobAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -61,7 +66,7 @@ const DarkModeToggle = ({ value }: { value: boolean }) => {
   });
 
   return (
-    <Pressable>
+    <Pressable onPress={() => onChange(!value)}>
       <Animated.View
         className="flex-row items-center justify-between overflow-hidden rounded-full border-gray-200 bg-black dark:border-gray-700"
         style={[

@@ -1,6 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { TextInput as RNTextInput, useColorScheme, View } from "react-native";
+import { TextInput as RNTextInput, View } from "react-native";
 import { TextInputProps } from "./types";
+import { useColorScheme } from "nativewind";
 
 const TextInput = ({
   placeholder,
@@ -14,19 +15,19 @@ const TextInput = ({
   value,
   postFix,
   onPress,
-  editable
+  editable,
 }: TextInputProps) => {
-  const colorSheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   return (
     <View
       className="flex-row items-center rounded-xl border border-gray-300 px-4 dark:border-gray-400"
       style={{
         borderColor: error
-          ? colorSheme === "dark"
+          ? colorScheme === "dark"
             ? "#f87171"
             : "#ef4444"
-          : colorSheme === "dark"
+          : colorScheme === "dark"
             ? "#374151"
             : "#d1d5db",
       }}
@@ -36,7 +37,7 @@ const TextInput = ({
           name={icon}
           size={18}
           className="pr-2"
-          color={colorSheme === "dark" ? "#9ca3af" : "#707070"}
+          color={colorScheme === "dark" ? "#9ca3af" : "#707070"}
         />
       )}
       <RNTextInput
@@ -46,9 +47,9 @@ const TextInput = ({
         placeholder={placeholder}
         keyboardType={keyboardType || "default"}
         autoCapitalize={autoCapitalize || "none"}
-        placeholderTextColor={colorSheme === "dark" ? "#9ca3af" : "#707070"}
+        placeholderTextColor={colorScheme === "dark" ? "#9ca3af" : "#707070"}
         secureTextEntry={secureTextEntry}
-        keyboardAppearance={colorSheme === "dark" ? "dark" : "light"}
+        keyboardAppearance={colorScheme === "dark" ? "dark" : "light"}
         onChangeText={onChangeText}
         onBlur={onBlur}
         value={value}

@@ -106,7 +106,7 @@ export const insertMeal = async ({
     food: foods,
   };
 
-  console.log("Body:", body);
+  // console.log("Body:", body);
 
   const response = await fetchWithToken(INSERT_MEAL_API, {
     method: "POST",
@@ -115,7 +115,7 @@ export const insertMeal = async ({
 
   const data = await response.json();
 
-  console.log("Data:", data);
+  // console.log("Data:", data);
 
   return data;
 };

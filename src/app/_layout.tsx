@@ -2,12 +2,12 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "../../global.css";
 import { ThemeProvider } from "@react-navigation/native";
-import { useColorScheme } from "react-native";
 import { DarkTheme, LightTheme } from "../constants/Colors";
 import { QueryProvider } from "../query/QueryProvider";
+import { useColorScheme } from "nativewind";
 
 const InitialLayout = () => {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   return (
     <>

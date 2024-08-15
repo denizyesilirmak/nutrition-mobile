@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Pressable, Text, useColorScheme, View } from "react-native";
+import { useColorScheme } from "nativewind";
+import { Pressable, Text, View } from "react-native";
 
 type Option = {
   label: string;
@@ -17,7 +18,7 @@ const OptionSelector = ({
   onPressForward,
   value,
 }: OptionSelectorProps) => {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   return (
     <View className="container py-4">

@@ -1,13 +1,6 @@
 import { eachDayOfInterval, format } from "date-fns";
 import { useRef } from "react";
-import {
-  Dimensions,
-  FlatList,
-  Pressable,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { Dimensions, FlatList, Pressable, Text, View } from "react-native";
 import Animated, {
   Easing,
   interpolateColor,
@@ -19,6 +12,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Path, Svg } from "react-native-svg";
 import { DateItemProps, DatePickerSliderProps } from "./types";
+import { useColorScheme } from "nativewind";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -59,7 +53,7 @@ const DatePickerSlider = ({
   onDateChange,
 }: DatePickerSliderProps) => {
   const flatListRef = useRef<FlatList>(null);
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
 
   const dates = eachDayOfInterval({
     start: new Date(new Date().setDate(new Date().getDate() + 2)),

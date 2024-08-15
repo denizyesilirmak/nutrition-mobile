@@ -1,11 +1,12 @@
 import ScreenView from "@/src/components/ScreenView";
 import Table from "@/src/components/Table";
 import { useLocalSearchParams } from "expo-router";
-import { Image, Text, useColorScheme, View } from "react-native";
+import { useColorScheme } from "nativewind";
+import { Image, Text, View } from "react-native";
 import { Defs, LinearGradient, Rect, Stop, Svg } from "react-native-svg";
 
 const FoodDetail = () => {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
   const stopColor = colorScheme === "dark" ? "#000000" : "#ffffff";
 
   const { foodId } = useLocalSearchParams();

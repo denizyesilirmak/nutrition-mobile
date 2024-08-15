@@ -1,5 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { Pressable, Text, useColorScheme, View } from "react-native";
+import { useColorScheme } from "nativewind";
+import { Pressable, Text, View } from "react-native";
 
 type CheckboxProps = {
   label: string;
@@ -8,7 +9,7 @@ type CheckboxProps = {
 };
 
 const Checkbox = ({ label, checked, onChange }: CheckboxProps) => {
-  const colorScheme = useColorScheme();
+  const { colorScheme } = useColorScheme();
   return (
     <Pressable
       onPress={onChange}

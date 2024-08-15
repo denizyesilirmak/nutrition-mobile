@@ -3,10 +3,10 @@ import IconButton from "@/src/components/IconButton";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { Tabs } from "expo-router/tabs";
-import { useColorScheme } from "react-native";
+import { useColorScheme } from "nativewind";
 
 const AuthLayout = () => {
-  const darkMode = useColorScheme() === "dark";
+  const { colorScheme } = useColorScheme();
 
   return (
     <Tabs
@@ -35,7 +35,7 @@ const AuthLayout = () => {
             <Ionicons
               name="home-outline"
               size={18}
-              color={darkMode ? "white" : "black"}
+              color={colorScheme === "dark" ? "white" : "black"}
             />
           ),
           headerLeft: () => (
@@ -47,7 +47,7 @@ const AuthLayout = () => {
                 <Ionicons
                   name="calendar-outline"
                   size={24}
-                  color={darkMode ? "white" : "black"}
+                  color={colorScheme === "dark" ? "white" : "black"}
                 />
               }
             />
@@ -62,7 +62,7 @@ const AuthLayout = () => {
                 <Ionicons
                   name="ellipsis-horizontal-outline"
                   size={24}
-                  color={darkMode ? "white" : "black"}
+                  color={colorScheme === "dark" ? "white" : "black"}
                 />
               }
             />
@@ -77,7 +77,7 @@ const AuthLayout = () => {
             <Ionicons
               name="fast-food-outline"
               size={18}
-              color={darkMode ? "white" : "black"}
+              color={colorScheme === "dark" ? "white" : "black"}
             />
           ),
         }}
@@ -90,7 +90,7 @@ const AuthLayout = () => {
             <Ionicons
               name="ribbon-outline"
               size={18}
-              color={darkMode ? "white" : "black"}
+              color={colorScheme === "dark" ? "white" : "black"}
             />
           ),
         }}
@@ -103,7 +103,7 @@ const AuthLayout = () => {
             <Ionicons
               name="person-outline"
               size={18}
-              color={darkMode ? "white" : "black"}
+              color={colorScheme === "dark" ? "white" : "black"}
             />
           ),
         }}
