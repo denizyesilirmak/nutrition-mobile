@@ -2,6 +2,7 @@ import DarkModeToggle from "@/src/components/DarkModeToggle";
 import ScreenView from "@/src/components/ScreenView";
 import useMe from "@/src/query/hooks/useMe";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { Pressable, Text, View } from "react-native";
 
@@ -27,16 +28,21 @@ const Section = ({
   text,
   rightIcon,
   rightComponent,
+  onPress,
 }: {
   leftIcon?: string;
   text: string | undefined;
   rightIcon?: string;
   rightComponent?: React.ReactNode;
+  onPress?: () => void;
 }) => {
   const { colorScheme } = useColorScheme();
 
   return (
-    <Pressable className="flex flex-row items-center justify-between py-1">
+    <Pressable
+      onPress={onPress}
+      className="flex flex-row items-center justify-between py-1"
+    >
       <View className="flex flex-row items-center gap-4">
         {leftIcon && (
           <Ionicons
@@ -78,11 +84,14 @@ const Profile = () => {
           Personal Information
         </Text>
         <Container>
-          <Section leftIcon="person-outline" text={"Deniz Özgen"} />
+          <Section
+            leftIcon="person-outline"
+            text={`${me?.firstName} ${me?.lastName}`}
+          />
           <Seperator />
           <Section leftIcon="mail-outline" text={me?.email} />
           <Seperator />
-          <Section leftIcon="calendar-outline" text={me?.age} />
+          <Section leftIcon="calendar-outline" text={`${me?.age} years`} />
           <Seperator />
           <Section leftIcon="person-outline" text={me?.gender} />
           <Seperator />
@@ -94,12 +103,14 @@ const Profile = () => {
             leftIcon="person-outline"
             text="Edit Profile"
             rightIcon="chevron-forward"
+            onPress={() => router.push("update")}
           />
           <Seperator />
           <Section
             leftIcon="bar-chart-outline"
             text={"Weight History"}
             rightIcon="chevron-forward"
+            onPress={() => router.push("weight")}
           />
         </Container>
         <Text className="text-xl font-bold dark:text-white">App Settings</Text>
@@ -120,7 +131,7 @@ const Profile = () => {
           <Section
             leftIcon="language-outline"
             text="Language"
-            rightIcon="globe"
+            rightIcon="chevron-forward"
           />
         </Container>
         <Text className="text-xl font-bold dark:text-white">Contact Us</Text>

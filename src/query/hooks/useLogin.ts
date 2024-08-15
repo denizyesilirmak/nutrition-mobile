@@ -14,6 +14,8 @@ export type User = {
   gender: string;
   age: number;
   nutritionalNeed: NutritionalNeed;
+  firstName: string;
+  lastName: string;
 };
 
 export type NutritionalNeed = {

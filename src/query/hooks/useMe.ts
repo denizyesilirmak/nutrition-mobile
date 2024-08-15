@@ -1,6 +1,6 @@
 import { ME_API } from "@/src/constants/Api";
 import fetchWithToken from "@/src/utils/fetch";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export type Response = {
   token: string;
@@ -14,6 +14,8 @@ export type User = {
   weight: number;
   gender: string;
   age: number;
+  firstName: string;
+  lastName: string;
   nutritionalNeed: NutritionalNeed;
 };
 
@@ -42,6 +44,23 @@ const fetchMe = async () => {
   } as Response & { status: number };
 };
 
+const fetchUpdateMe = async (user: Partial<User>) => {
+  const response = await fetchWithToken(ME_API, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  });
+
+  const result = await response.json();
+
+  return {
+    data: result as User,
+    status: response.status,
+  } as Response & { status: number };
+};
+
 const useMe = () => {
   const { data, isLoading, isError } = useQuery<
     QueryResponse,
@@ -53,10 +72,21 @@ const useMe = () => {
     queryFn: fetchMe,
   });
 
+  const {
+    isSuccess,
+    mutate,
+    isError: isUpdateError,
+  } = useMutation<Response, Error, Partial<User>, [string]>({
+    mutationFn: fetchUpdateMe,
+  });
+
   return {
     me: data?.data,
     isLoading,
     isError,
+    updateMe: mutate,
+    updateError: isUpdateError,
+    updateSuccess: isSuccess,
   };
 };
 
