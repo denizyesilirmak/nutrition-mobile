@@ -12,7 +12,7 @@ const AuthLayout = () => {
     <Tabs
       tabBar={(props) => <BottomBar {...props} />}
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         headerShadowVisible: false,
         headerTitleAlign: "center",
 
@@ -30,41 +30,11 @@ const AuthLayout = () => {
       <Tabs.Screen
         name="(home)"
         options={{
-          title: "Home",
           tabBarIcon: () => (
             <Ionicons
               name="home-outline"
               size={18}
               color={colorScheme === "dark" ? "white" : "black"}
-            />
-          ),
-          headerLeft: () => (
-            <IconButton
-              onPress={() => {
-                router.push("mealHistory");
-              }}
-              icon={
-                <Ionicons
-                  name="calendar-outline"
-                  size={24}
-                  color={colorScheme === "dark" ? "white" : "black"}
-                />
-              }
-            />
-          ),
-
-          headerRight: () => (
-            <IconButton
-              onPress={() => {
-                router.push("addMeal");
-              }}
-              icon={
-                <Ionicons
-                  name="ellipsis-horizontal-outline"
-                  size={24}
-                  color={colorScheme === "dark" ? "white" : "black"}
-                />
-              }
             />
           ),
         }}

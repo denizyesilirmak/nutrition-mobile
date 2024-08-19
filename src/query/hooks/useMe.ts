@@ -1,6 +1,7 @@
 import { ME_API } from "@/src/constants/Api";
 import fetchWithToken from "@/src/utils/fetch";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { _queryClient } from "../QueryProvider";
 
 export type Response = {
   token: string;
@@ -86,6 +87,10 @@ const useMe = () => {
     isError: isUpdateError,
   } = useMutation<Response, Error, Partial<User>, [string]>({
     mutationFn: fetchUpdateMe,
+    onSettled: () => {
+      // Invalidate the "me" query
+      _queryClient.invalidateQueries("me");
+    }
   });
 
   return {

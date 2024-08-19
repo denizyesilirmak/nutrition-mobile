@@ -11,6 +11,7 @@ import { useState } from "react";
 import { Text, View } from "react-native";
 import { Food } from "./types";
 import { calculateTotalCalories } from "./utils";
+import NumberSelector from "@/src/components/NumberSelector";
 
 const Home = () => {
   const today = new Date();
@@ -87,6 +88,10 @@ const Home = () => {
           Water Intake
         </Text>
         <WaterOverview />
+        <Text className="pb-2 pt-2 text-lg font-bold text-black dark:text-white">
+          Weight Update
+        </Text>
+        <NumberSelector />
       </View>
     </ScreenView>
   );

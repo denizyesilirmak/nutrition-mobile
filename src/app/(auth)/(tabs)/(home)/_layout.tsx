@@ -1,13 +1,54 @@
+import IconButton from "@/src/components/IconButton";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { Stack } from "expo-router/stack";
+import { useColorScheme } from "nativewind";
 
 const HomeStackLayout = () => {
+  const { colorScheme } = useColorScheme();
+
   return (
     <Stack
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="index" />
+      <Stack.Screen
+        options={{
+          title: "Home",
+          headerShown: true,
+          headerLeft: () => (
+            <IconButton
+              onPress={() => {
+                router.push("mealHistory");
+              }}
+              icon={
+                <Ionicons
+                  name="calendar-outline"
+                  size={24}
+                  color={colorScheme === "dark" ? "white" : "black"}
+                />
+              }
+            />
+          ),
+
+          headerRight: () => (
+            <IconButton
+              onPress={() => {
+                router.push("addMeal");
+              }}
+              icon={
+                <Ionicons
+                  name="ellipsis-horizontal-outline"
+                  size={24}
+                  color={colorScheme === "dark" ? "white" : "black"}
+                />
+              }
+            />
+          ),
+        }}
+        name="index"
+      />
       <Stack.Screen
         name="addMeal"
         options={{
@@ -20,10 +61,15 @@ const HomeStackLayout = () => {
           presentation: "card",
           gestureEnabled: false,
           animation: "flip",
-          
         }}
       />
-      <Stack.Screen name="mealHistory" />
+      <Stack.Screen
+        options={{
+          title: "Meal History",
+          headerShown: true,
+        }}
+        name="mealHistory"
+      />
     </Stack>
   );
 };

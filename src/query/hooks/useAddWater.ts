@@ -1,6 +1,7 @@
 import { WATER_API } from "@/src/constants/Api";
 import fetchWithToken from "@/src/utils/fetch";
 import { useMutation } from "@tanstack/react-query";
+import { _queryClient } from "../QueryProvider";
 
 export type ResponseType = {
   date: Date;
@@ -49,7 +50,8 @@ const useAddWater = () => {
     onSuccess: (data, amount, context) => {},
 
     onSettled: (data, error, amount, context) => {
-        
+        //invalidate the "water" query
+        _queryClient.invalidateQueries("water");
     },
   });
 

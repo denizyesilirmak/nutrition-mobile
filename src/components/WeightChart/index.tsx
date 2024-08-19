@@ -22,7 +22,7 @@ const GuideLine = ({ y }: { y: number }) => {
       x2="1000"
       y2={height}
       stroke="lightgray"
-      strokeWidth={1}
+      strokeWidth={0.5}
     />
   );
 };
@@ -99,7 +99,7 @@ const WeightChart = ({ data }: { data: WeightHistory[] }) => {
             d={generatePath(data)}
             fill="url(#gradient)"
             stroke="#4ade80"
-            strokeWidth={2}
+            strokeWidth={4}
           />
           {generateCirclePoints(data).map((point, index) => {
             return (
@@ -111,12 +111,12 @@ const WeightChart = ({ data }: { data: WeightHistory[] }) => {
                   r={10}
                   fill="#4ade80"
                   stroke={"white"}
-                  strokeWidth={2}
+                  strokeWidth={0}
                 />
                 <Text
                   x={point.x}
                   y={point.y + 1}
-                  fill="white"
+                  fill="black"
                   fontSize={10}
                   textAnchor="middle"
                   alignmentBaseline="middle"
