@@ -1,7 +1,10 @@
+import useAddWater from "@/src/query/hooks/useAddWater";
 import { router } from "expo-router";
 import LottieView from "lottie-react-native";
+import { useState } from "react";
 import { PanResponder, Pressable, Text, TextInput, View } from "react-native";
 import Animated, {
+  runOnJS,
   useAnimatedProps,
   useAnimatedStyle,
   useSharedValue,
@@ -19,6 +22,8 @@ const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
 const AnimatedText = Animated.createAnimatedComponent(TextInput);
 
 const AddWater = () => {
+  const { data: addWaterData, error: addWaterError, mutate } = useAddWater();
+
   const glassRatio = useSharedValue(0);
   const glassHeight = useSharedValue(0);
   const bounceShareValue = useSharedValue(1);
@@ -55,7 +60,7 @@ const AddWater = () => {
 
   const AmountTextProp = useAnimatedProps(() => {
     return {
-      text: `${Math.round(glassRatio.value * 200)} ml`,
+      text: `${Math.round(glassRatio.value * 250)} ml`,
       defaultValue: "0 ml",
     };
   });
@@ -80,6 +85,7 @@ const AddWater = () => {
           <Pressable
             onPress={() => {
               // glassRatio.value = 0;
+              mutate(Math.round(glassRatio.value * 250));
               router.back();
             }}
             className="z-30 h-20 w-24 flex-col items-center justify-center rounded-2xl border-2 border-white bg-lime-500 active:bg-lime-400 dark:border-black"

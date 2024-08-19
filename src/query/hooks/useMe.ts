@@ -8,6 +8,13 @@ export type Response = {
   user: User;
 };
 
+export type WeightHistory = {
+  createdAt: string;
+  id: string;
+  newWeight: number;
+  oldWeight: number;
+};
+
 export type User = {
   email: string;
   height: number;
@@ -17,6 +24,7 @@ export type User = {
   firstName: string;
   lastName: string;
   nutritionalNeed: NutritionalNeed;
+  weightHistory: WeightHistory[];
 };
 
 export type NutritionalNeed = {

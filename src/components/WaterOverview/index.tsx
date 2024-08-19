@@ -1,10 +1,9 @@
+import useWater from "@/src/query/hooks/useWater";
+import { format } from "date-fns";
 import { router } from "expo-router";
-import { Image, Pressable, View } from "react-native";
+import { Image, Pressable, Text, View } from "react-native";
 
-type WaterOverviewProps = {
-  full: number;
-  consumed: number;
-};
+type WaterOverviewProps = {};
 
 const FilledWater = () => (
   <Image
@@ -20,8 +19,18 @@ const EmptyWater = () => (
   />
 );
 
-const WaterOverview = ({ full, consumed }: WaterOverviewProps) => {
-  const array = new Array(full).fill({
+const WaterOverview = () => {
+  const { water, isError, isLoading } = useWater({
+    date: format(new Date(), "yyyy-MM-dd"),
+  });
+
+  const consumed = Math.ceil(water?.daily_total ? water.daily_total / 250 : 0);
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
+  const array = new Array(8).fill({
     consumed: false,
   });
 

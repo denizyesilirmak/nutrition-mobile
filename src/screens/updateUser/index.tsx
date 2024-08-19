@@ -2,6 +2,7 @@ import Button from "@/src/components/Button";
 import ScreenView from "@/src/components/ScreenView";
 import TextInput from "@/src/components/TextInput";
 import useMe, { User } from "@/src/query/hooks/useMe";
+import { router } from "expo-router";
 import { useState } from "react";
 import { Text, View } from "react-native";
 
@@ -10,8 +11,8 @@ const UpdateUser = () => {
   const [user, setUser] = useState<User>(me as User);
 
   const handleUpdate = () => {
-    console.log("handleUpdate");
     updateMe(user);
+    router.back();
   };
 
   return (

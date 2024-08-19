@@ -1,3 +1,5 @@
+import { WeightHistory } from "@/src/query/hooks/useMe";
+import { Fragment } from "react";
 import { ScrollView, useWindowDimensions, View } from "react-native";
 import {
   Circle,
@@ -25,9 +27,9 @@ const GuideLine = ({ y }: { y: number }) => {
   );
 };
 
-const generatePath = (data: { date: string; weight: number }[]) => {
-  const maxWeight = Math.max(...data.map((item) => item.weight));
-  const minWeight = Math.min(...data.map((item) => item.weight));
+const generatePath = (data: WeightHistory[]) => {
+  const maxWeight = Math.max(...data.map((item) => item.newWeight));
+  const minWeight = Math.min(...data.map((item) => item.newWeight));
 
   const weightRange = maxWeight - minWeight;
 
@@ -41,14 +43,14 @@ const generatePath = (data: { date: string; weight: number }[]) => {
 
   return data
     .map((item, index) => {
-      return `${index === 0 ? "M" : "L"} ${x(index)} ${y(item.weight)}`;
+      return `${index === 0 ? "M" : "L"} ${x(index)} ${y(item.newWeight)}`;
     })
     .join(" ");
 };
 
-const generateCirclePoints = (data: { date: string; weight: number }[]) => {
-  const maxWeight = Math.max(...data.map((item) => item.weight));
-  const minWeight = Math.min(...data.map((item) => item.weight));
+const generateCirclePoints = (data: WeightHistory[]) => {
+  const maxWeight = Math.max(...data.map((item) => item.newWeight));
+  const minWeight = Math.min(...data.map((item) => item.newWeight));
 
   const weightRange = maxWeight - minWeight;
 
@@ -64,16 +66,12 @@ const generateCirclePoints = (data: { date: string; weight: number }[]) => {
   return data.map((item, index) => {
     return {
       x: x(index),
-      y: y(item.weight),
+      y: y(item.newWeight),
     };
   });
 };
 
-const WeightChart = ({
-  data,
-}: {
-  data: { date: string; weight: number }[];
-}) => {
+const WeightChart = ({ data }: { data: WeightHistory[] }) => {
   const { width, height } = useWindowDimensions();
 
   const CHART_WIDTH = data.length * 50 < width ? width : data.length * 50;
@@ -105,7 +103,7 @@ const WeightChart = ({
           />
           {generateCirclePoints(data).map((point, index) => {
             return (
-              <>
+              <Fragment key={index}>
                 <Circle
                   key={index}
                   cx={point.x}
@@ -124,9 +122,9 @@ const WeightChart = ({
                   alignmentBaseline="middle"
                   fontWeight={"bold"}
                 >
-                  {data[index].weight}
+                  {data[index].newWeight}
                 </Text>
-              </>
+              </Fragment>
             );
           })}
         </Svg>

@@ -11,7 +11,6 @@ import { useState } from "react";
 import { Text, View } from "react-native";
 import { Food } from "./types";
 import { calculateTotalCalories } from "./utils";
-import Heatmap from "@/src/components/Heatmap";
 
 const Home = () => {
   const today = new Date();
@@ -57,7 +56,7 @@ const Home = () => {
         </Text>
         <Overview
           consumedCalories={totalCalories.total.energy}
-          total={me?.nutritionalNeed.calories || total}
+          total={me?.nutritionalNeed?.calories || total}
           macroNutrients={{
             carbs: totalCalories.total.carbs || 0,
             protein: totalCalories.total.protein || 0,
@@ -75,9 +74,9 @@ const Home = () => {
         <Meals
           meals={meals as Record<string, Food[]>}
           energyNeedPerMeal={{
-            breakfast: me?.nutritionalNeed.calories * 0.3 || 0,
-            lunch: me?.nutritionalNeed.calories * 0.4 || 0,
-            dinner: me?.nutritionalNeed.calories * 0.3 || 0,
+            breakfast: me?.nutritionalNeed?.calories * 0.3 || 0,
+            lunch: me?.nutritionalNeed?.calories * 0.4 || 0,
+            dinner: me?.nutritionalNeed?.calories * 0.3 || 0,
           }}
         />
         <Text className="pb-2 pt-2 text-lg font-bold text-black dark:text-white">
@@ -87,7 +86,7 @@ const Home = () => {
         <Text className="pb-2 pt-2 text-lg font-bold text-black dark:text-white">
           Water Intake
         </Text>
-        <WaterOverview full={8} consumed={3} />
+        <WaterOverview />
       </View>
     </ScreenView>
   );
