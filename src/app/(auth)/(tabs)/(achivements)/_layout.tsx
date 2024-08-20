@@ -7,12 +7,18 @@ const AchivementsStackLayout = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="index" />
+      <Stack.Screen
+        name="index"
+        options={{
+          headerShown: true,
+          title: "Achivements",
+        }}
+      />
       <Stack.Screen
         name="details"
         options={{
           presentation: "modal",
-          animation: "flip"
+          animation: "flip",
         }}
       />
     </Stack>

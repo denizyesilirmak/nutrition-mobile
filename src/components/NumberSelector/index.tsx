@@ -38,7 +38,7 @@ const NumberSelector = () => {
     <View className="flex-col items-center justify-center gap-4 space-x-4 rounded-md bg-gray-50 p-4 dark:bg-gray-800">
       <View className="flex-row items-center justify-center">
         <Pressable
-          className="flex-1 items-center justify-center rounded-md bg-slate-600 p-2 dark:bg-slate-700"
+          className="flex-1 items-center justify-center rounded-md bg-gray-200 p-2 dark:bg-slate-700"
           onPress={() => setValue(clamp(value - 1, BOUNDS.min, BOUNDS.max))}
         >
           <Ionicons name="remove" size={24} color="white" />
@@ -49,7 +49,7 @@ const NumberSelector = () => {
           </Text>
         </View>
         <Pressable
-          className="flex-1 items-center justify-center rounded-md bg-slate-600 p-2 dark:bg-slate-700"
+          className="flex-1 items-center justify-center rounded-md bg-gray-200 p-2 dark:bg-slate-700"
           onPress={() => setValue(clamp(value + 1, BOUNDS.min, BOUNDS.max))}
         >
           <Ionicons name="add" size={24} color="white" />

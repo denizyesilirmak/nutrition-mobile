@@ -7,7 +7,13 @@ const FoodsStackLayout = () => {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="index" />
+      <Stack.Screen
+        name="index"
+        options={{
+          headerShown: true,
+          title: "Foods",
+        }}
+      />
       <Stack.Screen
         name="scanfood"
         options={{
