@@ -1,11 +1,11 @@
+import Heatmap from "@/src/components/Heatmap";
 import OptionSelector from "@/src/components/OptionSelector";
 import TabSelector from "@/src/components/TabSelector";
-import { useEffect, useState } from "react";
+import WeeklyChart from "@/src/components/WeeklyChart";
+import { useState } from "react";
 import { View } from "react-native";
 import { dateNavigator } from "./utils/dateNavigator";
 import formatDate from "./utils/formatDate";
-import Heatmap from "@/src/components/Heatmap";
-import WeeklyChart from "@/src/components/WeeklyChart";
 
 type selectedTabType = {
   mode: "daily" | "weekly" | "monthly";

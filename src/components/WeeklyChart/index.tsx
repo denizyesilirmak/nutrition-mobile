@@ -2,7 +2,6 @@ import { eachDayOfInterval, format } from "date-fns";
 import { Text, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
-  withSpring,
   withTiming,
 } from "react-native-reanimated";
 
@@ -35,7 +34,7 @@ const Bar = ({ percentage, name }: { percentage: number; name: string }) => {
   return (
     <Animated.View
       // @ts-ignore
-      className={`h-1/2 min-h-8 w-full justify-center ${BAR_COLORS[name]}`}
+      className={`h-1/2 min-h-8 w-full justify-center ${BAR_COLORS[name]} rounded-lg`}
       style={animatedHeight}
     >
       <Animated.Text
@@ -76,14 +75,14 @@ const WeeklyChart = ({ dateRange }: WeeklyChartProps) => {
         const protein = 100 - fat - carb;
 
         return (
-          <View className="h-full flex-1 items-center justify-center overflow-hidden rounded-lg border border-gray-300 dark:border-gray-600">
+          <View className="h-full flex-1 items-center justify-center rounded-lg">
             <Animated.View
-              className="w-full flex-1 overflow-hidden bg-transparent"
+              className="bg-transparentp w-full flex-1 gap-1 pb-10"
               style={noDataAnimation}
             >
-              <Bar percentage={fat} name="fat" noData={false} />
-              <Bar percentage={carb} name="carb" noData={false} />
-              <Bar percentage={protein} name="protein" noData={false} />
+              <Bar percentage={fat} name="fat" />
+              <Bar percentage={carb} name="carb" />
+              <Bar percentage={protein} name="protein" />
             </Animated.View>
             <View className="p-2">
               <Text className="text-center text-lg font-semibold text-black dark:text-white">

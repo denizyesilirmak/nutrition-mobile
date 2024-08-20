@@ -18,8 +18,8 @@ const UpdateUser = () => {
   return (
     <ScreenView padding>
       <View className="gap-4">
-        <View className="gap-4 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
-          <Text className="text-lg font-bold">Update User</Text>
+        <View className="gap-2 rounded-lg bg-gray-50 p-4 dark:bg-gray-800">
+          <Text className="text-lg font-bold color-black dark:color-white">Update User</Text>
           <Text className="text-sm text-gray-500 dark:text-gray-400">
             To keep your weight history, please update your information.
           </Text>

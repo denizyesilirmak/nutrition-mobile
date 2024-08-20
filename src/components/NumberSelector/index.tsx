@@ -4,6 +4,7 @@ import { Alert, Pressable, Text, View } from "react-native";
 import Button from "../Button";
 import { useState } from "react";
 import useMe from "@/src/query/hooks/useMe";
+import { useColorScheme } from "nativewind";
 
 const BOUNDS = {
   min: 35,
@@ -11,8 +12,9 @@ const BOUNDS = {
 };
 
 const NumberSelector = () => {
-    const { me, updateMe } = useMe();
-    const [value, setValue] = useState(me?.weight || 0);
+  const { me, updateMe } = useMe();
+  const [value, setValue] = useState(me?.weight || 0);
+  const { colorScheme } = useColorScheme();
 
   const handleWeightUpdate = () => {
     Alert.alert(
@@ -41,7 +43,11 @@ const NumberSelector = () => {
           className="flex-1 items-center justify-center rounded-md bg-gray-200 p-2 dark:bg-slate-700"
           onPress={() => setValue(clamp(value - 1, BOUNDS.min, BOUNDS.max))}
         >
-          <Ionicons name="remove" size={24} color="white" />
+          <Ionicons
+            name="remove"
+            size={24}
+            color={colorScheme === "dark" ? "white" : "black"}
+          />
         </Pressable>
         <View className="flex-1 items-center justify-center">
           <Text className="text-2xl font-bold color-slate-900 dark:color-slate-100">
@@ -52,7 +58,11 @@ const NumberSelector = () => {
           className="flex-1 items-center justify-center rounded-md bg-gray-200 p-2 dark:bg-slate-700"
           onPress={() => setValue(clamp(value + 1, BOUNDS.min, BOUNDS.max))}
         >
-          <Ionicons name="add" size={24} color="white" />
+          <Ionicons
+            name="add"
+            size={24}
+            color={colorScheme === "dark" ? "white" : "black"}
+          />
         </Pressable>
       </View>
       <Button label="Update Weight" onPress={handleWeightUpdate} />
