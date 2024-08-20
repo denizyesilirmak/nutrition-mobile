@@ -87,7 +87,7 @@ const WeightChart = ({ data }: { data: WeightHistory[] }) => {
         <Svg width={CHART_WIDTH} height="200">
           <Defs>
             <LinearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
-              <Stop offset="0" stopColor="#4ade80" stopOpacity="0.2" />
+              <Stop offset="0" stopColor="#4ade80" stopOpacity="0.4" />
               <Stop offset="1" stopColor="#4ade80" stopOpacity="0" />
             </LinearGradient>
           </Defs>

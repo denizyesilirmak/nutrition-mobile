@@ -13,6 +13,7 @@ import Animated, { FadeInRight } from "react-native-reanimated";
 import useInsertMeal from "@/src/query/hooks/useInsertMeal";
 import IconButton from "@/src/components/IconButton";
 import { Ionicons } from "@expo/vector-icons";
+import { useLocalSearchParams } from "expo-router";
 
 const Food = ({
   food,
@@ -64,25 +65,40 @@ const SkeletonItem = () => {
   );
 };
 
+const MEAL_TIMES = {
+  breakfast: {
+    title: "Breakfast 🍳",
+  },
+  lunch: {
+    title: "Lunch 🍱",
+  },
+  dinner: {
+    title: "Dinner 🍲",
+  },
+};
+
 const AddMeals = () => {
+  const { mealTime } = useLocalSearchParams<{ mealTime: string }>();
+
   const [searchTerm, setSearchTerm] = useState<string>("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const { results, fetchNextPage, isLoading } = useFoodSearch({
     searchTerm: debouncedSearchTerm,
   });
   const [selectedFoods, setSelectedFoods] = useState<FoodType[]>([]);
+
   const { insertMeal, isPending, isSuccess } = useInsertMeal({
     foods: selectedFoods.map((food) => ({
       id: food.id,
       multiplier: 1,
     })),
-    mealTime: "dinner",
+    mealTime: mealTime as string,
   });
 
   return (
     <View className="flex-1 flex-col items-center justify-center gap-2 p-4">
       <Text className="text-black-400 text-xl font-semibold dark:text-gray-100">
-        Add Meals / Breakfast 🍳
+        Add Meals / {MEAL_TIMES[mealTime].title}
       </Text>
       <View className="h-min w-full rounded-xl border border-dashed border-gray-200 dark:border-gray-800">
         <View className="flex h-16 flex-row items-center justify-start gap-2 p-2">

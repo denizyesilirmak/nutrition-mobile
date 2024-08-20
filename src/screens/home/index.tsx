@@ -35,7 +35,7 @@ const Home = () => {
     nextday.setDate(date.getDate() + 1);
 
     const previosDay = new Date(date);
-    previosDay.setDate(date.getDate() - 1);
+    previosDay.setDate(date.getDate());
 
     setSelectedDateRange({
       startDate: format(previosDay, "yyyy-MM-dd"),

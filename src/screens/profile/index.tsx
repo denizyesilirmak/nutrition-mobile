@@ -1,5 +1,6 @@
 import DarkModeToggle from "@/src/components/DarkModeToggle";
 import ScreenView from "@/src/components/ScreenView";
+import { User } from "@/src/query/hooks/useLogin";
 import useMe from "@/src/query/hooks/useMe";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -71,11 +72,21 @@ const Profile = () => {
   const { me, isLoading } = useMe();
   const { colorScheme, toggleColorScheme } = useColorScheme();
 
-  // console.log(me);
-
   if (isLoading) {
     return <Text>Loading...</Text>;
   }
+
+  if (!me) {
+    return <Text>Error loading profile</Text>;
+  }
+
+  const calculateBMI = ({ weight, height }: User) => {
+    if (!weight || !height) {
+      return "N/A";
+    }
+
+    return (weight / (height / 100) ** 2).toFixed(2);
+  };
 
   return (
     <ScreenView scrollable>
@@ -98,6 +109,8 @@ const Profile = () => {
           <Section leftIcon="medkit-outline" text={`${me?.height} cm`} />
           <Seperator />
           <Section leftIcon="medkit-outline" text={`${me?.weight} kg`} />
+          <Seperator />
+          <Section leftIcon="man-outline" text={`${calculateBMI(me)} BMI`} />
           <Seperator />
           <Section
             leftIcon="person-outline"

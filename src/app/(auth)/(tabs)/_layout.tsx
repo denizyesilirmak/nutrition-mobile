@@ -30,6 +30,7 @@ const AuthLayout = () => {
       <Tabs.Screen
         name="(home)"
         options={{
+          title: "Home",
           tabBarIcon: () => (
             <Ionicons
               name="home-outline"

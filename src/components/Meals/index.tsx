@@ -4,14 +4,19 @@ import Animated, { FadeInLeft } from "react-native-reanimated";
 import IconButton from "../IconButton";
 import { MealsProps } from "./types";
 import { router } from "expo-router";
+import { useColorScheme } from "nativewind";
 
 const MealHeader = ({
   title,
   calories,
+  mealTime,
 }: {
   title: string;
   calories: number;
+  mealTime: string;
 }) => {
+  const { colorScheme } = useColorScheme();
+
   return (
     <View className="p flex flex-row items-center justify-between rounded-lg bg-gray-100 px-2 dark:bg-gray-700">
       <Text className="text-black-400 text-md font-semibold dark:text-gray-100">
@@ -21,9 +26,15 @@ const MealHeader = ({
         </Text>
       </Text>
       <IconButton
-        icon={<Ionicons name="add" size={18} />}
+        icon={
+          <Ionicons
+            name="add"
+            size={18}
+            color={colorScheme === "dark" ? "white" : "black"}
+          />
+        }
         onPress={() => {
-          router.push("addMeal");
+          router.push(`/addMeal?mealTime=${mealTime}`);
         }}
       />
     </View>
@@ -37,7 +48,7 @@ const MealItem = ({ title, calories }: { title: string; calories: number }) => {
       className="flex flex-row items-center justify-between px-4 py-3"
     >
       <Text
-        className="text-black-400 text-md dark:text-gray-100 w-3/4"
+        className="text-black-400 text-md w-3/4 dark:text-gray-100"
         numberOfLines={1}
       >
         {title}
@@ -70,11 +81,20 @@ const Meals = ({ meals, energyNeedPerMeal }: MealsProps) => {
         <MealHeader
           title="🥞 Breakfast"
           calories={energyNeedPerMeal.breakfast || 0}
+          mealTime="breakfast"
         />
         <NoRecords />
-        <MealHeader title="🥘 Lunch" calories={energyNeedPerMeal.lunch || 0} />
+        <MealHeader
+          title="🥘 Lunch"
+          calories={energyNeedPerMeal.lunch || 0}
+          mealTime="lunch"
+        />
         <NoRecords />
-        <MealHeader title="🍲 Dinner" calories={energyNeedPerMeal.lunch || 0} />
+        <MealHeader
+          title="🍲 Dinner"
+          calories={energyNeedPerMeal.lunch || 0}
+          mealTime="dinner"
+        />
         <NoRecords />
       </View>
     );
@@ -85,6 +105,7 @@ const Meals = ({ meals, energyNeedPerMeal }: MealsProps) => {
       <MealHeader
         title="🥞 Breakfast"
         calories={energyNeedPerMeal.breakfast || 0}
+        mealTime="breakfast"
       />
       {meals.breakfast.length === 0 ? (
         <NoRecords />
@@ -98,7 +119,11 @@ const Meals = ({ meals, energyNeedPerMeal }: MealsProps) => {
         ))
       )}
 
-      <MealHeader title="🥘 Lunch" calories={energyNeedPerMeal.lunch || 0} />
+      <MealHeader
+        title="🥘 Lunch"
+        calories={energyNeedPerMeal.lunch || 0}
+        mealTime="lunch"
+      />
 
       {meals.lunch.length === 0 ? (
         <NoRecords />
@@ -111,7 +136,11 @@ const Meals = ({ meals, energyNeedPerMeal }: MealsProps) => {
           />
         ))
       )}
-      <MealHeader title="🍲 Dinner" calories={energyNeedPerMeal.dinner || 0} />
+      <MealHeader
+        title="🍲 Dinner"
+        calories={energyNeedPerMeal.dinner || 0}
+        mealTime="dinner"
+      />
       {meals.dinner.length === 0 ? (
         <NoRecords />
       ) : (
