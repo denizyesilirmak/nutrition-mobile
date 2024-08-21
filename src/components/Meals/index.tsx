@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import Animated, { FadeInLeft } from "react-native-reanimated";
 import IconButton from "../IconButton";
 import { MealsProps } from "./types";
@@ -41,18 +41,42 @@ const MealHeader = ({
   );
 };
 
-const MealItem = ({ title, calories }: { title: string; calories: number }) => {
+const MealItem = ({
+  title,
+  calories,
+  image,
+  description,
+}: {
+  title: string;
+  calories: number;
+  image: string;
+  description?: string;
+}) => {
   return (
     <Animated.View
       entering={FadeInLeft}
       className="flex flex-row items-center justify-between px-4 py-3"
     >
-      <Text
-        className="text-black-400 text-md w-3/4 dark:text-gray-100"
-        numberOfLines={1}
-      >
-        {title}
-      </Text>
+      <View className="flex-1 flex-row items-center">
+        <Image
+          source={{ uri: image }}
+          className="mr-2 h-12 w-12 rounded-lg border border-lime-500 dark:border-green-500"
+        />
+        <View className="flex-1">
+          <Text
+            className="text-black-400 text-md w-3/4 font-semibold dark:text-gray-100"
+            numberOfLines={1}
+          >
+            {title}
+          </Text>
+          <Text
+            className="text-xs text-gray-400 dark:text-gray-300"
+            numberOfLines={1}
+          >
+            {description}
+          </Text>
+        </View>
+      </View>
       <Text className="text-xs text-gray-400 dark:text-gray-300">
         {calories} cal
       </Text>
@@ -110,13 +134,17 @@ const Meals = ({ meals, energyNeedPerMeal }: MealsProps) => {
       {meals.breakfast.length === 0 ? (
         <NoRecords />
       ) : (
-        meals.breakfast.map((meal) => (
-          <MealItem
-            key={keyGenerator(meal.id)}
-            title={meal.main_food_description}
-            calories={meal.energy}
-          />
-        ))
+        meals.breakfast
+          .sort((a, b) => b.energy - a.energy)
+          .map((meal) => (
+            <MealItem
+              key={keyGenerator(meal.id)}
+              title={meal.foodName}
+              calories={meal.energy}
+              image={`https://static.nuttrackerapi.com/${meal.lowResImage}`}
+              description={meal.category_description}
+            />
+          ))
       )}
 
       <MealHeader
@@ -128,13 +156,17 @@ const Meals = ({ meals, energyNeedPerMeal }: MealsProps) => {
       {meals.lunch.length === 0 ? (
         <NoRecords />
       ) : (
-        meals.lunch.map((meal) => (
-          <MealItem
-            key={keyGenerator(meal.id)}
-            title={meal.main_food_description}
-            calories={meal.energy}
-          />
-        ))
+        meals.lunch
+          .sort((a, b) => b.energy - a.energy)
+          .map((meal) => (
+            <MealItem
+              key={keyGenerator(meal.id)}
+              title={meal.foodName}
+              calories={meal.energy}
+              image={`https://static.nuttrackerapi.com/${meal.lowResImage}`}
+              description={meal.category_description}
+            />
+          ))
       )}
       <MealHeader
         title="🍲 Dinner"
@@ -144,13 +176,18 @@ const Meals = ({ meals, energyNeedPerMeal }: MealsProps) => {
       {meals.dinner.length === 0 ? (
         <NoRecords />
       ) : (
-        meals.dinner.map((meal) => (
-          <MealItem
-            key={keyGenerator(meal.id)}
-            title={meal.main_food_description}
-            calories={meal.energy}
-          />
-        ))
+        meals.dinner
+          .sort((a, b) => b.energy - a.energy)
+          .map((meal) => (
+            <MealItem
+              key={keyGenerator(meal.id)}
+              title={meal.foodName}
+              calories={meal.energy}
+              image={meal.lowResImage}
+              image={`https://static.nuttrackerapi.com/${meal.lowResImage}`}
+              description={meal.category_description}
+            />
+          ))
       )}
     </View>
   );

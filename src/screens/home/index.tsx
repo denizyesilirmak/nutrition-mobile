@@ -16,10 +16,10 @@ import NumberSelector from "@/src/components/NumberSelector";
 const Home = () => {
   const today = new Date();
   const dateObj = new Date(today);
-  const previosDay = new Date(dateObj.setDate(dateObj.getDate() - 1));
+  const previousDay = new Date(dateObj.setDate(dateObj.getDate() - 1));
 
   const [selectedDateRange, setSelectedDateRange] = useState({
-    startDate: format(previosDay, "yyyy-MM-dd"),
+    startDate: format(previousDay, "yyyy-MM-dd"),
     endDate: format(today, "yyyy-MM-dd"),
   });
 
@@ -34,11 +34,11 @@ const Home = () => {
     const nextday = new Date(date);
     nextday.setDate(date.getDate() + 1);
 
-    const previosDay = new Date(date);
-    previosDay.setDate(date.getDate());
+    const previousDay = new Date(date);
+    previousDay.setDate(date.getDate());
 
     setSelectedDateRange({
-      startDate: format(previosDay, "yyyy-MM-dd"),
+      startDate: format(previousDay, "yyyy-MM-dd"),
       endDate: format(nextday, "yyyy-MM-dd"),
     });
   };

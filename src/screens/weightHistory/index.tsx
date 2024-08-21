@@ -44,10 +44,13 @@ const WeightHistory = () => {
               className="flex flex-row items-center justify-between py-3"
             >
               <Text className="text-md text-black dark:text-white">
-                {format(new Date(history.createdAt), "yyyy-MM-dd")}
+                {format(new Date(history.createdAt), "dd.MM.yyyy - ")}
+                <Text className="text-gray-500 dark:text-gray-400">
+                  {format(new Date(history.createdAt), "HH.mm")}
+                </Text>
               </Text>
               <View className="rounded-lg bg-lime-500 p-1 dark:bg-lime-500">
-                <Text className="text-md font-semibold text-black dark:text-white">
+                <Text className="text-md font-semibold color-black dark:color-black">
                   <Text>
                     {history.oldWeight - history.newWeight > 0 ? "↓" : "↑"}
                   </Text>

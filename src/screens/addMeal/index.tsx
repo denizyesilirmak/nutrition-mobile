@@ -31,7 +31,9 @@ const Food = ({
       }}
     >
       <Image
-        source={`https://picsum.photos/seed/${food.id}/200/300`}
+        source={{
+          uri: food.image,
+        }}
         style={{
           width: 64,
           height: 64,
@@ -119,9 +121,7 @@ const AddMeals = () => {
                 <Animated.Image
                   entering={FadeInRight}
                   key={food.id}
-                  source={{
-                    uri: `https://picsum.photos/seed/${food.id}/200/300`,
-                  }}
+                  source={{ uri: food.image }}
                   className="h-14 w-14 rounded-lg border-2 border-green-500 dark:border-lime-500"
                 />
               </Pressable>

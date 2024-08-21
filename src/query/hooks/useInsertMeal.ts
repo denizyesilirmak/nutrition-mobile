@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { FoodToInsert, insertMeal } from "@/src/utils/services";
 import { _queryClient } from "../QueryProvider";
+import { format } from "date-fns";
 
 type MutationResponse = {
   status: boolean;
@@ -34,7 +35,7 @@ const useInsertMeal = ({
     },
     onSettled: () => {
       _queryClient.invalidateQueries({
-        queryKey: ["meals"],
+        queryKey: ["meals", "date", format(new Date(), "yyyy-MM-dd")],
       });
     },
   });

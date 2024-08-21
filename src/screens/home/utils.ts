@@ -91,26 +91,26 @@ export const calculateTotalCalories = (
     }
 
     data[key].forEach((food) => {
-      total.energy += food.energy;
-      total.carbs += food.carbohydrate;
-      total.protein += food.protein;
-      total.fat += food.total_fat;
+      total.energy += food.energy || 0;
+      total.carbs += food.carbohydrate || 0;
+      total.protein += food.protein || 0;
+      total.fat += food.total_fat || 0;
 
       if (key === "breakfast") {
-        breakfast.energy += food.energy;
-        breakfast.carbs += food.carbohydrate;
-        breakfast.protein += food.protein;
-        breakfast.fat += food.total_fat;
+        breakfast.energy += food.energy || 0;
+        breakfast.carbs += food.carbohydrate || 0;
+        breakfast.protein += food.protein || 0;
+        breakfast.fat += food.total_fat || 0;
       } else if (key === "lunch") {
-        lunch.energy += food.energy;
-        lunch.carbs += food.carbohydrate;
-        lunch.protein += food.protein;
-        lunch.fat += food.total_fat;
+        lunch.energy += food.energy || 0;
+        lunch.carbs += food.carbohydrate || 0;
+        lunch.protein += food.protein || 0;
+        lunch.fat += food.total_fat || 0;
       } else if (key === "dinner") {
-        dinner.energy += food.energy;
-        dinner.carbs += food.carbohydrate;
-        dinner.protein += food.protein;
-        dinner.fat += food.total_fat;
+        dinner.energy += food.energy || 0;
+        dinner.carbs += food.carbohydrate || 0;
+        dinner.protein += food.protein || 0;
+        dinner.fat += food.total_fat || 0;
       }
     });
   });

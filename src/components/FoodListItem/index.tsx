@@ -21,7 +21,7 @@ const FoodListItem = ({ food }: { food: Food }) => {
         <View className="mb-2 flex-row">
           <Image
             source={{ uri: food.image }}
-            className="h-16 w-16 rounded-2xl bg-red-500"
+            className="h-20 w-20 rounded-2xl"
           />
           <View className="pl-2 pt-1">
             <Text
@@ -35,12 +35,18 @@ const FoodListItem = ({ food }: { food: Food }) => {
         </View>
         <View className="border-b border-gray-200 dark:border-gray-700" />
         <View className="mt-2 flex-row justify-between px-2">
-          <Text className="text-xs color-white">energy: {food.energy} cal</Text>
-          <Text className="text-xs color-white">
-            carbs: {food.carbohydrate} gr
+          <Text className="text-xs color-black dark:color-white">
+            energy: {food.energy} cal
           </Text>
-          <Text className="text-xs color-white">fat: {food.energy} gr</Text>
-          <Text className="text-xs color-white">protein: {food.energy} gr</Text>
+          <Text className="text-xs color-black dark:color-white">
+            carbs: {food.carbonhydrate} gr
+          </Text>
+          <Text className="text-xs color-black dark:color-white">
+            fat: {food.fat} gr
+          </Text>
+          <Text className="text-xs color-black dark:color-white">
+            protein: {food.protein} gr
+          </Text>
         </View>
       </View>
     </Pressable>

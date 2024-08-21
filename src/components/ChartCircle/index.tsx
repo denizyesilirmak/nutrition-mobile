@@ -1,7 +1,10 @@
 import { useColorScheme } from "nativewind";
-import { Text, View } from "react-native";
+import { useEffect } from "react";
+import { Text, TextInput, View } from "react-native";
 import Animated, {
   useAnimatedProps,
+  useSharedValue,
+  withRepeat,
   withSequence,
   withSpring,
   withTiming,
@@ -15,9 +18,12 @@ type ChartCircleProps = {
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
+const AnimatedText = Animated.createAnimatedComponent(TextInput);
+
 const ChartCircle = ({ calorie, total }: ChartCircleProps) => {
   const clampedValue = Math.min(Math.max(calorie / total, 0), 1);
   const { colorScheme } = useColorScheme();
+  const updatedCalorieSharedValue = useSharedValue(0);
 
   const animatedProps = useAnimatedProps(() => {
     return {
@@ -33,11 +39,25 @@ const ChartCircle = ({ calorie, total }: ChartCircleProps) => {
     };
   }, [clampedValue]);
 
+  const animatedTextProps = useAnimatedProps(() => {
+    updatedCalorieSharedValue.value = withTiming(calorie, {
+      duration: 500,
+    });
+
+    return {
+      text: updatedCalorieSharedValue.value.toFixed(0).toString(),
+    };
+  }, [calorie]);
+
   return (
     <View className="h-32 w-32 items-center">
-      <Text className="absolute top-12 text-2xl font-bold text-black dark:text-white">
-        {calorie}
-      </Text>
+      <AnimatedText
+        className="absolute top-12 text-2xl font-bold text-black dark:text-white"
+        // @ts-ignore
+        animatedProps={animatedTextProps}
+        value={calorie.toString()}
+      />
+
       <Text className="absolute top-20 text-sm font-bold text-black dark:text-white">
         kCal
       </Text>
