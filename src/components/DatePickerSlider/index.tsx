@@ -27,15 +27,17 @@ const DateItem = ({
   index,
   datesLength,
   onPress,
+  selected,
 }: DateItemProps) => {
   return (
     <Pressable
       onPressOut={onPress}
-      className={`flex -scale-x-100 items-center justify-center rounded-lg bg-green-500 dark:bg-lime-500`}
+      className={`flex -scale-x-100 items-center justify-center bg-green-500 dark:bg-lime-500`}
       style={{
         width: dateBoxWidth,
         height: "100%",
         opacity: index > 1 && index < datesLength - 2 ? 1 : 0.4,
+        borderRadius: 8,
       }}
     >
       <Text className="bg text-xl font-extrabold color-white dark:color-black">

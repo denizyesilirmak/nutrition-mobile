@@ -52,6 +52,7 @@ const Section = ({
             color={colorScheme === "dark" ? "white" : "black"}
           />
         )}
+
         <Text className="text-md dark:text-white">{text}</Text>
       </View>
       {rightIcon && (

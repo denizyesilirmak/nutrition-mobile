@@ -34,7 +34,7 @@ const Bar = ({ percentage, name }: { percentage: number; name: string }) => {
   return (
     <Animated.View
       // @ts-ignore
-      className={`h-1/2 min-h-8 w-full justify-center ${BAR_COLORS[name]} rounded-lg`}
+      className={`h-1/2 min-h-3 w-full justify-center ${BAR_COLORS[name]} rounded-lg`}
       style={animatedHeight}
     >
       <Animated.Text
@@ -77,7 +77,7 @@ const WeeklyChart = ({ dateRange }: WeeklyChartProps) => {
         return (
           <View className="h-full flex-1 items-center justify-center rounded-lg">
             <Animated.View
-              className="bg-transparentp w-full flex-1 gap-1 pb-10"
+              className="bg-transparentp w-full flex-1 gap-2 pb-10"
               style={noDataAnimation}
             >
               <Bar percentage={fat} name="fat" />
