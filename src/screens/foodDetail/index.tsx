@@ -11,6 +11,8 @@ const FoodDetail = () => {
 
   const { foodId } = useLocalSearchParams();
 
+  console.log(foodId);
+
   return (
     <ScreenView>
       <View className="h-80 items-center">

@@ -48,6 +48,8 @@ const Home = () => {
   const { me } = useMe();
   if (!me) return null;
 
+  console.log('home render');
+
   return (
     <ScreenView scrollable>
       <DatePickerSlider onDateChange={handleDateChange} />

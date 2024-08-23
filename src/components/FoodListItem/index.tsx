@@ -21,7 +21,7 @@ const FoodListItem = ({ food }: { food: Food }) => {
         <View className="mb-2 flex-row">
           <Image
             source={{ uri: food.image }}
-            className="h-20 w-20 rounded-2xl"
+            style={{ width: 60, height: 60, borderRadius: 4 }}
           />
           <View className="pl-2 pt-1">
             <Text

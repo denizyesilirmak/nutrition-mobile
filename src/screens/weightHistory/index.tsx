@@ -38,10 +38,10 @@ const WeightHistory = () => {
           <WeightChart data={filteredWeightHistory} />
         </Section>
         <Section>
-          {filteredWeightHistory.map((history) => (
+          {filteredWeightHistory.map((history, index) => (
             <View
               key={history.id}
-              className="flex flex-row items-center justify-between py-3"
+              className={`flex flex-row items-center justify-between px-2 py-3 ${index % 2 === 0 ? "bg-gray-100 dark:bg-gray-700" : ""}`}
             >
               <Text className="text-md text-black dark:text-white">
                 {format(new Date(history.createdAt), "dd.MM.yyyy - ")}
