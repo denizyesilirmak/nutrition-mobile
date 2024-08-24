@@ -10,7 +10,7 @@ const TabSelector = ({ onChange, selectedTab }: TabSelectorProps) => {
     <View className="flex flex-row justify-between gap-2">
       <Pressable
         onPress={() => onChange("daily")}
-        className={`flex-1 items-center justify-center rounded border border-gray-300 p-2 py-4 dark:border-gray-600 ${
+        className={`flex-1 items-center justify-center rounded-xl border border-gray-300 p-2 py-4 transition-colors duration-500 dark:border-gray-600 ${
           selectedTab === "daily" ? "bg bg-green-500 dark:bg-lime-500" : ""
         }`}
       >
@@ -19,7 +19,7 @@ const TabSelector = ({ onChange, selectedTab }: TabSelectorProps) => {
 
       <Pressable
         onPress={() => onChange("weekly")}
-        className={`flex-1 items-center justify-center rounded border border-gray-300 p-2 py-4 dark:border-gray-600 ${
+        className={`flex-1 items-center justify-center rounded-xl border border-gray-300 p-2 py-4 transition-colors duration-500 dark:border-gray-600 ${
           selectedTab === "weekly" ? "bg bg-green-500 dark:bg-lime-500" : ""
         }`}
       >
@@ -28,7 +28,7 @@ const TabSelector = ({ onChange, selectedTab }: TabSelectorProps) => {
 
       <Pressable
         onPress={() => onChange("monthly")}
-        className={`flex-1 items-center justify-center rounded border border-gray-300 p-2 py-4 dark:border-gray-600 ${
+        className={`flex-1 items-center justify-center rounded-xl border border-gray-300 p-2 py-4 transition-colors duration-500 dark:border-gray-600 ${
           selectedTab === "monthly" ? "bg bg-green-500 dark:bg-lime-500" : ""
         }`}
       >

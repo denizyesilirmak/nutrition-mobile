@@ -5,6 +5,8 @@ import IconButton from "../IconButton";
 import { MealsProps } from "./types";
 import { router } from "expo-router";
 import { useColorScheme } from "nativewind";
+import useMeals from "@/src/query/hooks/useMeals";
+import useMe from "@/src/query/hooks/useMe";
 
 const MealHeader = ({
   title,
@@ -98,7 +100,24 @@ const keyGenerator = (id: string) => {
   return id + Math.random().toString();
 };
 
-const Meals = ({ meals, energyNeedPerMeal }: MealsProps) => {
+const Meals = ({ startDate, endDate }: MealsProps) => {
+  const { meals } = useMeals({
+    startDate,
+    endDate,
+  });
+
+  const { me } = useMe();
+
+  if (!me) {
+    return null;
+  }
+
+  const energyNeedPerMeal = {
+    breakfast: me!.nutritionalNeed!.calories * 0.3,
+    lunch: me!.nutritionalNeed!.calories * 0.4,
+    dinner: me!.nutritionalNeed!.calories * 0.3,
+  };
+
   if (!meals) {
     return (
       <View className="overflow-hidden rounded-lg bg-gray-50 p-2 dark:bg-gray-800">
@@ -141,7 +160,7 @@ const Meals = ({ meals, energyNeedPerMeal }: MealsProps) => {
               key={keyGenerator(meal.id)}
               title={meal.foodName}
               calories={meal.energy}
-              image={`https://static.nuttrackerapi.com/${meal.lowResImage}`}
+              image={meal.lowResImage}
               description={meal.category_description}
             />
           ))
@@ -163,7 +182,7 @@ const Meals = ({ meals, energyNeedPerMeal }: MealsProps) => {
               key={keyGenerator(meal.id)}
               title={meal.foodName}
               calories={meal.energy}
-              image={`https://static.nuttrackerapi.com/${meal.lowResImage}`}
+              image={meal.lowResImage}
               description={meal.category_description}
             />
           ))
@@ -184,7 +203,6 @@ const Meals = ({ meals, energyNeedPerMeal }: MealsProps) => {
               title={meal.foodName}
               calories={meal.energy}
               image={meal.lowResImage}
-              image={`https://static.nuttrackerapi.com/${meal.lowResImage}`}
               description={meal.category_description}
             />
           ))

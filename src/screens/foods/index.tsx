@@ -5,7 +5,6 @@ import useDebounce from "@/src/hooks/useDebounce";
 import { useFoodSearch } from "@/src/query/hooks/useFoodSearch";
 import { useScrollToTop } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
-import { StatusBar } from "expo-status-bar";
 import { useRef, useState } from "react";
 import { Text, View } from "react-native";
 
@@ -22,7 +21,6 @@ const FoodsScreen = () => {
 
   return (
     <ScreenView>
-      <StatusBar style="dark" animated />
       <SearchBar onChangeText={setSearchTerm} />
       <FlashList
         ref={flashListRef}

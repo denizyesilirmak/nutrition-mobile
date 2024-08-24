@@ -1,28 +1,41 @@
 import { Text, View } from "react-native";
 import ChartCircle from "../ChartCircle";
 import ChartLine from "../ChartLine";
+import useMeals from "@/src/query/hooks/useMeals";
+import { calculateTotalCalories } from "@/src/screens/home/utils";
+import { Food } from "@/src/screens/home/types";
+import useMe from "@/src/query/hooks/useMe";
+import { cn } from "@/src/utils/cn";
 
 type OverviewProps = {
-  consumedCalories: number;
-  total: number;
-  macroNutrients: {
-    carbs: number;
-    protein: number;
-    fat: number;
-  };
-  maximumNutrients: {
-    carbs: number;
-    protein: number;
-    fat: number;
-  };
+  startDate: string;
+  endDate: string;
 };
 
-const Overview = ({
-  consumedCalories,
-  total,
-  macroNutrients,
-  maximumNutrients,
-}: OverviewProps) => {
+const Overview = ({ startDate, endDate }: OverviewProps) => {
+  const { meals } = useMeals({
+    startDate,
+    endDate,
+  });
+
+  const { me } = useMe();
+
+  const totalCalories = calculateTotalCalories(meals as Record<string, Food[]>);
+
+  const total = me?.nutritionalNeed?.calories || 2400;
+  const consumedCalories = totalCalories.total.energy;
+  const macroNutrients = {
+    carbs: totalCalories.total.carbs || 0,
+    protein: totalCalories.total.protein || 0,
+    fat: totalCalories.total.fat || 0,
+  };
+
+  const maximumNutrients = {
+    carbs: me?.nutritionalNeed?.carbs || 300,
+    protein: me?.nutritionalNeed?.protein || 100,
+    fat: me?.nutritionalNeed?.fat || 100,
+  };
+
   return (
     <View className="overflow-hidden rounded-lg bg-gray-50 dark:bg-gray-800">
       <View className="flex-row justify-between">
@@ -36,12 +49,24 @@ const Overview = ({
         </View>
         <ChartCircle calorie={consumedCalories} total={total} />
         <View className="flex w-1/3 flex-col items-center justify-center">
-          <Text className="text-black-400 text-lg font-bold dark:text-gray-100">
-            {total - consumedCalories}
+          <Text
+            className={cn(
+              "text-black-400 text-lg font-bold dark:text-gray-100",
+              {
+                "text-red-500": total < consumedCalories,
+              },
+            )}
+          >
+            {Math.abs(total - consumedCalories)}
             <Text className="text-sm font-normal"> kcal</Text>
           </Text>
-          <Text className="text-sm font-semibold text-gray-400 dark:text-gray-300">
-            Remaining
+          <Text
+            className={cn("text-sm font-semibold", {
+              "text-gray-400 dark:text-gray-300": total >= consumedCalories,
+              "text-red-500": total < consumedCalories,
+            })}
+          >
+            {total > consumedCalories ? "Remaining" : "Exceeded"}
           </Text>
         </View>
       </View>

@@ -13,13 +13,16 @@ const BOUNDS = {
 
 const NumberSelector = () => {
   const { me, updateMe } = useMe();
-  const [value, setValue] = useState(me?.weight || 0);
+
+  const [value, setValue] = useState(me?.weight);
   const { colorScheme } = useColorScheme();
+
+  const currentValue = value ?? me?.weight ?? 0;
 
   const handleWeightUpdate = () => {
     Alert.alert(
       "Update Weight",
-      `Are you sure you want to update your weight to ${value} kg?`,
+      `Are you sure you want to update your weight to ${currentValue} kg?`,
       [
         {
           text: "Cancel",
@@ -29,7 +32,7 @@ const NumberSelector = () => {
         {
           text: "OK",
           onPress: async () => {
-            await updateMe({ weight: value });
+            await updateMe({ weight: currentValue });
           },
         },
       ],
@@ -41,7 +44,9 @@ const NumberSelector = () => {
       <View className="flex-row items-center justify-center">
         <Pressable
           className="flex-1 items-center justify-center rounded-md bg-gray-200 p-2 dark:bg-slate-700"
-          onPress={() => setValue(clamp(value - 1, BOUNDS.min, BOUNDS.max))}
+          onPress={() =>
+            setValue(clamp(currentValue - 1, BOUNDS.min, BOUNDS.max))
+          }
         >
           <Ionicons
             name="remove"
@@ -51,12 +56,14 @@ const NumberSelector = () => {
         </Pressable>
         <View className="flex-1 items-center justify-center">
           <Text className="text-2xl font-bold color-slate-900 dark:color-slate-100">
-            {value} <Text className="text-base">kg</Text>
+            {currentValue} <Text className="text-base">kg</Text>
           </Text>
         </View>
         <Pressable
           className="flex-1 items-center justify-center rounded-md bg-gray-200 p-2 dark:bg-slate-700"
-          onPress={() => setValue(clamp(value + 1, BOUNDS.min, BOUNDS.max))}
+          onPress={() =>
+            setValue(clamp(currentValue + 1, BOUNDS.min, BOUNDS.max))
+          }
         >
           <Ionicons
             name="add"

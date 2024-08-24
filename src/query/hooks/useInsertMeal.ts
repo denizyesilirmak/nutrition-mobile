@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { FoodToInsert, insertMeal } from "@/src/utils/services";
-import { _queryClient } from "../QueryProvider";
+import { invalidateQueriesWithDelay } from "../QueryProvider";
 
 type MutationResponse = {
   status: boolean;
@@ -33,7 +33,7 @@ const useInsertMeal = ({
       console.log("Meal inserted successfully");
     },
     onSettled: () => {
-      _queryClient.invalidateQueries({
+      invalidateQueriesWithDelay({
         queryKey: ["meals"],
       });
     },

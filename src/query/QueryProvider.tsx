@@ -13,6 +13,14 @@ function onAppStateChange(status: AppStateStatus) {
 }
 export const _queryClient = new QueryClient();
 
+export const invalidateQueriesWithDelay = (
+  args: Parameters<typeof _queryClient.invalidateQueries>[0],
+) => {
+  setTimeout(() => {
+    _queryClient.invalidateQueries(args);
+  }, 1300);
+};
+
 export const QueryProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     const subscription = AppState.addEventListener("change", onAppStateChange);

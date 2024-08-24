@@ -4,16 +4,16 @@ import { Image } from "expo-image";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
+import IconButton from "@/src/components/IconButton";
 import useDebounce from "@/src/hooks/useDebounce";
 import {
   Food as FoodType,
   useFoodSearch,
 } from "@/src/query/hooks/useFoodSearch";
-import Animated, { FadeInRight } from "react-native-reanimated";
 import useInsertMeal from "@/src/query/hooks/useInsertMeal";
-import IconButton from "@/src/components/IconButton";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams } from "expo-router";
+import Animated, { FadeInRight } from "react-native-reanimated";
 
 const Food = ({
   food,

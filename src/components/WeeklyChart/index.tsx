@@ -25,28 +25,14 @@ const Bar = ({ percentage, name }: { percentage: number; name: string }) => {
     };
   });
 
-  const animatedOpacity = useAnimatedStyle(() => {
-    return {
-      opacity: withTiming(percentage > 20 ? 1 : 0),
-    };
-  });
-
   return (
     <Animated.View
       // @ts-ignore
       className={`h-1/2 min-h-3 w-full justify-center ${BAR_COLORS[name]} rounded-lg`}
       style={animatedHeight}
     >
-      <Animated.Text
-        className="text-center text-xs text-black dark:text-black"
-        style={animatedOpacity}
-      >
-        {percentage}%
-      </Animated.Text>
-      <Animated.Text
-        className="text-center text-xs text-black dark:text-black"
-        style={animatedOpacity}
-      >
+      <Animated.Text className="text-center text-xs text-black dark:text-black">
+        {percentage > 20 ? `${percentage}% ${"\n"}` : ""}
         {name}
       </Animated.Text>
     </Animated.View>
@@ -70,12 +56,38 @@ const WeeklyChart = ({ dateRange }: WeeklyChartProps) => {
   return (
     <View className="flex-1 flex-row items-center justify-center gap-2">
       {days.map((day) => {
-        const fat = Math.floor(Math.random() * 100);
-        const carb = Math.floor(Math.random() * (100 - fat));
-        const protein = 100 - fat - carb;
+        function getRandomNutrientValues() {
+          const minValue = 10;
+          const maxTotal = 100;
+
+          // Start by allocating the minimum value to each nutrient
+          let fat = minValue;
+          let carb = minValue;
+          let protein = minValue;
+
+          // Calculate the remaining value to be distributed randomly
+          let remaining = maxTotal - (fat + carb + protein);
+
+          // Randomly allocate the remaining value to fat and carb
+          fat += Math.floor(Math.random() * (remaining + 1));
+          remaining = maxTotal - (fat + carb + protein); // Recalculate remaining after adding to fat
+
+          carb += Math.floor(Math.random() * (remaining + 1));
+          remaining = maxTotal - (fat + carb + protein); // Recalculate remaining after adding to carb
+
+          // The remaining value goes to protein
+          protein += remaining;
+
+          return { fat, carb, protein };
+        }
+
+        const { fat, carb, protein } = getRandomNutrientValues();
 
         return (
-          <View className="h-full flex-1 items-center justify-center rounded-lg">
+          <View
+            className="h-full flex-1 items-center justify-center rounded-lg"
+            key={day.getDay()}
+          >
             <Animated.View
               className="bg-transparentp w-full flex-1 gap-2 pb-10"
               style={noDataAnimation}

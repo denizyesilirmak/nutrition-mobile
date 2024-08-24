@@ -8,8 +8,13 @@ const useMeals = ({
   startDate: string;
   endDate: string;
 }) => {
-  const { data, isError, isLoading } = useQuery({
+  const { data, isError, isLoading, isRefetching } = useQuery({
     queryKey: ["meals", "date", startDate],
+    initialData: {
+      breakfast: [],
+      lunch: [],
+      dinner: [],
+    },
     queryFn: async () => fetchMeals({ startDate, endDate }),
   });
 

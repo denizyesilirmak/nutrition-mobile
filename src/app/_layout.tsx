@@ -1,10 +1,10 @@
 import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import "../../global.css";
 import { ThemeProvider } from "@react-navigation/native";
 import { DarkTheme, LightTheme } from "../constants/Colors";
 import { QueryProvider } from "../query/QueryProvider";
 import { useColorScheme } from "nativewind";
+import { StatusBar } from "react-native";
 
 const InitialLayout = () => {
   const { colorScheme } = useColorScheme();
@@ -13,7 +13,10 @@ const InitialLayout = () => {
     <>
       <QueryProvider>
         <ThemeProvider value={colorScheme === "dark" ? DarkTheme : LightTheme}>
-          <StatusBar style="dark" animated />
+          <StatusBar
+            barStyle={colorScheme === "dark" ? "light-content" : "dark-content"}
+            animated
+          />
           <Stack
             screenOptions={{
               headerShown: false,
