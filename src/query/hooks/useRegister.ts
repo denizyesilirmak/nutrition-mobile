@@ -15,6 +15,7 @@ type useRegisterType = {
   birthDate: string;
   height: number;
   weight: number;
+  gender: string;
 };
 
 const fetchRegister = async ({
@@ -52,6 +53,7 @@ const useRegister = ({
   birthDate,
   height,
   weight,
+  gender,
 }: useRegisterType) => {
   const { mutate, isPending, isSuccess, isError, error } = useMutation<
     MutationResponse,
@@ -68,7 +70,8 @@ const useRegister = ({
   });
 
   return {
-    register: () => mutate({ email, password, birthDate, height, weight }),
+    register: () =>
+      mutate({ email, password, birthDate, height, weight, gender }),
     isPending,
     isSuccess,
     isError,

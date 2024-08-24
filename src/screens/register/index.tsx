@@ -40,6 +40,7 @@ const Register = () => {
     birthDate: age,
     height,
     weight,
+    gender,
   });
 
   useEffect(() => {

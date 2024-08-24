@@ -8,6 +8,8 @@ import { useColorScheme } from "nativewind";
 import useMeals from "@/src/query/hooks/useMeals";
 import useMe from "@/src/query/hooks/useMe";
 
+const MAX_RECORDS_TO_SHOW = 3;
+
 const MealHeader = ({
   title,
   calories,
@@ -96,6 +98,16 @@ const NoRecords = () => {
   );
 };
 
+const MoreRecords = ({ count }: { count: number }) => {
+  return (
+    <View className="mb-2 flex flex-col justify-center rounded-lg bg-gray-100 px-4 py-3 opacity-50 dark:bg-gray-700">
+      <Text className="text-black-400 text-md dark:text-gray-100">
+        +{count} more records
+      </Text>
+    </View>
+  );
+};
+
 const keyGenerator = (id: string) => {
   return id + Math.random().toString();
 };
@@ -155,6 +167,7 @@ const Meals = ({ startDate, endDate }: MealsProps) => {
       ) : (
         meals.breakfast
           .sort((a, b) => b.energy - a.energy)
+          .slice(0, MAX_RECORDS_TO_SHOW)
           .map((meal) => (
             <MealItem
               key={keyGenerator(meal.id)}
@@ -164,6 +177,10 @@ const Meals = ({ startDate, endDate }: MealsProps) => {
               description={meal.category_description}
             />
           ))
+      )}
+
+      {meals.breakfast.length > MAX_RECORDS_TO_SHOW && (
+        <MoreRecords count={meals.breakfast.length - MAX_RECORDS_TO_SHOW} />
       )}
 
       <MealHeader
@@ -177,6 +194,7 @@ const Meals = ({ startDate, endDate }: MealsProps) => {
       ) : (
         meals.lunch
           .sort((a, b) => b.energy - a.energy)
+          .slice(0, MAX_RECORDS_TO_SHOW)
           .map((meal) => (
             <MealItem
               key={keyGenerator(meal.id)}
@@ -187,6 +205,11 @@ const Meals = ({ startDate, endDate }: MealsProps) => {
             />
           ))
       )}
+
+      {meals.lunch.length > MAX_RECORDS_TO_SHOW && (
+        <MoreRecords count={meals.lunch.length - MAX_RECORDS_TO_SHOW} />
+      )}
+
       <MealHeader
         title="🍲 Dinner"
         calories={energyNeedPerMeal.dinner || 0}
@@ -197,6 +220,7 @@ const Meals = ({ startDate, endDate }: MealsProps) => {
       ) : (
         meals.dinner
           .sort((a, b) => b.energy - a.energy)
+          .slice(0, MAX_RECORDS_TO_SHOW)
           .map((meal) => (
             <MealItem
               key={keyGenerator(meal.id)}
@@ -206,6 +230,10 @@ const Meals = ({ startDate, endDate }: MealsProps) => {
               description={meal.category_description}
             />
           ))
+      )}
+
+      {meals.dinner.length > MAX_RECORDS_TO_SHOW && (
+        <MoreRecords count={meals.dinner.length - MAX_RECORDS_TO_SHOW} />
       )}
     </View>
   );

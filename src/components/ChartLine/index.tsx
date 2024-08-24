@@ -24,7 +24,7 @@ const ChartLine = ({ value = 0 }: ChartLineProps) => {
         <Animated.View
           className={`h-2 duration-500 ${
             value > 0.9
-              ? "bg-red-500 dark:bg-red-400"
+              ? "bg-[#f87171] dark:bg-[#f87171]"
               : "bg-green-500 dark:bg-lime-400"
           }`}
           style={animatedStyle}

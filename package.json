@@ -9,7 +9,9 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "build-apk": "eas build -p android -e staging --local",
+    "build-ios": "eas build -p ios -e staging --local"
   },
   "jest": {
     "preset": "jest-expo"

@@ -2,6 +2,7 @@ import DarkModeToggle from "@/src/components/DarkModeToggle";
 import ScreenView from "@/src/components/ScreenView";
 import { User } from "@/src/query/hooks/useLogin";
 import useMe from "@/src/query/hooks/useMe";
+import { calculateBMI, getBmiCategory } from "@/src/utils/bmi";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useColorScheme } from "nativewind";
@@ -81,14 +82,6 @@ const Profile = () => {
     return <Text>Error loading profile</Text>;
   }
 
-  const calculateBMI = ({ weight, height }: User) => {
-    if (!weight || !height) {
-      return "N/A";
-    }
-
-    return (weight / (height / 100) ** 2).toFixed(2);
-  };
-
   return (
     <ScreenView scrollable>
       <View className="flex gap-4 p-4">
@@ -111,7 +104,10 @@ const Profile = () => {
           <Seperator />
           <Section leftIcon="medkit-outline" text={`${me?.weight} kg`} />
           <Seperator />
-          <Section leftIcon="man-outline" text={`${calculateBMI(me)} BMI`} />
+          <Section
+            leftIcon="man-outline"
+            text={`${calculateBMI(me)} BMI - ${getBmiCategory(Number(calculateBMI(me)))}`}
+          />
           <Seperator />
           <Section
             leftIcon="person-outline"

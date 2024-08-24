@@ -20,6 +20,7 @@ const InitialLayout = () => {
           <Stack
             screenOptions={{
               headerShown: false,
+              navigationBarColor: 'red',
             }}
           >
             <Stack.Screen

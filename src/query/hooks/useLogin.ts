@@ -67,11 +67,14 @@ export const useLogin = ({
   >({
     mutationFn: fetchLogin,
     onMutate: () => {
-      // console.log("[Login] onMutate");
+      console.log("[Login] onMutate");
     },
     onSuccess: (loginData) => {
-      // console.log("[Login] onSuccess:", loginData.data.user.nutritionalNeed);
+      console.log("[Login] onSuccess:", loginData);
     },
+    onError: (error) => {
+      console.log("[Login] onError:", error);
+    }
   });
 
   return {

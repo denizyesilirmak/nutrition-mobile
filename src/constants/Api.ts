@@ -1,4 +1,4 @@
-const BASE_URL = "http://188.245.44.159:3000/api/v1";
+const BASE_URL = "https://api.nuttrackerapi.com/api/v1";
 
 export const FOOD_SEARCH_API = `${BASE_URL}/food/search`;
 export const LOGIN_API = `${BASE_URL}/auth/login`;
