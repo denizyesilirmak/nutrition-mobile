@@ -5,7 +5,7 @@ import { Image } from "expo-image";
 import { router } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { useMemo } from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import Animated from "react-native-reanimated";
 import IconButton from "../IconButton";
 import { MealsProps } from "./types";
@@ -61,7 +61,12 @@ const MealItem = ({
   const MemorizedImage = useMemo(() => Image, []);
 
   return (
-    <Animated.View className="flex flex-row items-center justify-between px-4 py-3">
+    <Pressable
+      onPress={() => {
+        router.push("daySummary");
+      }}
+      className="flex flex-row items-center justify-between px-4 py-3"
+    >
       <View className="flex-1 flex-row items-center">
         <MemorizedImage
           source={{ uri: image }}
@@ -86,7 +91,7 @@ const MealItem = ({
       <Text className="text-xs text-gray-400 dark:text-gray-300">
         {calories} cal
       </Text>
-    </Animated.View>
+    </Pressable>
   );
 };
 

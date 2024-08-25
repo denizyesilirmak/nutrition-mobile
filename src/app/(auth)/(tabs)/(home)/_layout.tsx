@@ -70,6 +70,13 @@ const HomeStackLayout = () => {
         }}
         name="mealHistory"
       />
+      <Stack.Screen
+        options={{
+          title: "Day Summary",
+          headerShown: true,
+        }}
+        name="daySummary"
+      />
     </Stack>
   );
 };
