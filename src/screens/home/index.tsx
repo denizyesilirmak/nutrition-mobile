@@ -1,3 +1,4 @@
+import ActivityOverview from "@/src/components/ActivityOverview";
 import DailyTips from "@/src/components/DailyTips";
 import DatePickerSlider from "@/src/components/DatePickerSlider";
 import Meals from "@/src/components/Meals";
@@ -62,6 +63,10 @@ const Home = () => {
           Weight Update
         </Text>
         <NumberSelector />
+        <Text className="pb-2 pt-2 text-lg font-bold text-black dark:text-white">
+          Activities
+        </Text>
+        <ActivityOverview />
       </View>
     </ScreenView>
   );
