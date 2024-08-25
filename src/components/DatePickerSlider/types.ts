@@ -8,7 +8,6 @@ type DateItemProps = {
   index: number;
   datesLength: number;
   onPress?: () => void;
-  selected?: boolean;
 };
 
-export type { DatePickerSliderProps, DateItemProps };
+export type { DateItemProps, DatePickerSliderProps };

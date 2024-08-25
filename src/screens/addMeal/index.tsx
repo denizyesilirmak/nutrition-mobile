@@ -12,7 +12,7 @@ import {
 } from "@/src/query/hooks/useFoodSearch";
 import useInsertMeal from "@/src/query/hooks/useInsertMeal";
 import { Ionicons } from "@expo/vector-icons";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import Animated, { FadeInRight } from "react-native-reanimated";
 
 const Food = ({
@@ -131,6 +131,7 @@ const AddMeals = () => {
             icon={<Ionicons name="add" size={24} color="red" />}
             onPress={() => {
               insertMeal();
+              router.back();
             }}
           />
         </View>

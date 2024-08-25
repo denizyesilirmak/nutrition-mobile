@@ -19,15 +19,15 @@ const screenWidth = Dimensions.get("window").width;
 const dateBoxCount = 5;
 const dateMarginCount = dateBoxCount + 1;
 const dateBoxMargin = 10;
-const dateBoxWidth =
-  (screenWidth - dateBoxMargin * dateMarginCount) / dateBoxCount;
+const dateBoxWidth = Math.round(
+  (screenWidth - dateBoxMargin * dateMarginCount) / dateBoxCount,
+);
 
 const DateItem = ({
   currentDate,
   index,
   datesLength,
   onPress,
-  selected,
 }: DateItemProps) => {
   return (
     <Pressable
@@ -115,8 +115,11 @@ const DatePickerSlider = ({
     <View className="w-full items-center justify-center">
       <Animated.View
         pointerEvents="none"
-        className="absolute z-10 rounded-lg border-2 border-green-900 dark:border-white"
-        style={[{ height: 80, width: dateBoxWidth }, animatedStyle]}
+        className="absolute z-10 rounded-lg border-green-900 dark:border-white"
+        style={[
+          { height: 82, width: dateBoxWidth + 2, borderWidth: 3 },
+          animatedStyle,
+        ]}
       >
         <Svg
           className="h-full w-full"
@@ -164,14 +167,14 @@ const DatePickerSlider = ({
         className="-scale-x-100"
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        snapToInterval={dateBoxWidth + dateBoxMargin}
+        snapToInterval={Math.round(dateBoxWidth + dateBoxMargin)}
         decelerationRate="fast"
         onScroll={scrollHandler}
         scrollEventThrottle={32}
         onMomentumScrollEnd={(event) => {
           const contentOffsetX = event.nativeEvent.contentOffset.x;
           const currentIndex = Math.round(
-            contentOffsetX / (dateBoxWidth + dateBoxMargin),
+            contentOffsetX / Math.round(dateBoxWidth + dateBoxMargin),
           );
           const currentDay = dates[currentIndex + 2];
           onDateChange?.(currentDay);

@@ -57,10 +57,7 @@ const MealItem = ({
   description?: string;
 }) => {
   return (
-    <Animated.View
-      entering={FadeInLeft}
-      className="flex flex-row items-center justify-between px-4 py-3"
-    >
+    <Animated.View className="flex flex-row items-center justify-between px-4 py-3">
       <View className="flex-1 flex-row items-center">
         <Image
           source={{ uri: image }}
