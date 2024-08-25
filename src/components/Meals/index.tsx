@@ -1,12 +1,14 @@
+import useMe from "@/src/query/hooks/useMe";
+import useMeals from "@/src/query/hooks/useMeals";
 import { Ionicons } from "@expo/vector-icons";
-import { Image, Text, View } from "react-native";
-import Animated, { FadeInLeft } from "react-native-reanimated";
-import IconButton from "../IconButton";
-import { MealsProps } from "./types";
+import { Image } from "expo-image";
 import { router } from "expo-router";
 import { useColorScheme } from "nativewind";
-import useMeals from "@/src/query/hooks/useMeals";
-import useMe from "@/src/query/hooks/useMe";
+import { useMemo } from "react";
+import { Text, View } from "react-native";
+import Animated from "react-native-reanimated";
+import IconButton from "../IconButton";
+import { MealsProps } from "./types";
 
 const MAX_RECORDS_TO_SHOW = 3;
 
@@ -56,12 +58,15 @@ const MealItem = ({
   image: string;
   description?: string;
 }) => {
+  const MemorizedImage = useMemo(() => Image, []);
+
   return (
     <Animated.View className="flex flex-row items-center justify-between px-4 py-3">
       <View className="flex-1 flex-row items-center">
-        <Image
+        <MemorizedImage
           source={{ uri: image }}
           className="mr-2 h-12 w-12 rounded-lg border border-lime-500 dark:border-green-500"
+          style={{ width: 48, height: 48, borderRadius: 8, marginRight: 8 }}
         />
         <View className="flex-1">
           <Text

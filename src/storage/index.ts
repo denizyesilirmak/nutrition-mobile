@@ -4,6 +4,7 @@ export const STORAGE_KEYS = {
   USER: "USER",
   TOKEN: "TOKEN",
   REMEMBER_ME: "REMEMBER_ME",
+  ONBOARDING_COMPLETED: "ONBOARDING_COMPLETED",
 };
 
 type StorageKey = keyof typeof STORAGE_KEYS;

@@ -1,10 +1,8 @@
 import { useColorScheme } from "nativewind";
-import { useEffect } from "react";
 import { Text, TextInput, View } from "react-native";
 import Animated, {
   useAnimatedProps,
   useSharedValue,
-  withRepeat,
   withSequence,
   withSpring,
   withTiming,
@@ -38,7 +36,7 @@ const ChartCircle = ({ calorie, total }: ChartCircleProps) => {
       }),
       strokeWidth: withSequence(
         withTiming(6, { duration: 100 }),
-        withTiming(10, { duration: 300 }),
+        withTiming(12, { duration: 300 }),
         withTiming(6, { duration: 500 }),
       ),
     };

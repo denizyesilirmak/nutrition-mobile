@@ -79,6 +79,7 @@ const useMe = () => {
   >({
     queryKey: ["me"],
     queryFn: fetchMe,
+    staleTime: 1000 * 60 * 60 * 24,
   });
 
   const {
@@ -89,8 +90,10 @@ const useMe = () => {
     mutationFn: fetchUpdateMe,
     onSettled: () => {
       // Invalidate the "me" query
-      _queryClient.invalidateQueries("me");
-    }
+      _queryClient.invalidateQueries({
+        queryKey: ["me"],
+      });
+    },
   });
 
   return {

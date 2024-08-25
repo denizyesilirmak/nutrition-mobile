@@ -5,8 +5,10 @@ import PagerView from "react-native-pager-view";
 
 import Button from "@/src/components/Button";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ONBOARDING_SLIDES } from "./constants";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Storage from "@/src/storage";
 
 const SliderItem = ({
   title,
@@ -56,27 +58,35 @@ const SliderItem = ({
 const Onboarding = () => {
   const [activeStep, setActiveStep] = useState<number>(0);
 
+  useEffect(() => {
+    if (activeStep === ONBOARDING_SLIDES.length - 1) {
+      Storage.setItem("ONBOARDING_COMPLETED", "true");
+    }
+  }, [activeStep]);
+
   return (
-    <ScreenView scrollable={false} padding>
-      <PagerView
-        initialPage={0}
-        style={{ flex: 1 }}
-        onPageSelected={(e) => setActiveStep(e.nativeEvent.position)}
-      >
-        {ONBOARDING_SLIDES.map((slide, index) => (
-          <View
-            key={index}
-            className="flex-1 items-center justify-center gap-4 pb-4"
-          >
-            <SliderItem {...slide} />
-          </View>
-        ))}
-      </PagerView>
-      <Stepper
-        steps={ONBOARDING_SLIDES.map((_, index) => (index + 1).toString())}
-        activeStep={activeStep}
-      />
-    </ScreenView>
+    <SafeAreaView edges={["top", "bottom"]} style={{ flex: 1 }}>
+      <ScreenView scrollable={false} padding>
+        <PagerView
+          initialPage={0}
+          style={{ flex: 1 }}
+          onPageSelected={(e) => setActiveStep(e.nativeEvent.position)}
+        >
+          {ONBOARDING_SLIDES.map((slide, index) => (
+            <View
+              key={index}
+              className="flex-1 items-center justify-center gap-4 pb-4"
+            >
+              <SliderItem {...slide} />
+            </View>
+          ))}
+        </PagerView>
+        <Stepper
+          steps={ONBOARDING_SLIDES.map((_, index) => (index + 1).toString())}
+          activeStep={activeStep}
+        />
+      </ScreenView>
+    </SafeAreaView>
   );
 };
 

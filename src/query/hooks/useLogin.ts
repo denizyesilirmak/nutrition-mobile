@@ -70,10 +70,10 @@ export const useLogin = ({
       console.log("[Login] onMutate");
     },
     onSuccess: (loginData) => {
-      console.log("[Login] onSuccess:", loginData);
+      // console.log("[Login] onSuccess:", loginData);
     },
     onError: (error) => {
-      console.log("[Login] onError:", error);
+      // console.log("[Login] onError:", error);
     }
   });
 

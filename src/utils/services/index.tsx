@@ -78,12 +78,11 @@ export const fetchMeals = async ({
 }: {
   startDate: string;
   endDate: string;
-}) => {
+}): Promise<any> => {
   const response = await fetchWithToken(
     `${MEALS_API}?startDate=${startDate}&endDate=${endDate}`,
   );
   const data = await response.json();
-
   return transformMeals(data);
 };
 
