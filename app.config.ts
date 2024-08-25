@@ -1,7 +1,7 @@
 import type { ExpoConfig } from "@expo/config-types";
 
 const config: ExpoConfig = {
-  name: "nutrition-mobile",
+  name: "EatInsight",
   slug: "nutrition-mobile",
   version: "1.0.0",
   orientation: "portrait",

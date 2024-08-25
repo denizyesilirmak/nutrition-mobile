@@ -1,6 +1,16 @@
-import { fetchFoodSearch, PageResponse } from "@/src/utils/services";
+import { fetchFoodSearch } from "@/src/utils/services";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
+
+export interface Datum {
+  carbonhydrate: number;
+  protein: number;
+  fat: number;
+  energy: number;
+  name: string;
+  image: string;
+  id: string;
+}
 
 export const useFoodSearch = ({
   searchTerm,
@@ -10,7 +20,13 @@ export const useFoodSearch = ({
   initialPage?: number;
 }) => {
   const { data, isError, fetchNextPage, hasNextPage, isLoading } =
-    useInfiniteQuery<PageResponse>({
+    useInfiniteQuery<
+      {
+        data: Datum[];
+        page: number;
+      },
+      Error
+    >({
       queryKey: ["food", "search", searchTerm],
       staleTime: 1000 * 60 * 60, // 1 hour
       getNextPageParam: (lastPage) => {

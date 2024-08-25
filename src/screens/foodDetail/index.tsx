@@ -45,7 +45,7 @@ const FoodDetail = () => {
 
           <Rect x="0" y="0" width="100" height="100" fill="url(#grad)" />
         </Svg>
-        <Text className="absolute py-4 text-lg font-semibold text-gray-500 dark:text-gray-100">
+        <Text className="absolute py-4 text-lg font-semibold text-black dark:text-gray-100 z-10">
           {foodDetails?.foodName} {`\n`}
         </Text>
       </View>
@@ -53,39 +53,39 @@ const FoodDetail = () => {
         className="flex-1 p-4"
         style={{ borderTopLeftRadius: 24, borderTopRightRadius: 24 }}
       >
-        <Text className="text-lg font-semibold text-black dark:text-white">
+        <Text className="text-lg font-semibold text-black dark:text-white mb-2">
           Macro Nutrients
         </Text>
-        <View className="mb-4 mt-4 flex flex-row justify-between gap-3">
-          <View className="flex-1 items-center justify-center rounded-lg bg-gray-100 p-4 dark:bg-gray-700">
-            <Text className="text-sm text-gray-500 dark:text-gray-400">
+        <View className="flex flex-row justify-between gap-2">
+          <View className="flex-1 items-center justify-center rounded-lg bg-gray-100 p-2 dark:bg-gray-700">
+            <Text className="text-xs text-gray-500 dark:text-gray-400">
               Carbs
             </Text>
-            <Text className="text-sm font-semibold text-black dark:text-white">
-              {foodDetails?.carbohydrate || 0} gr / 100 gr
+            <Text className="text-md font-semibold text-black dark:text-white">
+              {foodDetails?.carbohydrate || 0} gr
             </Text>
           </View>
 
-          <View className="flex-1 items-center justify-center rounded-lg bg-gray-100 p-4 dark:bg-gray-700">
-            <Text className="text-sm text-gray-500 dark:text-gray-400">
+          <View className="flex-1 items-center justify-center rounded-lg bg-gray-100 p-2 dark:bg-gray-700">
+            <Text className="text-xs text-gray-500 dark:text-gray-400">
               Protein
             </Text>
-            <Text className="text-sm font-semibold text-black dark:text-white">
-              {foodDetails?.protein || 0} gr / 100 gr
+            <Text className="text-md font-semibold text-black dark:text-white">
+              {foodDetails?.protein || 0} gr
             </Text>
           </View>
 
-          <View className="flex-1 items-center justify-center rounded-lg bg-gray-100 p-4 dark:bg-gray-700">
-            <Text className="text-sm text-gray-500 dark:text-gray-400">
+          <View className="flex-1 items-center justify-center rounded-lg bg-gray-100 p-2 dark:bg-gray-700">
+            <Text className="text-xs text-gray-500 dark:text-gray-400">
               Fat
             </Text>
-            <Text className="text-sm font-semibold text-black dark:text-white">
-              {foodDetails?.total_fat || 0} gr / 100 gr
+            <Text className="text-md font-semibold text-black dark:text-white">
+              {foodDetails?.total_fat || 0} gr
             </Text>
           </View>
         </View>
 
-        <Text className="text-lg font-semibold text-black dark:text-white">
+        <Text className="text-lg font-semibold text-black dark:text-white my-2">
           Others
         </Text>
         <Table

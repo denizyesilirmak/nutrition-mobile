@@ -3,8 +3,9 @@ import Image from "../Image";
 import ChartPercentage from "../ChartPercentage";
 import { router } from "expo-router";
 import { Food } from "@/src/screens/home/types";
+import { Datum } from "@/src/query/hooks/useFoodSearch";
 
-const FoodListItem = ({ food }: { food: Food }) => {
+const FoodListItem = ({ food }: { food: Datum }) => {
   return (
     <Pressable
       onPress={() => {
