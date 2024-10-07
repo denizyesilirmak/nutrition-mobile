@@ -1,13 +1,17 @@
-import { Stack } from "expo-router";
+import { Stack, useNavigation } from "expo-router";
 import "../../global.css";
 import { ThemeProvider } from "@react-navigation/native";
 import { DarkTheme, LightTheme } from "../constants/Colors";
 import { QueryProvider } from "../query/QueryProvider";
 import { useColorScheme } from "nativewind";
 import { StatusBar } from "react-native";
+import IconButton from "../components/IconButton";
+import { EvilIcons, Ionicons } from "@expo/vector-icons";
 
 const InitialLayout = () => {
   const { colorScheme } = useColorScheme();
+
+  const navigation = useNavigation();
 
   return (
     <>
@@ -39,6 +43,14 @@ const InitialLayout = () => {
                 headerTitle: "Register",
                 gestureEnabled: false,
                 headerBackVisible: false,
+                headerRight: () => (
+                  <IconButton
+                    icon={
+                      <Ionicons name="log-in-outline" size={24} color="white" />
+                    }
+                    onPress={() => navigation.navigate("/login")}
+                  />
+                ),
               }}
             />
             <Stack.Screen

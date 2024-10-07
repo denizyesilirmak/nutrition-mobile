@@ -81,6 +81,9 @@ class DateNavigator {
   changeMode = (mode: Mode) => {
     this.mode = mode;
     this.currentRangeIndex = 0;
+
+    console.log("changeMode", mode);
+
     return this.getRange();
   };
 }

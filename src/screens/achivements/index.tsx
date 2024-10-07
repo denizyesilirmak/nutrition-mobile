@@ -16,7 +16,7 @@ const DUMMY_BADGES = [
     image: require("@/src/assets/images/badges/badge-icon-1.png"),
   },
   {
-    title: "Consistency Champ",
+    title: "Consistency",
     description: "For logging meals every day for a week",
     earned: true,
     image: require("@/src/assets/images/badges/badge-icon-2.png"),
@@ -41,7 +41,7 @@ const DUMMY_BADGES = [
     image: require("@/src/assets/images/badges/badge-icon-5.png"),
   },
   {
-    title: "Hydration Master",
+    title: "Hydration",
     description: "For tracking water intake regularly",
     earned: false,
     image: require("@/src/assets/images/badges/badge-icon-6.png"),

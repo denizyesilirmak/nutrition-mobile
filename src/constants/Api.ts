@@ -9,3 +9,4 @@ export const DAILY_TIPS_API = `${BASE_URL}/tip`;
 export const INSERT_MEAL_API = `${BASE_URL}/nutrition`;
 export const WATER_API = `${BASE_URL}/water`;
 export const FOOD_DETAILS_API = `${BASE_URL}/food`;
+export const SUMMARY_API = `${BASE_URL}/nutrition/summaryByDate`;

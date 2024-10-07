@@ -1,17 +1,21 @@
-import { format, isSameMonth, isWeekend } from "date-fns";
 import {
-  Dimensions,
-  DimensionValue,
-  Pressable,
-  Text,
-  View,
-} from "react-native";
+  endOfMonth,
+  format,
+  formatDate,
+  isSameMonth,
+  isWeekend,
+  startOfMonth,
+} from "date-fns";
+import { Dimensions, Pressable, Text, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   withSequence,
   withTiming,
 } from "react-native-reanimated";
 import { getWeeksOfMonth } from "./utils";
+import useSummary from "@/src/query/hooks/useSummary";
+import useMe from "@/src/query/hooks/useMe";
+import { clamp } from "lodash";
 
 const { width } = Dimensions.get("window");
 
@@ -87,6 +91,18 @@ type HeatmapProps = {
 };
 
 const Heatmap = ({ year, month, onPressDate }: HeatmapProps) => {
+  const selectedMonth = new Date(year, month - 1);
+
+  const firstDay = formatDate(startOfMonth(selectedMonth), "yyyy-MM-dd");
+  const lastDay = formatDate(endOfMonth(selectedMonth), "yyyy-MM-dd");
+
+  const { summary, isLoading } = useSummary({
+    startDate: firstDay,
+    endDate: lastDay,
+  });
+
+  const { me } = useMe();
+
   const animatedStyle = useAnimatedStyle(() => {
     return {
       opacity: withSequence(
@@ -105,15 +121,25 @@ const Heatmap = ({ year, month, onPressDate }: HeatmapProps) => {
     <Animated.View style={[animatedStyle]}>
       {days.map((week, index) => (
         <Row key={index}>
-          {week.map((day) => (
-            <Square
-              key={format(day, "dd-MM-yyyy")}
-              isInCurrentMonth={isSameMonth(day, new Date(2024, month - 1))}
-              date={day}
-              onPress={() => onPressDate?.(day)}
-              value={Math.floor(Math.random() * 10)}
-            />
-          ))}
+          {week.map((day) => {
+            const valueOfDay = clamp(
+              (summary?.[formatDate(day, "yyyy-MM-dd")]?.calory /
+                me?.nutritionalNeed.calories!) *
+                10,
+              0,
+              10,
+            );
+
+            return (
+              <Square
+                key={format(day, "dd-MM-yyyy")}
+                isInCurrentMonth={isSameMonth(day, new Date(2024, month - 1))}
+                date={day}
+                onPress={() => onPressDate?.(day)}
+                value={valueOfDay}
+              />
+            );
+          })}
         </Row>
       ))}
     </Animated.View>

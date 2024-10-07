@@ -67,7 +67,9 @@ const SkeletonItem = () => {
   );
 };
 
-const MEAL_TIMES = {
+type MealTime = "breakfast" | "lunch" | "dinner";
+
+const MEAL_TIMES: Record<MealTime, { title: string }> = {
   breakfast: {
     title: "Breakfast 🍳",
   },
@@ -80,7 +82,7 @@ const MEAL_TIMES = {
 };
 
 const AddMeals = () => {
-  const { mealTime } = useLocalSearchParams<{ mealTime: string }>();
+  const { mealTime } = useLocalSearchParams<{ mealTime: MealTime }>();
 
   const [searchTerm, setSearchTerm] = useState<string>("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -130,8 +132,12 @@ const AddMeals = () => {
           <IconButton
             icon={<Ionicons name="add" size={24} color="red" />}
             onPress={() => {
-              insertMeal();
-              router.back();
+              if (selectedFoods.length >= 1) {
+                console.log("Inserting meal", selectedFoods.length);
+                console.log("Inserting meal");
+                insertMeal();
+                router.back();
+              }
             }}
           />
         </View>

@@ -1,6 +1,5 @@
 import DarkModeToggle from "@/src/components/DarkModeToggle";
 import ScreenView from "@/src/components/ScreenView";
-import { User } from "@/src/query/hooks/useLogin";
 import useMe from "@/src/query/hooks/useMe";
 import { calculateBMI, getBmiCategory } from "@/src/utils/bmi";
 import { Ionicons } from "@expo/vector-icons";

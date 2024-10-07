@@ -3,6 +3,7 @@ import {
   FOOD_SEARCH_API,
   INSERT_MEAL_API,
   MEALS_API,
+  SUMMARY_API,
 } from "@/src/constants/Api";
 import fetchWithToken from "../fetch";
 import { transformMeals } from "../transformMeals";
@@ -115,5 +116,15 @@ export const insertMeal = async ({
 
   const data = await response.json();
 
+  return data;
+};
+
+// Get Summary
+
+export const fetchSummary = async (startDate: string, endDate: string) => {
+  const response = await fetchWithToken(
+    `${SUMMARY_API}?startDate=${startDate}&endDate=${endDate}`,
+  );
+  const data = await response.json();
   return data;
 };
