@@ -6,25 +6,16 @@ import { router } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { useMemo } from "react";
 import { Pressable, Text, View } from "react-native";
-import Animated from "react-native-reanimated";
 import IconButton from "../IconButton";
-import { MealsProps } from "./types";
+import { MealSectionProps, MealsProps } from "./types";
 
 const MAX_RECORDS_TO_SHOW = 3;
 
-const MealHeader = ({
-  title,
-  calories,
-  mealTime,
-}: {
-  title: string;
-  calories: number;
-  mealTime: string;
-}) => {
+const MealHeader = ({ title, calories, mealTime }: MealsProps) => {
   const { colorScheme } = useColorScheme();
 
   return (
-    <View className="p flex flex-row items-center justify-between rounded-lg bg-gray-100 px-2 dark:bg-gray-700">
+    <View className="flex flex-row items-center justify-between rounded-lg bg-gray-100 px-2 dark:bg-gray-700">
       <Text className="text-black-400 text-md font-semibold dark:text-gray-100">
         {title}{" "}
         <Text className="text-xs text-gray-400 dark:text-gray-300">
@@ -47,31 +38,39 @@ const MealHeader = ({
   );
 };
 
+type MealItemProps = {
+  title: string;
+  calories: number;
+  image: string;
+  description: string;
+  onPress: () => void;
+};
+
 const MealItem = ({
   title,
   calories,
   image,
   description,
-}: {
-  title: string;
-  calories: number;
-  image: string;
-  description?: string;
-}) => {
+  onPress,
+}: MealItemProps) => {
   const MemorizedImage = useMemo(() => Image, []);
 
   return (
     <Pressable
-      onPress={() => {
-        router.push("daySummary");
-      }}
+      onPress={onPress}
       className="flex flex-row items-center justify-between px-4 py-3"
     >
       <View className="flex-1 flex-row items-center">
         <MemorizedImage
           source={{ uri: image }}
-          className="mr-2 h-12 w-12 rounded-lg border border-lime-500 dark:border-green-500"
-          style={{ width: 48, height: 48, borderRadius: 8, marginRight: 8 }}
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: 8,
+            borderWidth: 1,
+            borderColor: "#34D399",
+            marginRight: 8,
+          }}
         />
         <View className="flex-1">
           <Text
@@ -95,31 +94,79 @@ const MealItem = ({
   );
 };
 
-const NoRecords = () => {
+const NoRecords = () => (
+  <View className="flex flex-col justify-center px-4 py-3">
+    <Text className="text-black-400 text-md dark:text-gray-100">
+      No records found
+    </Text>
+  </View>
+);
+
+const MoreRecords = ({ count }: { count: number }) => (
+  <View className="mb-2 flex flex-col justify-center rounded-lg bg-gray-100 px-4 py-3 opacity-50 dark:bg-gray-700">
+    <Text className="text-black-400 text-md dark:text-gray-100">
+      +{count} more records
+    </Text>
+  </View>
+);
+
+const MealSection = ({
+  mealType,
+  meals,
+  energyNeed,
+  startDate,
+  endDate,
+}: MealSectionProps) => {
+  const mealIcons = {
+    breakfast: "🥞 Breakfast",
+    lunch: "🥘 Lunch",
+    dinner: "🍲 Dinner",
+  };
+
+  const mealData = meals[mealType] || [];
+
   return (
-    <View className="flex flex-col justify-center px-4 py-3">
-      <Text className="text-black-400 text-md dark:text-gray-100">
-        No records found
-      </Text>
-    </View>
+    <>
+      <MealHeader
+        title={mealIcons[mealType]}
+        calories={energyNeed}
+        mealTime={mealType}
+      />
+      {mealData.length === 0 ? (
+        <NoRecords />
+      ) : (
+        mealData
+          .sort((a, b) => b.energy - a.energy)
+          .slice(0, MAX_RECORDS_TO_SHOW)
+          .map((meal) => (
+            <MealItem
+              key={meal.id}
+              title={meal.foodName}
+              calories={meal.energy}
+              image={meal.lowResImage}
+              description={meal.category_description}
+              onPress={() => {
+                router.push(
+                  `/daySummary?startDate=${startDate}&endDate=${endDate}`,
+                );
+              }}
+            />
+          ))
+      )}
+      {mealData.length > MAX_RECORDS_TO_SHOW && (
+        <MoreRecords count={mealData.length - MAX_RECORDS_TO_SHOW} />
+      )}
+    </>
   );
 };
 
-const MoreRecords = ({ count }: { count: number }) => {
-  return (
-    <View className="mb-2 flex flex-col justify-center rounded-lg bg-gray-100 px-4 py-3 opacity-50 dark:bg-gray-700">
-      <Text className="text-black-400 text-md dark:text-gray-100">
-        +{count} more records
-      </Text>
-    </View>
-  );
-};
-
-const keyGenerator = (id: string) => {
-  return id + Math.random().toString();
-};
-
-const Meals = ({ startDate, endDate }: MealsProps) => {
+const Meals = ({
+  startDate,
+  endDate,
+}: {
+  startDate: string;
+  endDate: string;
+}) => {
   const { meals } = useMeals({
     startDate,
     endDate,
@@ -131,117 +178,27 @@ const Meals = ({ startDate, endDate }: MealsProps) => {
     return null;
   }
 
+  const totalCalories = me.nutritionalNeed?.calories || 0;
   const energyNeedPerMeal = {
-    breakfast: me!.nutritionalNeed!.calories * 0.3,
-    lunch: me!.nutritionalNeed!.calories * 0.4,
-    dinner: me!.nutritionalNeed!.calories * 0.3,
+    breakfast: totalCalories * 0.3,
+    lunch: totalCalories * 0.4,
+    dinner: totalCalories * 0.3,
   };
 
-  if (!meals) {
-    return (
-      <View className="overflow-hidden rounded-lg bg-gray-50 p-2 dark:bg-gray-800">
-        <MealHeader
-          title="🥞 Breakfast"
-          calories={energyNeedPerMeal.breakfast || 0}
-          mealTime="breakfast"
-        />
-        <NoRecords />
-        <MealHeader
-          title="🥘 Lunch"
-          calories={energyNeedPerMeal.lunch || 0}
-          mealTime="lunch"
-        />
-        <NoRecords />
-        <MealHeader
-          title="🍲 Dinner"
-          calories={energyNeedPerMeal.lunch || 0}
-          mealTime="dinner"
-        />
-        <NoRecords />
-      </View>
-    );
-  }
+  const mealTypes = ["breakfast", "lunch", "dinner"] as const;
 
   return (
     <View className="overflow-hidden rounded-lg bg-gray-50 p-2 dark:bg-gray-800">
-      <MealHeader
-        title="🥞 Breakfast"
-        calories={energyNeedPerMeal.breakfast || 0}
-        mealTime="breakfast"
-      />
-      {meals.breakfast.length === 0 ? (
-        <NoRecords />
-      ) : (
-        meals.breakfast
-          .sort((a, b) => b.energy - a.energy)
-          .slice(0, MAX_RECORDS_TO_SHOW)
-          .map((meal) => (
-            <MealItem
-              key={keyGenerator(meal.id)}
-              title={meal.foodName}
-              calories={meal.energy}
-              image={meal.lowResImage}
-              description={meal.category_description}
-            />
-          ))
-      )}
-
-      {meals.breakfast.length > MAX_RECORDS_TO_SHOW && (
-        <MoreRecords count={meals.breakfast.length - MAX_RECORDS_TO_SHOW} />
-      )}
-
-      <MealHeader
-        title="🥘 Lunch"
-        calories={energyNeedPerMeal.lunch || 0}
-        mealTime="lunch"
-      />
-
-      {meals.lunch.length === 0 ? (
-        <NoRecords />
-      ) : (
-        meals.lunch
-          .sort((a, b) => b.energy - a.energy)
-          .slice(0, MAX_RECORDS_TO_SHOW)
-          .map((meal) => (
-            <MealItem
-              key={keyGenerator(meal.id)}
-              title={meal.foodName}
-              calories={meal.energy}
-              image={meal.lowResImage}
-              description={meal.category_description}
-            />
-          ))
-      )}
-
-      {meals.lunch.length > MAX_RECORDS_TO_SHOW && (
-        <MoreRecords count={meals.lunch.length - MAX_RECORDS_TO_SHOW} />
-      )}
-
-      <MealHeader
-        title="🍲 Dinner"
-        calories={energyNeedPerMeal.dinner || 0}
-        mealTime="dinner"
-      />
-      {meals.dinner.length === 0 ? (
-        <NoRecords />
-      ) : (
-        meals.dinner
-          .sort((a, b) => b.energy - a.energy)
-          .slice(0, MAX_RECORDS_TO_SHOW)
-          .map((meal) => (
-            <MealItem
-              key={keyGenerator(meal.id)}
-              title={meal.foodName}
-              calories={meal.energy}
-              image={meal.lowResImage}
-              description={meal.category_description}
-            />
-          ))
-      )}
-
-      {meals.dinner.length > MAX_RECORDS_TO_SHOW && (
-        <MoreRecords count={meals.dinner.length - MAX_RECORDS_TO_SHOW} />
-      )}
+      {mealTypes.map((mealType) => (
+        <MealSection
+          key={mealType}
+          mealType={mealType}
+          meals={meals || { [mealType]: [] }}
+          energyNeed={energyNeedPerMeal[mealType]}
+          startDate={startDate}
+          endDate={endDate}
+        />
+      ))}
     </View>
   );
 };
