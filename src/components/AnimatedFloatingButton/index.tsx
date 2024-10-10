@@ -1,19 +1,20 @@
-import { Image, Pressable, Text, View } from "react-native";
-import SweepGradient from "../../assets/images/sweep-gradient.png";
+import { useEffect } from "react";
+import { Pressable, Text, View } from "react-native";
 import Animated, {
-  BounceIn,
   Easing,
-  FadeInUp,
   SlideInDown,
-  SlideInUp,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
-import { useEffect } from "react";
+import SweepGradient from "../../assets/images/sweep-gradient.png";
 
-const AnimatedFloatingButton = () => {
+const AnimatedFloatingButton = ({
+  onButtonPress,
+}: {
+  onButtonPress: () => void;
+}) => {
   const buttonSize = 60;
 
   const rotation = useSharedValue(0);
@@ -33,6 +34,7 @@ const AnimatedFloatingButton = () => {
 
   return (
     <Animated.View
+      pointerEvents="box-none"
       entering={SlideInDown.duration(1000).delay(1000).springify()}
       style={{
         position: "absolute",
@@ -43,6 +45,7 @@ const AnimatedFloatingButton = () => {
       }}
     >
       <Pressable
+        onPress={onButtonPress}
         style={{
           position: "absolute",
           bottom: 20,

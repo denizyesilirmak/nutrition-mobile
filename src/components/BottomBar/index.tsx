@@ -83,12 +83,18 @@ const BottomBar = (props: BottomTabBarProps) => {
               >
                 {options.tabBarIcon ? (
                   <options.tabBarIcon
-                    color={isFocused ? "lime" : "black"}
+                    color="red"
                     size={16}
                     focused={isFocused}
                   />
                 ) : null}
-                <Text className="text-xs font-semibold text-black dark:text-white">
+                <Text
+                  className={`text-xs font-semibold ${
+                    isFocused
+                      ? "text-green-600 dark:text-lime-400"
+                      : "text-black dark:text-white"
+                  } ${fetching ? "opacity-50" : ""}`}
+                >
                   {options.title}
                 </Text>
               </Pressable>
@@ -98,14 +104,6 @@ const BottomBar = (props: BottomTabBarProps) => {
             pointerEvents="none"
             className="absolute bottom-0 h-1 w-full bg-transparent"
           >
-            {/* <Svg className="absolute bottom-0 h-1 w-full">
-            <Path
-            d={`M0 0 L${width} 0`}
-            fill="none"
-            stroke={fetching ? "lime" : "black"}
-            strokeWidth={2}
-            />
-            </Svg> */}
             <Animated.View
               className="bg-green-500 dark:bg-lime-500"
               style={[

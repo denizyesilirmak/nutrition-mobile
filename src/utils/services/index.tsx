@@ -1,4 +1,5 @@
 import {
+  AI_RECOMMENDATION_API,
   DAILY_TIPS_API,
   FOOD_SEARCH_API,
   INSERT_MEAL_API,
@@ -58,6 +59,8 @@ export const fetchFoodSearch = async ({
       page: 1,
     };
   }
+
+  console.log("Search request for", searchTerm, "page", page);
 
   const response = await fetchWithToken(
     `${FOOD_SEARCH_API}?query=${searchTerm.toLowerCase()}&page=${page}&limit=20`,
@@ -124,6 +127,16 @@ export const insertMeal = async ({
 export const fetchSummary = async (startDate: string, endDate: string) => {
   const response = await fetchWithToken(
     `${SUMMARY_API}?startDate=${startDate}&endDate=${endDate}`,
+  );
+  const data = await response.json();
+  return data;
+};
+
+// AI Recommendation
+
+export const fetchAiRecommendation = async (date: string) => {
+  const response = await fetchWithToken(
+    `${AI_RECOMMENDATION_API}?date=${date}`,
   );
   const data = await response.json();
   return data;

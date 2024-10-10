@@ -31,21 +31,6 @@ const HomeStackLayout = () => {
               }
             />
           ),
-
-          headerRight: () => (
-            <IconButton
-              onPress={() => {
-                router.push("addMeal");
-              }}
-              icon={
-                <Ionicons
-                  name="ellipsis-horizontal-outline"
-                  size={24}
-                  color={colorScheme === "dark" ? "white" : "black"}
-                />
-              }
-            />
-          ),
         }}
         name="index"
       />
@@ -72,10 +57,19 @@ const HomeStackLayout = () => {
       />
       <Stack.Screen
         options={{
-          title: "Day Summary",
+          title: "Summary",
           headerShown: true,
         }}
         name="daySummary"
+      />
+      <Stack.Screen
+        options={{
+          title: "Nutri Guide",
+          headerShown: true,
+          presentation: "modal",
+          animation: "fade"
+        }}
+        name="aiRecommendation"
       />
     </Stack>
   );
