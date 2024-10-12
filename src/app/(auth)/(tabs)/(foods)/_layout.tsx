@@ -15,12 +15,6 @@ const FoodsStackLayout = () => {
         }}
       />
       <Stack.Screen
-        name="scanfood"
-        options={{
-          presentation: "modal",
-        }}
-      />
-      <Stack.Screen
         name="foodDetail"
         options={{
           presentation: "modal",

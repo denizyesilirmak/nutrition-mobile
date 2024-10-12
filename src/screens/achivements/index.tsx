@@ -167,7 +167,7 @@ const Achievements = () => {
   const { width } = useWindowDimensions();
 
   return (
-    <View className="bg-red flex-1">
+    <View className="bg-red flex-1 pt-4">
       <Text className="mb-4 ml-4 text-xl font-semibold text-black dark:text-white">
         My Achievements 🏆
       </Text>

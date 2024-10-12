@@ -5,8 +5,11 @@ import useDebounce from "@/src/hooks/useDebounce";
 import { useFoodSearch } from "@/src/query/hooks/useFoodSearch";
 import { useScrollToTop } from "@react-navigation/native";
 import { FlashList } from "@shopify/flash-list";
+import LottieView from "lottie-react-native";
 import { useRef, useState } from "react";
 import { Text, View } from "react-native";
+import EmptyLottieGreen from "@/src/assets/animations/empty-green.json";
+import EmptyLottieLime from "@/src/assets/animations/empty-lime.json";
 
 const FoodsScreen = () => {
   const flashListRef = useRef(null);
@@ -37,6 +40,12 @@ const FoodsScreen = () => {
         ListEmptyComponent={() => {
           return (
             <View className="flex-1 items-center justify-center">
+              <LottieView
+                source={EmptyLottieGreen}
+                autoPlay
+                loop
+                style={{ width: 300, height: 300 }}
+              />
               <Text className="text-lg font-semibold text-gray-500 dark:text-gray-400">
                 {isError
                   ? "An error occurred while fetching data."

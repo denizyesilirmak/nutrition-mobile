@@ -1,93 +1,82 @@
+import { useState } from "react";
 import {
-  add,
-  eachDayOfInterval,
-  eachMonthOfInterval,
-  eachWeekOfInterval,
+  startOfDay,
+  endOfDay,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  addDays,
   subDays,
+  addWeeks,
+  subWeeks,
+  addMonths,
+  subMonths,
+  eachDayOfInterval,
 } from "date-fns";
 
-type Mode = "daily" | "weekly" | "monthly";
+function useDateRange(mode: "daily" | "weekly" | "monthly") {
+  const [currentDate, setCurrentDate] = useState(new Date());
 
-type DateObj = {
-  start: Date;
-  end: Date;
-};
+  const getDateRange = (date: Date) => {
+    let startDate;
+    let endDate;
 
-class DateNavigator {
-  private mode: Mode;
-
-  private days: DateObj[] = eachDayOfInterval({
-    start: subDays(new Date(), 100),
-    end: new Date(),
-  }).map((day) => ({
-    start: day,
-    end: add(day, { days: 1 }),
-  }));
-  private weeks: DateObj[] = eachWeekOfInterval(
-    {
-      start: subDays(new Date(), 365),
-      end: new Date(),
-    },
-    {
-      weekStartsOn: 1,
-    },
-  ).map((week) => ({
-    start: week,
-    end: subDays(add(week, { weeks: 1 }), 1),
-  }));
-  private months: DateObj[] = eachMonthOfInterval({
-    start: subDays(new Date(), 365),
-    end: new Date(),
-  }).map((month) => ({
-    start: month,
-    end: add(month, { months: 1 }),
-  }));
-
-  private ranges = {
-    daily: this.days.reverse(),
-    weekly: this.weeks.reverse(),
-    monthly: this.months.reverse(),
-  };
-
-  private currentRangeIndex = 0;
-
-  constructor(mode: Mode) {
-    this.mode = mode;
-  }
-
-  prev = () => {
-    if (this.currentRangeIndex < this.ranges[this.mode].length - 1) {
-      this.currentRangeIndex++;
+    switch (mode) {
+      case "daily":
+        startDate = startOfDay(date);
+        endDate = endOfDay(date);
+        break;
+      case "weekly":
+        startDate = startOfWeek(date);
+        endDate = endOfWeek(date);
+        break;
+      case "monthly":
+        startDate = startOfMonth(date);
+        endDate = endOfMonth(date);
+        break;
+      default:
+        throw new Error("Invalid mode");
     }
 
-    return this.getRange(); // return the current range
+    return { startDate, endDate };
   };
 
-  next = () => {
-    if (this.currentRangeIndex > 0) {
-      this.currentRangeIndex--;
-    }
+  const { startDate, endDate } = getDateRange(currentDate);
 
-    return this.getRange(); // return the current range
+  const days = eachDayOfInterval({ start: startDate, end: endDate });
+
+  const next = () => {
+    setCurrentDate((prevDate) => {
+      switch (mode) {
+        case "daily":
+          return addDays(prevDate, 1);
+        case "weekly":
+          return addWeeks(prevDate, 1);
+        case "monthly":
+          return addMonths(prevDate, 1);
+        default:
+          return prevDate;
+      }
+    });
   };
 
-  getRange = () => {
-    return {
-      start: this.ranges[this.mode][this.currentRangeIndex].start,
-      end: this.ranges[this.mode][this.currentRangeIndex].end,
-    };
+  const prev = () => {
+    setCurrentDate((prevDate) => {
+      switch (mode) {
+        case "daily":
+          return subDays(prevDate, 1);
+        case "weekly":
+          return subWeeks(prevDate, 1);
+        case "monthly":
+          return subMonths(prevDate, 1);
+        default:
+          return prevDate;
+      }
+    });
   };
 
-  changeMode = (mode: Mode) => {
-    this.mode = mode;
-    this.currentRangeIndex = 0;
-
-    console.log("changeMode", mode);
-
-    return this.getRange();
-  };
+  return { startDate, endDate, days, next, prev };
 }
 
-const dateNavigatorInstance = new DateNavigator("daily");
-
-export { dateNavigatorInstance as dateNavigator };
+export default useDateRange;

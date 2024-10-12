@@ -1,12 +1,12 @@
-import { Stack, useNavigation } from "expo-router";
-import "../../global.css";
+import { Ionicons } from "@expo/vector-icons";
 import { ThemeProvider } from "@react-navigation/native";
-import { DarkTheme, LightTheme } from "../constants/Colors";
-import { QueryProvider } from "../query/QueryProvider";
+import { Stack, useNavigation } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { StatusBar } from "react-native";
+import "../../global.css";
 import IconButton from "../components/IconButton";
-import { EvilIcons, Ionicons } from "@expo/vector-icons";
+import { DarkTheme, LightTheme } from "../constants/Colors";
+import { QueryProvider } from "../query/QueryProvider";
 
 const InitialLayout = () => {
   const { colorScheme } = useColorScheme();
@@ -23,7 +23,7 @@ const InitialLayout = () => {
           />
           <Stack
             screenOptions={{
-              navigationBarColor: "red",
+              navigationBarColor: "white",
               headerShown: false,
             }}
           >
@@ -62,7 +62,12 @@ const InitialLayout = () => {
                 headerBackVisible: false,
               }}
             />
-            {/* <Stack.Screen name="camera" /> */}
+            <Stack.Screen
+              name="camera"
+              options={{
+                presentation: "modal",
+              }}
+            />
             <Stack.Screen
               name="components"
               options={{

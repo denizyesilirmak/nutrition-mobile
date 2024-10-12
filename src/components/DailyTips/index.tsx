@@ -89,22 +89,25 @@ const DailyTips = () => {
     pageIndexSv.value = page;
   });
 
-  useEffect(() => {
-    const autoScrollInterval = setInterval(() => {
-      const currentPageIndex = Math.round(pageIndexSv.value);
-      const next =
-        currentPageIndex >= tips.length - 1 ? 0 : currentPageIndex + 1;
+  // useEffect(() => {
+  //   const autoScrollInterval = setInterval(() => {
+  //     const currentPageIndex = Math.round(pageIndexSv.value);
+  //     const next =
+  //       currentPageIndex >= tips.length - 1 ? 0 : currentPageIndex + 1;
 
-      flatlistRef.current?.scrollToIndex({
-        index: next,
-        animated: true,
-      });
-    }, 6000);
+  //     flatlistRef.current?.scrollToIndex({
+  //       index: next,
+  //       animated: true,
+  //     });
 
-    return () => {
-      clearInterval(autoScrollInterval);
-    };
-  }, [tips]);
+  //     console.log("Auto scroll to", next);
+  //     console.log("Current page index", currentPageIndex);
+  //   }, 6000);
+
+  //   return () => {
+  //     clearInterval(autoScrollInterval);
+  //   };
+  // }, [pageIndexSv.value, tips]);
 
   if (isLoading) {
     return <Text>Loading...</Text>;
@@ -117,7 +120,7 @@ const DailyTips = () => {
           <Animated.FlatList
             ref={flatlistRef}
             pagingEnabled
-            scrollEnabled={false}
+            scrollEnabled={true}
             showsHorizontalScrollIndicator={false}
             horizontal
             onScroll={scrollHandler}

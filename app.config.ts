@@ -42,23 +42,6 @@ const config: ExpoConfig = {
   },
   plugins: [
     "expo-router",
-    // [
-    //   "react-native-vision-camera",
-    //   {
-    //     cameraPermissionText: "$(PRODUCT_NAME) needs access to your Camera.",
-
-    //     // optionally, if you want to record audio:
-    //     enableMicrophonePermission: true,
-    //     microphonePermissionText:
-    //       "$(PRODUCT_NAME) needs access to your Microphone.",
-    //   },
-    // ],
-    // [
-    //   "react-native-fast-tflite",
-    //   {
-    //     enableCoreMLDelegate: true,
-    //   },
-    // ],
     [
       "expo-build-properties",
       {
@@ -71,6 +54,17 @@ const config: ExpoConfig = {
         ios: {
           deploymentTarget: "13.4",
         },
+      },
+    ],
+    [
+      "react-native-vision-camera",
+      {
+        cameraPermissionText: "$(PRODUCT_NAME) needs access to your Camera.",
+
+        // optionally, if you want to record audio:
+        enableMicrophonePermission: true,
+        microphonePermissionText:
+          "$(PRODUCT_NAME) needs access to your Microphone.",
       },
     ],
   ],

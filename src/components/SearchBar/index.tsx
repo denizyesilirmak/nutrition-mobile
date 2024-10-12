@@ -18,7 +18,7 @@ const SearchBar = ({ onChangeText }: SearchBarProps) => {
         />
         <Pressable
           onPress={() => {
-            router.push("scanfood");
+            router.push("camera");
           }}
           className="rounded-r-lg bg-white p-2 dark:bg-black"
         >
