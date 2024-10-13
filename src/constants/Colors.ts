@@ -58,4 +58,11 @@ export const DarkTheme = {
   },
 };
 
+export const IconColors = {
+  energy: "red",
+  protein: "tomato",
+  carbonhydrate: "green",
+  fat: "orange",
+} as const;
+
 export default COLORS;

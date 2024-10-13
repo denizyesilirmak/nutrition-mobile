@@ -1,3 +1,4 @@
+import EmptyLottieGreen from "@/src/assets/animations/empty-green.json";
 import FoodListItem from "@/src/components/FoodListItem";
 import ScreenView from "@/src/components/ScreenView";
 import SearchBar from "@/src/components/SearchBar";
@@ -8,8 +9,6 @@ import { FlashList } from "@shopify/flash-list";
 import LottieView from "lottie-react-native";
 import { useRef, useState } from "react";
 import { Text, View } from "react-native";
-import EmptyLottieGreen from "@/src/assets/animations/empty-green.json";
-import EmptyLottieLime from "@/src/assets/animations/empty-lime.json";
 
 const FoodsScreen = () => {
   const flashListRef = useRef(null);

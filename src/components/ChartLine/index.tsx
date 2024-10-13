@@ -20,7 +20,7 @@ const ChartLine = ({ value = 0 }: ChartLineProps) => {
 
   return (
     <View className="-1 flex flex-row p-2">
-      <View className="h-2 w-full overflow-hidden rounded-full bg-slate-400 dark:bg-gray-500">
+      <View className="h-2 w-full overflow-hidden rounded-full bg-gray-300 dark:bg-gray-500">
         <Animated.View
           className={`h-2 bg-green-500 duration-500 dark:bg-lime-400`}
           style={animatedStyle}

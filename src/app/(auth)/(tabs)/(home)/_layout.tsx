@@ -11,6 +11,7 @@ const HomeStackLayout = () => {
     <Stack
       screenOptions={{
         headerShown: false,
+        headerTintColor: colorScheme === "dark" ? "white" : "black",
       }}
     >
       <Stack.Screen

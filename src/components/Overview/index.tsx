@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import ChartCircle from "../ChartCircle";
 import ChartLine from "../ChartLine";
 import useMeals from "@/src/query/hooks/useMeals";
@@ -6,6 +6,11 @@ import { calculateTotalCalories } from "@/src/screens/home/utils";
 import { Food } from "@/src/screens/home/types";
 import useMe from "@/src/query/hooks/useMe";
 import { cn } from "@/src/utils/cn";
+
+import CarbsIcon from "@/src/assets/icons/carb.png";
+import FatIcon from "@/src/assets/icons/fat.png";
+import ProteinIcon from "@/src/assets/icons/protein.png";
+import { IconColors } from "@/src/constants/Colors";
 
 type OverviewProps = {
   startDate: string;
@@ -72,9 +77,16 @@ const Overview = ({ startDate, endDate }: OverviewProps) => {
       </View>
       <View className="h-20 w-full flex-row bg-gray-100 dark:bg-gray-700">
         <View className="h-full flex-1 items-center justify-center">
-          <Text className="text-black-400 text-sm font-semibold dark:text-gray-100">
-            Carbs
-          </Text>
+          <View className="flex-row items-center">
+            <Image
+              source={CarbsIcon}
+              className="mr-1 h-6 w-6"
+              tintColor={IconColors.carbonhydrate}
+            />
+            <Text className="text-black-400 text-sm font-semibold dark:text-gray-100">
+              Carbs
+            </Text>
+          </View>
           <Text className="text-black-400 text-sm font-semibold dark:text-gray-100">
             {macroNutrients.carbs.toFixed(1)} gr /{" "}
             <Text className="text-xs text-gray-400 dark:text-gray-300">
@@ -85,9 +97,16 @@ const Overview = ({ startDate, endDate }: OverviewProps) => {
         </View>
 
         <View className="h-full flex-1 items-center justify-center">
-          <Text className="text-black-400 text-sm font-semibold dark:text-gray-100">
-            Protein
-          </Text>
+          <View className="flex-row items-center">
+            <Image
+              source={ProteinIcon}
+              className="mr-1 h-6 w-6"
+              tintColor={IconColors.protein}
+            />
+            <Text className="text-black-400 text-sm font-semibold dark:text-gray-100">
+              Protein
+            </Text>
+          </View>
           <Text className="text-black-400 text-sm font-semibold dark:text-gray-100">
             {macroNutrients.protein.toFixed(1)} gr /{" "}
             <Text className="text-xs text-gray-400 dark:text-gray-300">
@@ -100,9 +119,16 @@ const Overview = ({ startDate, endDate }: OverviewProps) => {
         </View>
 
         <View className="h-full flex-1 items-center justify-center">
-          <Text className="text-black-400 text-sm font-semibold dark:text-gray-100">
-            Fat
-          </Text>
+          <View className="flex-row items-center">
+            <Image
+              source={FatIcon}
+              className="mr-1 h-6 w-6"
+              tintColor={IconColors.fat}
+            />
+            <Text className="text-black-400 text-sm font-semibold dark:text-gray-100">
+              Fat
+            </Text>
+          </View>
           <Text className="text-black-400 text-sm font-semibold dark:text-gray-100">
             {macroNutrients.fat.toFixed(1)} gr /{" "}
             <Text className="text-xs text-gray-400 dark:text-gray-300">

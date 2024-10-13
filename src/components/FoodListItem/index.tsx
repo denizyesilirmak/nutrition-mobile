@@ -8,13 +8,7 @@ import EnergyIcon from "@/src/assets/icons/energy.png";
 import CarbsIcon from "@/src/assets/icons/carb.png";
 import FatIcon from "@/src/assets/icons/fat.png";
 import ProteinIcon from "@/src/assets/icons/protein.png";
-
-const IconColors = {
-  energy: "red",
-  protein: "tomato",
-  carbonhydrate: "green",
-  fat: "orange",
-} as const;
+import { IconColors } from "@/src/constants/Colors";
 
 const FoodListItem = ({ food }: { food: Datum }) => {
   return (
@@ -35,14 +29,13 @@ const FoodListItem = ({ food }: { food: Datum }) => {
             source={{ uri: food.image }}
             style={{ width: 60, height: 60, borderRadius: 4 }}
           />
-          <View className="pl-2 pt-1">
+          <View className="justify-center pl-4 pt-1">
             <Text
               numberOfLines={1}
-              className="text-md mb-1 font-semibold color-black dark:color-white"
+              className="mb-1 ml-1 text-xl font-semibold color-black dark:color-white"
             >
               {food.name}
             </Text>
-            <Text className="text-sm text-gray-500">Food detail text</Text>
           </View>
         </View>
         <View className="border-b border-gray-200 dark:border-gray-700" />

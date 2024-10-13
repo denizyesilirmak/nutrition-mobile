@@ -15,7 +15,7 @@ const Stars = ({ rating }: { rating: number }) => {
       {stars.map((star, index) => (
         <Text
           key={index}
-          className="text-3xl text-lime-400 dark:text-green-400"
+          className="text-3xl text-lime-500 dark:text-green-400"
         >
           {star}
         </Text>
@@ -31,7 +31,7 @@ const AiRecommendationView = ({ date }: { date: string }) => {
 
   return (
     <View className="flex-1 gap-2">
-      <View className="gap-2 rounded-lg bg-gray-200 p-2 pb-4 dark:bg-gray-800">
+      <View className="gap-2 rounded-lg bg-gray-100 p-2 pb-4 dark:bg-gray-800">
         <Text className="text-xl font-bold text-black dark:text-white">
           🌿 Health Score: {recomendation?.["healthiness-point"]} / 10
         </Text>
@@ -45,7 +45,7 @@ const AiRecommendationView = ({ date }: { date: string }) => {
         </Text>
       </View>
 
-      <View className="gap-2 rounded-lg bg-gray-200 p-2 pb-4 dark:bg-gray-800">
+      <View className="gap-2 rounded-lg bg-gray-100 p-2 pb-4 dark:bg-gray-800">
         <Text className="text-xl font-bold text-black dark:text-white">
           💡 Suggestions
         </Text>

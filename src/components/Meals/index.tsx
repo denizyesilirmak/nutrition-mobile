@@ -64,11 +64,11 @@ const MealItem = ({
         <MemorizedImage
           source={{ uri: image }}
           style={{
-            width: 48,
-            height: 48,
-            borderRadius: 8,
+            width: 60,
+            height: 60,
+            borderRadius: 4,
             borderWidth: 1,
-            borderColor: "#34D399",
+            borderColor: "#00000030",
             marginRight: 8,
           }}
         />

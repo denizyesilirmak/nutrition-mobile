@@ -20,6 +20,14 @@ const FoodsStackLayout = () => {
           presentation: "modal",
         }}
       />
+      <Stack.Screen
+        name="nutritionDetail"
+        options={{
+          presentation: "modal",
+          headerShown: true,
+          title: "Nutrition Details",
+        }}
+      />
     </Stack>
   );
 };

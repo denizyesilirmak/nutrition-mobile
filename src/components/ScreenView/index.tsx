@@ -4,12 +4,18 @@ type ScreenViewProps = {
   children?: React.ReactNode;
   scrollable?: boolean;
   padding?: boolean;
+  bounces?: boolean;
 };
 
-const ScreenView = ({ children, scrollable, padding }: ScreenViewProps) => {
+const ScreenView = ({
+  children,
+  scrollable,
+  padding,
+  bounces = false,
+}: ScreenViewProps) => {
   return (
     <ScrollView
-      bounces={false}
+      bounces={bounces}
       scrollEnabled={scrollable}
       className="flex-1 bg-white dark:bg-black"
       showsHorizontalScrollIndicator={false}
